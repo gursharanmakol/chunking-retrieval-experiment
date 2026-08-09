@@ -96,7 +96,7 @@ match `QUESTIONS`, so results cannot be observed before the criteria exist.
 
 ## Companion UI
 
-A reader-facing explorer for the article. Not an experiment and not a benchmark:
+A reader-facing companion explorer for the article. It is not a separate benchmark:
 it re-runs the same retrieval pipeline while letting a reader vary chunk size
 (300, 500, 800), overlap (0%, 10%, 20%), strategy, top-k (3, 5), and which of the
 five frozen questions is asked.
@@ -185,12 +185,12 @@ evidence against the rubric — nothing is inferred.
 reads `config.SUFFICIENCY_RUBRIC_DISPLAY`, which differs in one place: the Q5 entry
 was reworded afterwards to state plainly that the generic Section 6 "may inspect"
 sentence is not sufficient on its own. That rewording narrows the criterion and
-changes no recorded verdict — A passes on the matrix row plus the table header, B
+changes no recorded verdict. A passes on the matrix row plus the table header, B
 retrieves no part of the table, and C passes on the complete table in C-8, which is
 the only chunk any verdict relied on.
 
 ## Ground rules
 
-The source document, questions, chunkers, chunk sizes, overlap, embedding model,
-top-k, and evaluation rules do not change between runs. The companion UI reads
-this code but never regenerates the files in `outputs/`.
+For the frozen A/B/C experiment, the source document, questions, chunking
+parameters, embedding model, top-k, and evaluation rules remain fixed. The
+companion UI reads this code but never regenerates the files in `outputs/`.
