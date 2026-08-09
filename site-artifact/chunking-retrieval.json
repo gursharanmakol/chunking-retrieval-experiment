@@ -1,0 +1,910 @@
+{
+  "chunks": [
+    {
+      "end": 500,
+      "heading": null,
+      "id": "A-0",
+      "start": 0,
+      "strategy": "A",
+      "text": "# TechNova Billing and Cancellation Policy\n\n**Effective date:** August 1, 2026  \n**Applies to:** Purchases made directly from the TechNova Store\n\n---\n\n## 1. Purpose\n\nThis policy defines billing, cancellation, refund, and restocking rules for TechNova product orders.\n\nIt applies to physical products, subscriptions, accessories, promotional purchases, and business orders unless a separate written agreement applies. If a signed business agreement conflicts with this policy, the signed agreement tak"
+    },
+    {
+      "end": 1000,
+      "heading": null,
+      "id": "A-1",
+      "start": 500,
+      "strategy": "A",
+      "text": "es precedence.\n\n---\n\n## 2. Payment Terms\n\nCustomers are charged when an order is confirmed.\n\nFor subscription products:\n\n- recurring charges are billed at the start of each billing cycle\n- failed payments may be retried\n- access may be suspended if payment remains outstanding\n\nFor physical products:\n\n- payment is authorized at order placement\n- final capture occurs when the order ships\n\nA payment authorization confirms that the customer’s payment method can cover the order amount. It is not a co"
+    },
+    {
+      "end": 1500,
+      "heading": null,
+      "id": "A-2",
+      "start": 1000,
+      "strategy": "A",
+      "text": "mpleted charge. TechNova captures payment when the physical product ships.\n\nIf an authorization expires before shipment, TechNova may request updated payment information or attempt to reauthorize the original payment method. An order may be delayed or cancelled if TechNova cannot obtain a valid authorization.\n\nPrices, taxes, shipping charges, and discounts are shown at checkout. Promotional discounts apply only when the order meets the offer terms at the time of purchase.\n\n---\n\n## 3. Orders Elig"
+    },
+    {
+      "end": 2000,
+      "heading": null,
+      "id": "A-3",
+      "start": 1500,
+      "strategy": "A",
+      "text": "ible for Fee Waiver\n\nA cancellation fee or restocking fee does not apply when one of the following conditions is met:\n\n- TechNova shipped the wrong item.\n- The product was damaged before delivery.\n- The order was cancelled because of a verified TechNova fulfillment error.\n- The customer requested cancellation before the order entered shipment processing.\n\nOrders qualifying under this section are considered **fee-waiver eligible**.\n\nTo request a fee waiver, the customer must provide the order num"
+    },
+    {
+      "end": 2500,
+      "heading": null,
+      "id": "A-4",
+      "start": 2000,
+      "strategy": "A",
+      "text": "ber and a description of the issue. For damaged or incorrect products, TechNova may request photos of the product, packaging, and shipping label before approving the claim.\n\nA verified TechNova fulfillment error includes an incorrect item, an incorrect quantity, an order sent to the wrong address because of a TechNova processing error, or a failure to ship an in-stock order within the stated handling period.\n\nFor purposes of this policy, damage before delivery means damage that occurred during p"
+    },
+    {
+      "end": 3000,
+      "heading": null,
+      "id": "A-5",
+      "start": 2500,
+      "strategy": "A",
+      "text": "acking, handling, or transit and was not caused by the customer after delivery. Damage claims should be reported within 14 calendar days of delivery.\n\nFee-waiver eligibility applies to the restocking fee. Whether original or return shipping charges are refunded is determined under Section 8.\n\n---\n\n## 4. Cancellation Before Shipment\n\nA customer may cancel an order before shipment without a restocking fee.\n\nIf the order has not entered shipment processing:\n\n- the cancellation is accepted\n- the ful"
+    },
+    {
+      "end": 3500,
+      "heading": null,
+      "id": "A-6",
+      "start": 3000,
+      "strategy": "A",
+      "text": "l payment is refunded\n- no cancellation fee applies\n\nCustomers may submit a cancellation request through the TechNova Support Portal. A request is received when it appears in the customer’s order record.\n\nAn order enters shipment processing when TechNova begins picking, packing, labeling, or assigning the order to a carrier. An order awaiting payment review, inventory allocation, or warehouse release has not entered shipment processing.\n\nIf TechNova has only authorized payment, the authorization"
+    },
+    {
+      "end": 4000,
+      "heading": null,
+      "id": "A-7",
+      "start": 3500,
+      "strategy": "A",
+      "text": " will be released. If payment has already been captured, TechNova will issue a refund to the original payment method in accordance with Section 6.\n\n---\n\n## 5. Cancellation During Shipment Processing\n\nIf an order has entered shipment processing but has not yet shipped, TechNova may attempt to stop fulfillment.\n\nIf fulfillment can be stopped successfully:\n\n- the order is cancelled\n- the customer receives a full refund\n\nIf fulfillment cannot be stopped:\n\n- the order is treated as a post-shipment ca"
+    },
+    {
+      "end": 4500,
+      "heading": null,
+      "id": "A-8",
+      "start": 4000,
+      "strategy": "A",
+      "text": "ncellation\n\nTechNova cannot guarantee that fulfillment can be stopped once warehouse processing begins. Whether a request can be completed depends on the order’s current status, including picking, packing, carrier-label creation, and carrier handoff.\n\nIf TechNova cannot stop fulfillment, it will provide return instructions after delivery. The request will then be reviewed under Section 7, including the fee-waiver conditions in Section 3.\n\n---\n\n## 6. Refund Processing\n\nApproved refunds are return"
+    },
+    {
+      "end": 5000,
+      "heading": null,
+      "id": "A-9",
+      "start": 4500,
+      "strategy": "A",
+      "text": "ed to the original payment method.\n\nRefund timing depends on the payment provider.\n\nRefunds may take **5–10 business days** to appear on the customer’s account.\n\nTechNova begins refund processing after a cancellation, return, or fee-waiver claim is approved. For returned physical products, TechNova may inspect the item before determining the final refund amount.\n\nThe final refund may include the product price, applicable taxes, and eligible shipping charges. If a restocking fee applies under Sec"
+    },
+    {
+      "end": 5500,
+      "heading": null,
+      "id": "A-10",
+      "start": 5000,
+      "strategy": "A",
+      "text": "tion 7, TechNova deducts that amount before issuing the refund.\n\nA refund confirmation email does not mean the funds have already appeared in the customer’s account. Processing times after TechNova issues the refund are determined by the card issuer, bank, or payment provider.\n\n---\n\n## 7. Cancellation After Shipment\n\nCancellation after shipment normally incurs a **15% restocking fee**.\n\nThe restocking fee is calculated using the product price before tax and shipping charges.\n\nHowever, the restoc"
+    },
+    {
+      "end": 6000,
+      "heading": null,
+      "id": "A-11",
+      "start": 5500,
+      "strategy": "A",
+      "text": "king fee does not apply if the order qualifies under **Section 3: Orders Eligible for Fee Waiver**.\n\nIf the order qualifies under Section 3:\n\n- the customer receives a full refund\n- the 15% restocking fee is waived\n\nIf the order does not qualify:\n\n- the 15% restocking fee is deducted from the refund\n\nA post-shipment cancellation applies when an order has shipped, is in transit, has been delivered, or could not be stopped under Section 5. The customer must return the item according to TechNova’s "
+    },
+    {
+      "end": 6500,
+      "heading": null,
+      "id": "A-12",
+      "start": 6000,
+      "strategy": "A",
+      "text": "return instructions.\n\nThe restocking fee is based on the amount actually paid for the product after any promotional discount, but before tax and shipping charges. For example, if a product was listed at $1,000 and purchased for $800 during a promotion, the restocking fee is $120.\n\nThe restocking fee is waived when TechNova confirms that the order is fee-waiver eligible under Section 3. A cancellation request by itself does not stop an order already in transit.\n\n---\n\n## 8. Shipping Charges\n\nOrigi"
+    },
+    {
+      "end": 7000,
+      "heading": null,
+      "id": "A-13",
+      "start": 6500,
+      "strategy": "A",
+      "text": "nal shipping charges are generally non-refundable after shipment.\n\nShipping charges may be refunded if:\n\n- TechNova shipped the wrong product\n- the product was damaged before delivery\n- the shipment failure was caused by TechNova\n\nCustomers are responsible for return-shipping costs unless TechNova confirms that the return resulted from an eligible damage claim, an incorrect shipment, or a verified fulfillment error. TechNova may provide a prepaid return label in those situations.\n\nShipping-charg"
+    },
+    {
+      "end": 7500,
+      "heading": null,
+      "id": "A-14",
+      "start": 7000,
+      "strategy": "A",
+      "text": "e eligibility is reviewed separately from restocking-fee eligibility. An order may qualify for a restocking-fee waiver under Section 3 while TechNova separately reviews whether shipping charges should be refunded.\n\n### Return Handling Matrix\n\n| Return scenario | Restocking fee | Original shipping | Return shipping | Inspection before refund |\n|---|---:|---|---|---|\n| Wrong item shipped by TechNova | Waived | Refunded | Paid by TechNova | No physical inspection required before refund |\n| Product "
+    },
+    {
+      "end": 8000,
+      "heading": null,
+      "id": "A-15",
+      "start": 7500,
+      "strategy": "A",
+      "text": "damaged before delivery | Waived | Refunded | Paid by TechNova | Photo review may be required |\n| Verified TechNova fulfillment error | Waived | Refunded if related to the error | Paid by TechNova | Case-by-case review |\n| Customer changes mind after shipment | 15% | Not refunded | Paid by customer | Returned product must be inspected |\n| Customer cancels before shipment processing | None | Not applicable | Not applicable | No |\n\nThe table is a quick operational reference. If the table conflicts"
+    },
+    {
+      "end": 8500,
+      "heading": null,
+      "id": "A-16",
+      "start": 8000,
+      "strategy": "A",
+      "text": " with the detailed rules in another section, the detailed policy language governs.\n\n---\n\n## 9. Subscription Cancellation\n\nSubscription customers may cancel future renewals at any time.\n\nCancellation:\n\n- stops future billing\n- does not automatically refund charges already processed\n- does not affect physical-order restocking rules\n\nThe subscription remains active until the end of the current paid billing period unless TechNova approves an earlier termination. Cancelling a subscription does not ca"
+    },
+    {
+      "end": 9000,
+      "heading": null,
+      "id": "A-17",
+      "start": 8500,
+      "strategy": "A",
+      "text": "ncel an open physical-product order.\n\nTechNova may issue a subscription refund for a duplicate charge, billing error, or other verified issue. The restocking-fee rules in Section 7 do not apply to subscription cancellations.\n\n---\n\n## 10. Promotional Orders\n\nPromotional discounts do not change the restocking-fee percentage.\n\nFor example:\n\n- product list price: $1,000\n- promotional price paid: $800\n- applicable restocking fee: 15% of the product price actually paid\n\nPromotional gifts, bundled acce"
+    },
+    {
+      "end": 9500,
+      "heading": null,
+      "id": "A-18",
+      "start": 9000,
+      "strategy": "A",
+      "text": "ssories, and limited-time credits must be returned when they were included with the original purchase. If a required promotional item is not returned, TechNova may deduct its stated value from the refund.\n\nAn order that qualifies under Section 3 remains fee-waiver eligible even if it was purchased using a promotion. The waiver applies to the restocking fee and does not reinstate an expired promotion or discount code.\n\n---\n\n## 11. Business Orders\n\nBusiness orders containing more than 25 units may"
+    },
+    {
+      "end": 10000,
+      "heading": null,
+      "id": "A-19",
+      "start": 9500,
+      "strategy": "A",
+      "text": " be subject to separate contract terms.\n\nIf a signed business agreement conflicts with this policy, the signed agreement takes precedence.\n\nTechNova may require additional review for orders involving volume pricing, custom configurations, staged delivery, or purchase orders. Those orders may have different cancellation deadlines, restocking fees, or return requirements.\n\nIf no signed business agreement applies, this policy governs the order. Business customers should include their organization n"
+    },
+    {
+      "end": 10500,
+      "heading": null,
+      "id": "A-20",
+      "start": 10000,
+      "strategy": "A",
+      "text": "ame and order number when submitting a cancellation, refund, or fee-waiver request.\n\n---\n\n## 12. Policy Interpretation\n\nWhen a cancellation depends on another section of this policy, the referenced section must be evaluated before the final refund amount is determined.\n\nFor example, Section 7 sets the normal 15% restocking fee for post-shipment cancellations. However, TechNova must first determine whether the order qualifies under Section 3 before calculating the final refund.\n\nWhen reviewing a "
+    },
+    {
+      "end": 10849,
+      "heading": null,
+      "id": "A-21",
+      "start": 10500,
+      "strategy": "A",
+      "text": "cancellation request, TechNova generally follows this order:\n\n1. Confirm the order and shipment status.\n2. Determine whether Section 4, Section 5, or Section 7 applies.\n3. Evaluate whether the order qualifies for a fee waiver under Section 3.\n4. Review shipping-charge eligibility under Section 8.\n5. Calculate and issue the refund under Section 6.\n"
+    },
+    {
+      "end": 500,
+      "heading": null,
+      "id": "B-0",
+      "start": 0,
+      "strategy": "B",
+      "text": "# TechNova Billing and Cancellation Policy\n\n**Effective date:** August 1, 2026  \n**Applies to:** Purchases made directly from the TechNova Store\n\n---\n\n## 1. Purpose\n\nThis policy defines billing, cancellation, refund, and restocking rules for TechNova product orders.\n\nIt applies to physical products, subscriptions, accessories, promotional purchases, and business orders unless a separate written agreement applies. If a signed business agreement conflicts with this policy, the signed agreement tak"
+    },
+    {
+      "end": 900,
+      "heading": null,
+      "id": "B-1",
+      "start": 400,
+      "strategy": "B",
+      "text": "reement applies. If a signed business agreement conflicts with this policy, the signed agreement takes precedence.\n\n---\n\n## 2. Payment Terms\n\nCustomers are charged when an order is confirmed.\n\nFor subscription products:\n\n- recurring charges are billed at the start of each billing cycle\n- failed payments may be retried\n- access may be suspended if payment remains outstanding\n\nFor physical products:\n\n- payment is authorized at order placement\n- final capture occurs when the order ships\n\nA payment "
+    },
+    {
+      "end": 1300,
+      "heading": null,
+      "id": "B-2",
+      "start": 800,
+      "strategy": "B",
+      "text": "\n\n- payment is authorized at order placement\n- final capture occurs when the order ships\n\nA payment authorization confirms that the customer’s payment method can cover the order amount. It is not a completed charge. TechNova captures payment when the physical product ships.\n\nIf an authorization expires before shipment, TechNova may request updated payment information or attempt to reauthorize the original payment method. An order may be delayed or cancelled if TechNova cannot obtain a valid auth"
+    },
+    {
+      "end": 1700,
+      "heading": null,
+      "id": "B-3",
+      "start": 1200,
+      "strategy": "B",
+      "text": "original payment method. An order may be delayed or cancelled if TechNova cannot obtain a valid authorization.\n\nPrices, taxes, shipping charges, and discounts are shown at checkout. Promotional discounts apply only when the order meets the offer terms at the time of purchase.\n\n---\n\n## 3. Orders Eligible for Fee Waiver\n\nA cancellation fee or restocking fee does not apply when one of the following conditions is met:\n\n- TechNova shipped the wrong item.\n- The product was damaged before delivery.\n- T"
+    },
+    {
+      "end": 2100,
+      "heading": null,
+      "id": "B-4",
+      "start": 1600,
+      "strategy": "B",
+      "text": "onditions is met:\n\n- TechNova shipped the wrong item.\n- The product was damaged before delivery.\n- The order was cancelled because of a verified TechNova fulfillment error.\n- The customer requested cancellation before the order entered shipment processing.\n\nOrders qualifying under this section are considered **fee-waiver eligible**.\n\nTo request a fee waiver, the customer must provide the order number and a description of the issue. For damaged or incorrect products, TechNova may request photos o"
+    },
+    {
+      "end": 2500,
+      "heading": null,
+      "id": "B-5",
+      "start": 2000,
+      "strategy": "B",
+      "text": "ber and a description of the issue. For damaged or incorrect products, TechNova may request photos of the product, packaging, and shipping label before approving the claim.\n\nA verified TechNova fulfillment error includes an incorrect item, an incorrect quantity, an order sent to the wrong address because of a TechNova processing error, or a failure to ship an in-stock order within the stated handling period.\n\nFor purposes of this policy, damage before delivery means damage that occurred during p"
+    },
+    {
+      "end": 2900,
+      "heading": null,
+      "id": "B-6",
+      "start": 2400,
+      "strategy": "B",
+      "text": "ing period.\n\nFor purposes of this policy, damage before delivery means damage that occurred during packing, handling, or transit and was not caused by the customer after delivery. Damage claims should be reported within 14 calendar days of delivery.\n\nFee-waiver eligibility applies to the restocking fee. Whether original or return shipping charges are refunded is determined under Section 8.\n\n---\n\n## 4. Cancellation Before Shipment\n\nA customer may cancel an order before shipment without a restocki"
+    },
+    {
+      "end": 3300,
+      "heading": null,
+      "id": "B-7",
+      "start": 2800,
+      "strategy": "B",
+      "text": "# 4. Cancellation Before Shipment\n\nA customer may cancel an order before shipment without a restocking fee.\n\nIf the order has not entered shipment processing:\n\n- the cancellation is accepted\n- the full payment is refunded\n- no cancellation fee applies\n\nCustomers may submit a cancellation request through the TechNova Support Portal. A request is received when it appears in the customer’s order record.\n\nAn order enters shipment processing when TechNova begins picking, packing, labeling, or assigni"
+    },
+    {
+      "end": 3700,
+      "heading": null,
+      "id": "B-8",
+      "start": 3200,
+      "strategy": "B",
+      "text": "rd.\n\nAn order enters shipment processing when TechNova begins picking, packing, labeling, or assigning the order to a carrier. An order awaiting payment review, inventory allocation, or warehouse release has not entered shipment processing.\n\nIf TechNova has only authorized payment, the authorization will be released. If payment has already been captured, TechNova will issue a refund to the original payment method in accordance with Section 6.\n\n---\n\n## 5. Cancellation During Shipment Processing\n\n"
+    },
+    {
+      "end": 4100,
+      "heading": null,
+      "id": "B-9",
+      "start": 3600,
+      "strategy": "B",
+      "text": "l payment method in accordance with Section 6.\n\n---\n\n## 5. Cancellation During Shipment Processing\n\nIf an order has entered shipment processing but has not yet shipped, TechNova may attempt to stop fulfillment.\n\nIf fulfillment can be stopped successfully:\n\n- the order is cancelled\n- the customer receives a full refund\n\nIf fulfillment cannot be stopped:\n\n- the order is treated as a post-shipment cancellation\n\nTechNova cannot guarantee that fulfillment can be stopped once warehouse processing begi"
+    },
+    {
+      "end": 4500,
+      "heading": null,
+      "id": "B-10",
+      "start": 4000,
+      "strategy": "B",
+      "text": "ncellation\n\nTechNova cannot guarantee that fulfillment can be stopped once warehouse processing begins. Whether a request can be completed depends on the order’s current status, including picking, packing, carrier-label creation, and carrier handoff.\n\nIf TechNova cannot stop fulfillment, it will provide return instructions after delivery. The request will then be reviewed under Section 7, including the fee-waiver conditions in Section 3.\n\n---\n\n## 6. Refund Processing\n\nApproved refunds are return"
+    },
+    {
+      "end": 4900,
+      "heading": null,
+      "id": "B-11",
+      "start": 4400,
+      "strategy": "B",
+      "text": "g the fee-waiver conditions in Section 3.\n\n---\n\n## 6. Refund Processing\n\nApproved refunds are returned to the original payment method.\n\nRefund timing depends on the payment provider.\n\nRefunds may take **5–10 business days** to appear on the customer’s account.\n\nTechNova begins refund processing after a cancellation, return, or fee-waiver claim is approved. For returned physical products, TechNova may inspect the item before determining the final refund amount.\n\nThe final refund may include the p"
+    },
+    {
+      "end": 5300,
+      "heading": null,
+      "id": "B-12",
+      "start": 4800,
+      "strategy": "B",
+      "text": "may inspect the item before determining the final refund amount.\n\nThe final refund may include the product price, applicable taxes, and eligible shipping charges. If a restocking fee applies under Section 7, TechNova deducts that amount before issuing the refund.\n\nA refund confirmation email does not mean the funds have already appeared in the customer’s account. Processing times after TechNova issues the refund are determined by the card issuer, bank, or payment provider.\n\n---\n\n## 7. Cancellati"
+    },
+    {
+      "end": 5700,
+      "heading": null,
+      "id": "B-13",
+      "start": 5200,
+      "strategy": "B",
+      "text": "sues the refund are determined by the card issuer, bank, or payment provider.\n\n---\n\n## 7. Cancellation After Shipment\n\nCancellation after shipment normally incurs a **15% restocking fee**.\n\nThe restocking fee is calculated using the product price before tax and shipping charges.\n\nHowever, the restocking fee does not apply if the order qualifies under **Section 3: Orders Eligible for Fee Waiver**.\n\nIf the order qualifies under Section 3:\n\n- the customer receives a full refund\n- the 15% restocking"
+    },
+    {
+      "end": 6100,
+      "heading": null,
+      "id": "B-14",
+      "start": 5600,
+      "strategy": "B",
+      "text": "\nIf the order qualifies under Section 3:\n\n- the customer receives a full refund\n- the 15% restocking fee is waived\n\nIf the order does not qualify:\n\n- the 15% restocking fee is deducted from the refund\n\nA post-shipment cancellation applies when an order has shipped, is in transit, has been delivered, or could not be stopped under Section 5. The customer must return the item according to TechNova’s return instructions.\n\nThe restocking fee is based on the amount actually paid for the product after "
+    },
+    {
+      "end": 6500,
+      "heading": null,
+      "id": "B-15",
+      "start": 6000,
+      "strategy": "B",
+      "text": "return instructions.\n\nThe restocking fee is based on the amount actually paid for the product after any promotional discount, but before tax and shipping charges. For example, if a product was listed at $1,000 and purchased for $800 during a promotion, the restocking fee is $120.\n\nThe restocking fee is waived when TechNova confirms that the order is fee-waiver eligible under Section 3. A cancellation request by itself does not stop an order already in transit.\n\n---\n\n## 8. Shipping Charges\n\nOrigi"
+    },
+    {
+      "end": 6900,
+      "heading": null,
+      "id": "B-16",
+      "start": 6400,
+      "strategy": "B",
+      "text": "ion request by itself does not stop an order already in transit.\n\n---\n\n## 8. Shipping Charges\n\nOriginal shipping charges are generally non-refundable after shipment.\n\nShipping charges may be refunded if:\n\n- TechNova shipped the wrong product\n- the product was damaged before delivery\n- the shipment failure was caused by TechNova\n\nCustomers are responsible for return-shipping costs unless TechNova confirms that the return resulted from an eligible damage claim, an incorrect shipment, or a verified"
+    },
+    {
+      "end": 7300,
+      "heading": null,
+      "id": "B-17",
+      "start": 6800,
+      "strategy": "B",
+      "text": "onfirms that the return resulted from an eligible damage claim, an incorrect shipment, or a verified fulfillment error. TechNova may provide a prepaid return label in those situations.\n\nShipping-charge eligibility is reviewed separately from restocking-fee eligibility. An order may qualify for a restocking-fee waiver under Section 3 while TechNova separately reviews whether shipping charges should be refunded.\n\n### Return Handling Matrix\n\n| Return scenario | Restocking fee | Original shipping | "
+    },
+    {
+      "end": 7700,
+      "heading": null,
+      "id": "B-18",
+      "start": 7200,
+      "strategy": "B",
+      "text": " be refunded.\n\n### Return Handling Matrix\n\n| Return scenario | Restocking fee | Original shipping | Return shipping | Inspection before refund |\n|---|---:|---|---|---|\n| Wrong item shipped by TechNova | Waived | Refunded | Paid by TechNova | No physical inspection required before refund |\n| Product damaged before delivery | Waived | Refunded | Paid by TechNova | Photo review may be required |\n| Verified TechNova fulfillment error | Waived | Refunded if related to the error | Paid by TechNova | C"
+    },
+    {
+      "end": 8100,
+      "heading": null,
+      "id": "B-19",
+      "start": 7600,
+      "strategy": "B",
+      "text": "rified TechNova fulfillment error | Waived | Refunded if related to the error | Paid by TechNova | Case-by-case review |\n| Customer changes mind after shipment | 15% | Not refunded | Paid by customer | Returned product must be inspected |\n| Customer cancels before shipment processing | None | Not applicable | Not applicable | No |\n\nThe table is a quick operational reference. If the table conflicts with the detailed rules in another section, the detailed policy language governs.\n\n---\n\n## 9. Subsc"
+    },
+    {
+      "end": 8500,
+      "heading": null,
+      "id": "B-20",
+      "start": 8000,
+      "strategy": "B",
+      "text": " with the detailed rules in another section, the detailed policy language governs.\n\n---\n\n## 9. Subscription Cancellation\n\nSubscription customers may cancel future renewals at any time.\n\nCancellation:\n\n- stops future billing\n- does not automatically refund charges already processed\n- does not affect physical-order restocking rules\n\nThe subscription remains active until the end of the current paid billing period unless TechNova approves an earlier termination. Cancelling a subscription does not ca"
+    },
+    {
+      "end": 8900,
+      "heading": null,
+      "id": "B-21",
+      "start": 8400,
+      "strategy": "B",
+      "text": "illing period unless TechNova approves an earlier termination. Cancelling a subscription does not cancel an open physical-product order.\n\nTechNova may issue a subscription refund for a duplicate charge, billing error, or other verified issue. The restocking-fee rules in Section 7 do not apply to subscription cancellations.\n\n---\n\n## 10. Promotional Orders\n\nPromotional discounts do not change the restocking-fee percentage.\n\nFor example:\n\n- product list price: $1,000\n- promotional price paid: $800\n"
+    },
+    {
+      "end": 9300,
+      "heading": null,
+      "id": "B-22",
+      "start": 8800,
+      "strategy": "B",
+      "text": "stocking-fee percentage.\n\nFor example:\n\n- product list price: $1,000\n- promotional price paid: $800\n- applicable restocking fee: 15% of the product price actually paid\n\nPromotional gifts, bundled accessories, and limited-time credits must be returned when they were included with the original purchase. If a required promotional item is not returned, TechNova may deduct its stated value from the refund.\n\nAn order that qualifies under Section 3 remains fee-waiver eligible even if it was purchased u"
+    },
+    {
+      "end": 9700,
+      "heading": null,
+      "id": "B-23",
+      "start": 9200,
+      "strategy": "B",
+      "text": "und.\n\nAn order that qualifies under Section 3 remains fee-waiver eligible even if it was purchased using a promotion. The waiver applies to the restocking fee and does not reinstate an expired promotion or discount code.\n\n---\n\n## 11. Business Orders\n\nBusiness orders containing more than 25 units may be subject to separate contract terms.\n\nIf a signed business agreement conflicts with this policy, the signed agreement takes precedence.\n\nTechNova may require additional review for orders involving "
+    },
+    {
+      "end": 10100,
+      "heading": null,
+      "id": "B-24",
+      "start": 9600,
+      "strategy": "B",
+      "text": "the signed agreement takes precedence.\n\nTechNova may require additional review for orders involving volume pricing, custom configurations, staged delivery, or purchase orders. Those orders may have different cancellation deadlines, restocking fees, or return requirements.\n\nIf no signed business agreement applies, this policy governs the order. Business customers should include their organization name and order number when submitting a cancellation, refund, or fee-waiver request.\n\n---\n\n## 12. Pol"
+    },
+    {
+      "end": 10500,
+      "heading": null,
+      "id": "B-25",
+      "start": 10000,
+      "strategy": "B",
+      "text": "ame and order number when submitting a cancellation, refund, or fee-waiver request.\n\n---\n\n## 12. Policy Interpretation\n\nWhen a cancellation depends on another section of this policy, the referenced section must be evaluated before the final refund amount is determined.\n\nFor example, Section 7 sets the normal 15% restocking fee for post-shipment cancellations. However, TechNova must first determine whether the order qualifies under Section 3 before calculating the final refund.\n\nWhen reviewing a "
+    },
+    {
+      "end": 10849,
+      "heading": null,
+      "id": "B-26",
+      "start": 10400,
+      "strategy": "B",
+      "text": " whether the order qualifies under Section 3 before calculating the final refund.\n\nWhen reviewing a cancellation request, TechNova generally follows this order:\n\n1. Confirm the order and shipment status.\n2. Determine whether Section 4, Section 5, or Section 7 applies.\n3. Evaluate whether the order qualifies for a fee waiver under Section 3.\n4. Review shipping-charge eligibility under Section 8.\n5. Calculate and issue the refund under Section 6.\n"
+    },
+    {
+      "end": 10849,
+      "heading": null,
+      "id": "B-27",
+      "start": 10800,
+      "strategy": "B",
+      "text": " Calculate and issue the refund under Section 6.\n"
+    },
+    {
+      "end": 151,
+      "heading": "(front matter, before first ## heading)",
+      "id": "C-0",
+      "start": 0,
+      "strategy": "C",
+      "text": "# TechNova Billing and Cancellation Policy\n\n**Effective date:** August 1, 2026  \n**Applies to:** Purchases made directly from the TechNova Store\n\n---\n\n"
+    },
+    {
+      "end": 521,
+      "heading": "## 1. Purpose",
+      "id": "C-1",
+      "start": 151,
+      "strategy": "C",
+      "text": "## 1. Purpose\n\nThis policy defines billing, cancellation, refund, and restocking rules for TechNova product orders.\n\nIt applies to physical products, subscriptions, accessories, promotional purchases, and business orders unless a separate written agreement applies. If a signed business agreement conflicts with this policy, the signed agreement takes precedence.\n\n---\n\n"
+    },
+    {
+      "end": 1483,
+      "heading": "## 2. Payment Terms",
+      "id": "C-2",
+      "start": 521,
+      "strategy": "C",
+      "text": "## 2. Payment Terms\n\nCustomers are charged when an order is confirmed.\n\nFor subscription products:\n\n- recurring charges are billed at the start of each billing cycle\n- failed payments may be retried\n- access may be suspended if payment remains outstanding\n\nFor physical products:\n\n- payment is authorized at order placement\n- final capture occurs when the order ships\n\nA payment authorization confirms that the customer’s payment method can cover the order amount. It is not a completed charge. TechNova captures payment when the physical product ships.\n\nIf an authorization expires before shipment, TechNova may request updated payment information or attempt to reauthorize the original payment method. An order may be delayed or cancelled if TechNova cannot obtain a valid authorization.\n\nPrices, taxes, shipping charges, and discounts are shown at checkout. Promotional discounts apply only when the order meets the offer terms at the time of purchase.\n\n---\n\n"
+    },
+    {
+      "end": 2799,
+      "heading": "## 3. Orders Eligible for Fee Waiver",
+      "id": "C-3",
+      "start": 1483,
+      "strategy": "C",
+      "text": "## 3. Orders Eligible for Fee Waiver\n\nA cancellation fee or restocking fee does not apply when one of the following conditions is met:\n\n- TechNova shipped the wrong item.\n- The product was damaged before delivery.\n- The order was cancelled because of a verified TechNova fulfillment error.\n- The customer requested cancellation before the order entered shipment processing.\n\nOrders qualifying under this section are considered **fee-waiver eligible**.\n\nTo request a fee waiver, the customer must provide the order number and a description of the issue. For damaged or incorrect products, TechNova may request photos of the product, packaging, and shipping label before approving the claim.\n\nA verified TechNova fulfillment error includes an incorrect item, an incorrect quantity, an order sent to the wrong address because of a TechNova processing error, or a failure to ship an in-stock order within the stated handling period.\n\nFor purposes of this policy, damage before delivery means damage that occurred during packing, handling, or transit and was not caused by the customer after delivery. Damage claims should be reported within 14 calendar days of delivery.\n\nFee-waiver eligibility applies to the restocking fee. Whether original or return shipping charges are refunded is determined under Section 8.\n\n---\n\n"
+    },
+    {
+      "end": 3653,
+      "heading": "## 4. Cancellation Before Shipment",
+      "id": "C-4",
+      "start": 2799,
+      "strategy": "C",
+      "text": "## 4. Cancellation Before Shipment\n\nA customer may cancel an order before shipment without a restocking fee.\n\nIf the order has not entered shipment processing:\n\n- the cancellation is accepted\n- the full payment is refunded\n- no cancellation fee applies\n\nCustomers may submit a cancellation request through the TechNova Support Portal. A request is received when it appears in the customer’s order record.\n\nAn order enters shipment processing when TechNova begins picking, packing, labeling, or assigning the order to a carrier. An order awaiting payment review, inventory allocation, or warehouse release has not entered shipment processing.\n\nIf TechNova has only authorized payment, the authorization will be released. If payment has already been captured, TechNova will issue a refund to the original payment method in accordance with Section 6.\n\n---\n\n"
+    },
+    {
+      "end": 4448,
+      "heading": "## 5. Cancellation During Shipment Processing",
+      "id": "C-5",
+      "start": 3653,
+      "strategy": "C",
+      "text": "## 5. Cancellation During Shipment Processing\n\nIf an order has entered shipment processing but has not yet shipped, TechNova may attempt to stop fulfillment.\n\nIf fulfillment can be stopped successfully:\n\n- the order is cancelled\n- the customer receives a full refund\n\nIf fulfillment cannot be stopped:\n\n- the order is treated as a post-shipment cancellation\n\nTechNova cannot guarantee that fulfillment can be stopped once warehouse processing begins. Whether a request can be completed depends on the order’s current status, including picking, packing, carrier-label creation, and carrier handoff.\n\nIf TechNova cannot stop fulfillment, it will provide return instructions after delivery. The request will then be reviewed under Section 7, including the fee-waiver conditions in Section 3.\n\n---\n\n"
+    },
+    {
+      "end": 5284,
+      "heading": "## 6. Refund Processing",
+      "id": "C-6",
+      "start": 4448,
+      "strategy": "C",
+      "text": "## 6. Refund Processing\n\nApproved refunds are returned to the original payment method.\n\nRefund timing depends on the payment provider.\n\nRefunds may take **5–10 business days** to appear on the customer’s account.\n\nTechNova begins refund processing after a cancellation, return, or fee-waiver claim is approved. For returned physical products, TechNova may inspect the item before determining the final refund amount.\n\nThe final refund may include the product price, applicable taxes, and eligible shipping charges. If a restocking fee applies under Section 7, TechNova deducts that amount before issuing the refund.\n\nA refund confirmation email does not mean the funds have already appeared in the customer’s account. Processing times after TechNova issues the refund are determined by the card issuer, bank, or payment provider.\n\n---\n\n"
+    },
+    {
+      "end": 6471,
+      "heading": "## 7. Cancellation After Shipment",
+      "id": "C-7",
+      "start": 5284,
+      "strategy": "C",
+      "text": "## 7. Cancellation After Shipment\n\nCancellation after shipment normally incurs a **15% restocking fee**.\n\nThe restocking fee is calculated using the product price before tax and shipping charges.\n\nHowever, the restocking fee does not apply if the order qualifies under **Section 3: Orders Eligible for Fee Waiver**.\n\nIf the order qualifies under Section 3:\n\n- the customer receives a full refund\n- the 15% restocking fee is waived\n\nIf the order does not qualify:\n\n- the 15% restocking fee is deducted from the refund\n\nA post-shipment cancellation applies when an order has shipped, is in transit, has been delivered, or could not be stopped under Section 5. The customer must return the item according to TechNova’s return instructions.\n\nThe restocking fee is based on the amount actually paid for the product after any promotional discount, but before tax and shipping charges. For example, if a product was listed at $1,000 and purchased for $800 during a promotion, the restocking fee is $120.\n\nThe restocking fee is waived when TechNova confirms that the order is fee-waiver eligible under Section 3. A cancellation request by itself does not stop an order already in transit.\n\n---\n\n"
+    },
+    {
+      "end": 8089,
+      "heading": "## 8. Shipping Charges",
+      "id": "C-8",
+      "start": 6471,
+      "strategy": "C",
+      "text": "## 8. Shipping Charges\n\nOriginal shipping charges are generally non-refundable after shipment.\n\nShipping charges may be refunded if:\n\n- TechNova shipped the wrong product\n- the product was damaged before delivery\n- the shipment failure was caused by TechNova\n\nCustomers are responsible for return-shipping costs unless TechNova confirms that the return resulted from an eligible damage claim, an incorrect shipment, or a verified fulfillment error. TechNova may provide a prepaid return label in those situations.\n\nShipping-charge eligibility is reviewed separately from restocking-fee eligibility. An order may qualify for a restocking-fee waiver under Section 3 while TechNova separately reviews whether shipping charges should be refunded.\n\n### Return Handling Matrix\n\n| Return scenario | Restocking fee | Original shipping | Return shipping | Inspection before refund |\n|---|---:|---|---|---|\n| Wrong item shipped by TechNova | Waived | Refunded | Paid by TechNova | No physical inspection required before refund |\n| Product damaged before delivery | Waived | Refunded | Paid by TechNova | Photo review may be required |\n| Verified TechNova fulfillment error | Waived | Refunded if related to the error | Paid by TechNova | Case-by-case review |\n| Customer changes mind after shipment | 15% | Not refunded | Paid by customer | Returned product must be inspected |\n| Customer cancels before shipment processing | None | Not applicable | Not applicable | No |\n\nThe table is a quick operational reference. If the table conflicts with the detailed rules in another section, the detailed policy language governs.\n\n---\n\n"
+    },
+    {
+      "end": 8731,
+      "heading": "## 9. Subscription Cancellation",
+      "id": "C-9",
+      "start": 8089,
+      "strategy": "C",
+      "text": "## 9. Subscription Cancellation\n\nSubscription customers may cancel future renewals at any time.\n\nCancellation:\n\n- stops future billing\n- does not automatically refund charges already processed\n- does not affect physical-order restocking rules\n\nThe subscription remains active until the end of the current paid billing period unless TechNova approves an earlier termination. Cancelling a subscription does not cancel an open physical-product order.\n\nTechNova may issue a subscription refund for a duplicate charge, billing error, or other verified issue. The restocking-fee rules in Section 7 do not apply to subscription cancellations.\n\n---\n\n"
+    },
+    {
+      "end": 9427,
+      "heading": "## 10. Promotional Orders",
+      "id": "C-10",
+      "start": 8731,
+      "strategy": "C",
+      "text": "## 10. Promotional Orders\n\nPromotional discounts do not change the restocking-fee percentage.\n\nFor example:\n\n- product list price: $1,000\n- promotional price paid: $800\n- applicable restocking fee: 15% of the product price actually paid\n\nPromotional gifts, bundled accessories, and limited-time credits must be returned when they were included with the original purchase. If a required promotional item is not returned, TechNova may deduct its stated value from the refund.\n\nAn order that qualifies under Section 3 remains fee-waiver eligible even if it was purchased using a promotion. The waiver applies to the restocking fee and does not reinstate an expired promotion or discount code.\n\n---\n\n"
+    },
+    {
+      "end": 10090,
+      "heading": "## 11. Business Orders",
+      "id": "C-11",
+      "start": 9427,
+      "strategy": "C",
+      "text": "## 11. Business Orders\n\nBusiness orders containing more than 25 units may be subject to separate contract terms.\n\nIf a signed business agreement conflicts with this policy, the signed agreement takes precedence.\n\nTechNova may require additional review for orders involving volume pricing, custom configurations, staged delivery, or purchase orders. Those orders may have different cancellation deadlines, restocking fees, or return requirements.\n\nIf no signed business agreement applies, this policy governs the order. Business customers should include their organization name and order number when submitting a cancellation, refund, or fee-waiver request.\n\n---\n\n"
+    },
+    {
+      "end": 10849,
+      "heading": "## 12. Policy Interpretation",
+      "id": "C-12",
+      "start": 10090,
+      "strategy": "C",
+      "text": "## 12. Policy Interpretation\n\nWhen a cancellation depends on another section of this policy, the referenced section must be evaluated before the final refund amount is determined.\n\nFor example, Section 7 sets the normal 15% restocking fee for post-shipment cancellations. However, TechNova must first determine whether the order qualifies under Section 3 before calculating the final refund.\n\nWhen reviewing a cancellation request, TechNova generally follows this order:\n\n1. Confirm the order and shipment status.\n2. Determine whether Section 4, Section 5, or Section 7 applies.\n3. Evaluate whether the order qualifies for a fee waiver under Section 3.\n4. Review shipping-charge eligibility under Section 8.\n5. Calculate and issue the refund under Section 6.\n"
+    }
+  ],
+  "provenance": {
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "generated_at": "2026-08-08",
+    "similarity": "cosine",
+    "source_sha256": "59d1785463a48b752babc882ac155ef2b9de84ad7cfed32b64aeecabcb68f1e4",
+    "strategies": {
+      "A": {
+        "chunk_size_chars": 500,
+        "label": "Fixed-size",
+        "overlap_chars": 0
+      },
+      "B": {
+        "chunk_size_chars": 500,
+        "label": "Fixed-size with overlap",
+        "overlap_chars": 100
+      },
+      "C": {
+        "label": "Section-aware",
+        "rule": "One chunk per Markdown ## section; natural section length"
+      }
+    },
+    "top_k": 3
+  },
+  "questions": [
+    {
+      "id": "Q1",
+      "rubric": "Sufficient only if the retrieved set contains the explicit '5-10 business days' window from Section 6. A set containing only 'refund timing depends on the payment provider', or only the refund-confirmation-email caveat, without the number, is insufficient.",
+      "text": "How long can an approved refund take to appear in a customer's account?"
+    },
+    {
+      "id": "Q2",
+      "rubric": "Sufficient only if the retrieved set contains both the 15% rate and the base it is applied to: the amount actually paid after any promotional discount, before tax and shipping charges. Either half alone is insufficient.",
+      "text": "How is the restocking fee calculated for a post-shipment cancellation?"
+    },
+    {
+      "id": "Q3",
+      "rubric": "Sufficient only if the retrieved set contains both the statement that the restocking fee does not apply when the order qualifies under Section 3, and the Section 3 condition 'TechNova shipped the wrong item' (or the Return Handling Matrix row 'Wrong item shipped by TechNova | Waived'). A set containing only the bare 15% post-shipment rule is insufficient, because it supports the wrong answer.",
+      "text": "A customer cancels after shipment because TechNova sent the wrong item. Does the 15% restocking fee apply?"
+    },
+    {
+      "id": "Q4",
+      "rubric": "Sufficient only if all four Section 3 waiver conditions appear intact in the retrieved text: wrong item shipped, product damaged before delivery, verified TechNova fulfillment error, and cancellation requested before the order entered shipment processing. A bullet list truncated by a chunk boundary is insufficient.",
+      "text": "What conditions make a post-shipment cancellation eligible for a restocking-fee waiver?"
+    },
+    {
+      "id": "Q5",
+      "rubric": "Sufficient only if the retrieved set binds 'customer changes mind after shipment' to the requirement that the returned product must be inspected, with enough table or header context to interpret that relationship. Generic language that TechNova 'may inspect' returned products is insufficient.",
+      "text": "A customer changes their mind after shipment. Is an inspection required before the refund is issued?"
+    }
+  ],
+  "results": [
+    {
+      "explanation": "A-9 contains the '5-10 business days' sentence whole. The fact sits in the middle of Section 6, far from any boundary, so no cut could damage it.",
+      "question_id": "Q1",
+      "strategy": "A",
+      "top3": [
+        {
+          "chunk_id": "A-9",
+          "cosine": 0.5607,
+          "rank": 1
+        },
+        {
+          "chunk_id": "A-5",
+          "cosine": 0.4453,
+          "rank": 2
+        },
+        {
+          "chunk_id": "A-10",
+          "cosine": 0.3262,
+          "rank": 3
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "explanation": "The rate and the base it applies to sit about 800 characters apart and landed in different chunks. Both A-10 and A-12 reached the top 3, so the answer had to be reassembled from two slots.",
+      "question_id": "Q2",
+      "strategy": "A",
+      "top3": [
+        {
+          "chunk_id": "A-12",
+          "cosine": 0.6705,
+          "rank": 1
+        },
+        {
+          "chunk_id": "A-10",
+          "cosine": 0.649,
+          "rank": 2
+        },
+        {
+          "chunk_id": "A-20",
+          "cosine": 0.6057,
+          "rank": 3
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "explanation": "A-10 breaks off mid-word at 'However, the restoc', cutting the clause that reverses the answer. The Section 3 condition for a wrong item is in A-3, which was not retrieved, so the set supports the 15% fee with no sign of the waiver.",
+      "question_id": "Q3",
+      "strategy": "A",
+      "top3": [
+        {
+          "chunk_id": "A-10",
+          "cosine": 0.7817,
+          "rank": 1
+        },
+        {
+          "chunk_id": "A-17",
+          "cosine": 0.7349,
+          "rank": 2
+        },
+        {
+          "chunk_id": "A-12",
+          "cosine": 0.7188,
+          "rank": 3
+        }
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "explanation": "A-3 holds all four waiver conditions intact, because the 500-character cut landed inside the heading 'Orders Elig|ible for Fee Waiver' rather than inside the list. A different offset would have split the list.",
+      "question_id": "Q4",
+      "strategy": "A",
+      "top3": [
+        {
+          "chunk_id": "A-5",
+          "cosine": 0.7171,
+          "rank": 1
+        },
+        {
+          "chunk_id": "A-3",
+          "cosine": 0.6537,
+          "rank": 2
+        },
+        {
+          "chunk_id": "A-11",
+          "cosine": 0.6482,
+          "rank": 3
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "explanation": "A-15 carries the 'changes mind' row and A-14 carries the table header. Both reached the top 3, so the inspection column could be interpreted across two separate chunks.",
+      "question_id": "Q5",
+      "strategy": "A",
+      "top3": [
+        {
+          "chunk_id": "A-15",
+          "cosine": 0.5125,
+          "rank": 1
+        },
+        {
+          "chunk_id": "A-5",
+          "cosine": 0.5053,
+          "rank": 2
+        },
+        {
+          "chunk_id": "A-14",
+          "cosine": 0.4636,
+          "rank": 3
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "explanation": "B-11 contains the '5-10 business days' sentence whole. One slot went to B-27, a 49-character tail fragment, which did not matter here because rank 1 already held the answer.",
+      "question_id": "Q1",
+      "strategy": "B",
+      "top3": [
+        {
+          "chunk_id": "B-11",
+          "cosine": 0.6003,
+          "rank": 1
+        },
+        {
+          "chunk_id": "B-27",
+          "cosine": 0.4233,
+          "rank": 2
+        },
+        {
+          "chunk_id": "B-12",
+          "cosine": 0.397,
+          "rank": 3
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "explanation": "All three slots landed on one contiguous 1,300-character stretch of Section 7, and that stretch happens to contain both the rate and the base it applies to.",
+      "question_id": "Q2",
+      "strategy": "B",
+      "top3": [
+        {
+          "chunk_id": "B-13",
+          "cosine": 0.7927,
+          "rank": 1
+        },
+        {
+          "chunk_id": "B-14",
+          "cosine": 0.7091,
+          "rank": 2
+        },
+        {
+          "chunk_id": "B-15",
+          "cosine": 0.6705,
+          "rank": 3
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "explanation": "B-14 states the fee is waived when an order qualifies under Section 3, but no retrieved chunk contains the Section 3 condition for a wrong item, so the qualifying fact never arrives.",
+      "question_id": "Q3",
+      "strategy": "B",
+      "top3": [
+        {
+          "chunk_id": "B-14",
+          "cosine": 0.8738,
+          "rank": 1
+        },
+        {
+          "chunk_id": "B-12",
+          "cosine": 0.7747,
+          "rank": 2
+        },
+        {
+          "chunk_id": "B-21",
+          "cosine": 0.7638,
+          "rank": 3
+        }
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "explanation": "B-4 holds all four waiver conditions intact but never reached the top 3. Two of the three slots went to B-13 and B-14, which overlap each other, so the ranking spent its budget on one region of Section 7.",
+      "question_id": "Q4",
+      "strategy": "B",
+      "top3": [
+        {
+          "chunk_id": "B-13",
+          "cosine": 0.7153,
+          "rank": 1
+        },
+        {
+          "chunk_id": "B-14",
+          "cosine": 0.7009,
+          "rank": 2
+        },
+        {
+          "chunk_id": "B-6",
+          "cosine": 0.6572,
+          "rank": 3
+        }
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "explanation": "No retrieved chunk contains any part of the Return Handling Matrix. B-19 holds the 'changes mind' row and B-18 holds the header, and neither was retrieved.",
+      "question_id": "Q5",
+      "strategy": "B",
+      "top3": [
+        {
+          "chunk_id": "B-6",
+          "cosine": 0.5083,
+          "rank": 1
+        },
+        {
+          "chunk_id": "B-10",
+          "cosine": 0.4599,
+          "rank": 2
+        },
+        {
+          "chunk_id": "B-26",
+          "cosine": 0.443,
+          "rank": 3
+        }
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "explanation": "C-6 is the whole of Section 6, so the '5-10 business days' sentence arrives with the surrounding refund-timing rules.",
+      "question_id": "Q1",
+      "strategy": "C",
+      "top3": [
+        {
+          "chunk_id": "C-6",
+          "cosine": 0.6168,
+          "rank": 1
+        },
+        {
+          "chunk_id": "C-3",
+          "cosine": 0.3016,
+          "rank": 2
+        },
+        {
+          "chunk_id": "C-2",
+          "cosine": 0.2844,
+          "rank": 3
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "explanation": "C-7 is the whole of Section 7, which carries the 15% rate and the base it applies to in a single chunk.",
+      "question_id": "Q2",
+      "strategy": "C",
+      "top3": [
+        {
+          "chunk_id": "C-7",
+          "cosine": 0.7467,
+          "rank": 1
+        },
+        {
+          "chunk_id": "C-12",
+          "cosine": 0.593,
+          "rank": 2
+        },
+        {
+          "chunk_id": "C-4",
+          "cosine": 0.5533,
+          "rank": 3
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "explanation": "C-7 states that the fee does not apply when an order qualifies under Section 3, but Section 3 is C-3, which was not retrieved. The pointer arrived without the condition it points to.",
+      "question_id": "Q3",
+      "strategy": "C",
+      "top3": [
+        {
+          "chunk_id": "C-7",
+          "cosine": 0.8422,
+          "rank": 1
+        },
+        {
+          "chunk_id": "C-12",
+          "cosine": 0.716,
+          "rank": 2
+        },
+        {
+          "chunk_id": "C-10",
+          "cosine": 0.6969,
+          "rank": 3
+        }
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "explanation": "C-3 is the whole of Section 3, so all four waiver conditions arrive together with the sentence that introduces them.",
+      "question_id": "Q4",
+      "strategy": "C",
+      "top3": [
+        {
+          "chunk_id": "C-7",
+          "cosine": 0.7203,
+          "rank": 1
+        },
+        {
+          "chunk_id": "C-3",
+          "cosine": 0.6413,
+          "rank": 2
+        },
+        {
+          "chunk_id": "C-5",
+          "cosine": 0.6297,
+          "rank": 3
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "explanation": "C-8 is the whole of Section 8, so the 'changes mind' row arrives with the table header that labels the inspection column.",
+      "question_id": "Q5",
+      "strategy": "C",
+      "top3": [
+        {
+          "chunk_id": "C-3",
+          "cosine": 0.4681,
+          "rank": 1
+        },
+        {
+          "chunk_id": "C-8",
+          "cosine": 0.4677,
+          "rank": 2
+        },
+        {
+          "chunk_id": "C-6",
+          "cosine": 0.4246,
+          "rank": 3
+        }
+      ],
+      "verdict": "PASS"
+    }
+  ],
+  "source": {
+    "char_count": 10849,
+    "path": "source/technova-billing-cancellation-policy.md",
+    "text": "# TechNova Billing and Cancellation Policy\n\n**Effective date:** August 1, 2026  \n**Applies to:** Purchases made directly from the TechNova Store\n\n---\n\n## 1. Purpose\n\nThis policy defines billing, cancellation, refund, and restocking rules for TechNova product orders.\n\nIt applies to physical products, subscriptions, accessories, promotional purchases, and business orders unless a separate written agreement applies. If a signed business agreement conflicts with this policy, the signed agreement takes precedence.\n\n---\n\n## 2. Payment Terms\n\nCustomers are charged when an order is confirmed.\n\nFor subscription products:\n\n- recurring charges are billed at the start of each billing cycle\n- failed payments may be retried\n- access may be suspended if payment remains outstanding\n\nFor physical products:\n\n- payment is authorized at order placement\n- final capture occurs when the order ships\n\nA payment authorization confirms that the customer’s payment method can cover the order amount. It is not a completed charge. TechNova captures payment when the physical product ships.\n\nIf an authorization expires before shipment, TechNova may request updated payment information or attempt to reauthorize the original payment method. An order may be delayed or cancelled if TechNova cannot obtain a valid authorization.\n\nPrices, taxes, shipping charges, and discounts are shown at checkout. Promotional discounts apply only when the order meets the offer terms at the time of purchase.\n\n---\n\n## 3. Orders Eligible for Fee Waiver\n\nA cancellation fee or restocking fee does not apply when one of the following conditions is met:\n\n- TechNova shipped the wrong item.\n- The product was damaged before delivery.\n- The order was cancelled because of a verified TechNova fulfillment error.\n- The customer requested cancellation before the order entered shipment processing.\n\nOrders qualifying under this section are considered **fee-waiver eligible**.\n\nTo request a fee waiver, the customer must provide the order number and a description of the issue. For damaged or incorrect products, TechNova may request photos of the product, packaging, and shipping label before approving the claim.\n\nA verified TechNova fulfillment error includes an incorrect item, an incorrect quantity, an order sent to the wrong address because of a TechNova processing error, or a failure to ship an in-stock order within the stated handling period.\n\nFor purposes of this policy, damage before delivery means damage that occurred during packing, handling, or transit and was not caused by the customer after delivery. Damage claims should be reported within 14 calendar days of delivery.\n\nFee-waiver eligibility applies to the restocking fee. Whether original or return shipping charges are refunded is determined under Section 8.\n\n---\n\n## 4. Cancellation Before Shipment\n\nA customer may cancel an order before shipment without a restocking fee.\n\nIf the order has not entered shipment processing:\n\n- the cancellation is accepted\n- the full payment is refunded\n- no cancellation fee applies\n\nCustomers may submit a cancellation request through the TechNova Support Portal. A request is received when it appears in the customer’s order record.\n\nAn order enters shipment processing when TechNova begins picking, packing, labeling, or assigning the order to a carrier. An order awaiting payment review, inventory allocation, or warehouse release has not entered shipment processing.\n\nIf TechNova has only authorized payment, the authorization will be released. If payment has already been captured, TechNova will issue a refund to the original payment method in accordance with Section 6.\n\n---\n\n## 5. Cancellation During Shipment Processing\n\nIf an order has entered shipment processing but has not yet shipped, TechNova may attempt to stop fulfillment.\n\nIf fulfillment can be stopped successfully:\n\n- the order is cancelled\n- the customer receives a full refund\n\nIf fulfillment cannot be stopped:\n\n- the order is treated as a post-shipment cancellation\n\nTechNova cannot guarantee that fulfillment can be stopped once warehouse processing begins. Whether a request can be completed depends on the order’s current status, including picking, packing, carrier-label creation, and carrier handoff.\n\nIf TechNova cannot stop fulfillment, it will provide return instructions after delivery. The request will then be reviewed under Section 7, including the fee-waiver conditions in Section 3.\n\n---\n\n## 6. Refund Processing\n\nApproved refunds are returned to the original payment method.\n\nRefund timing depends on the payment provider.\n\nRefunds may take **5–10 business days** to appear on the customer’s account.\n\nTechNova begins refund processing after a cancellation, return, or fee-waiver claim is approved. For returned physical products, TechNova may inspect the item before determining the final refund amount.\n\nThe final refund may include the product price, applicable taxes, and eligible shipping charges. If a restocking fee applies under Section 7, TechNova deducts that amount before issuing the refund.\n\nA refund confirmation email does not mean the funds have already appeared in the customer’s account. Processing times after TechNova issues the refund are determined by the card issuer, bank, or payment provider.\n\n---\n\n## 7. Cancellation After Shipment\n\nCancellation after shipment normally incurs a **15% restocking fee**.\n\nThe restocking fee is calculated using the product price before tax and shipping charges.\n\nHowever, the restocking fee does not apply if the order qualifies under **Section 3: Orders Eligible for Fee Waiver**.\n\nIf the order qualifies under Section 3:\n\n- the customer receives a full refund\n- the 15% restocking fee is waived\n\nIf the order does not qualify:\n\n- the 15% restocking fee is deducted from the refund\n\nA post-shipment cancellation applies when an order has shipped, is in transit, has been delivered, or could not be stopped under Section 5. The customer must return the item according to TechNova’s return instructions.\n\nThe restocking fee is based on the amount actually paid for the product after any promotional discount, but before tax and shipping charges. For example, if a product was listed at $1,000 and purchased for $800 during a promotion, the restocking fee is $120.\n\nThe restocking fee is waived when TechNova confirms that the order is fee-waiver eligible under Section 3. A cancellation request by itself does not stop an order already in transit.\n\n---\n\n## 8. Shipping Charges\n\nOriginal shipping charges are generally non-refundable after shipment.\n\nShipping charges may be refunded if:\n\n- TechNova shipped the wrong product\n- the product was damaged before delivery\n- the shipment failure was caused by TechNova\n\nCustomers are responsible for return-shipping costs unless TechNova confirms that the return resulted from an eligible damage claim, an incorrect shipment, or a verified fulfillment error. TechNova may provide a prepaid return label in those situations.\n\nShipping-charge eligibility is reviewed separately from restocking-fee eligibility. An order may qualify for a restocking-fee waiver under Section 3 while TechNova separately reviews whether shipping charges should be refunded.\n\n### Return Handling Matrix\n\n| Return scenario | Restocking fee | Original shipping | Return shipping | Inspection before refund |\n|---|---:|---|---|---|\n| Wrong item shipped by TechNova | Waived | Refunded | Paid by TechNova | No physical inspection required before refund |\n| Product damaged before delivery | Waived | Refunded | Paid by TechNova | Photo review may be required |\n| Verified TechNova fulfillment error | Waived | Refunded if related to the error | Paid by TechNova | Case-by-case review |\n| Customer changes mind after shipment | 15% | Not refunded | Paid by customer | Returned product must be inspected |\n| Customer cancels before shipment processing | None | Not applicable | Not applicable | No |\n\nThe table is a quick operational reference. If the table conflicts with the detailed rules in another section, the detailed policy language governs.\n\n---\n\n## 9. Subscription Cancellation\n\nSubscription customers may cancel future renewals at any time.\n\nCancellation:\n\n- stops future billing\n- does not automatically refund charges already processed\n- does not affect physical-order restocking rules\n\nThe subscription remains active until the end of the current paid billing period unless TechNova approves an earlier termination. Cancelling a subscription does not cancel an open physical-product order.\n\nTechNova may issue a subscription refund for a duplicate charge, billing error, or other verified issue. The restocking-fee rules in Section 7 do not apply to subscription cancellations.\n\n---\n\n## 10. Promotional Orders\n\nPromotional discounts do not change the restocking-fee percentage.\n\nFor example:\n\n- product list price: $1,000\n- promotional price paid: $800\n- applicable restocking fee: 15% of the product price actually paid\n\nPromotional gifts, bundled accessories, and limited-time credits must be returned when they were included with the original purchase. If a required promotional item is not returned, TechNova may deduct its stated value from the refund.\n\nAn order that qualifies under Section 3 remains fee-waiver eligible even if it was purchased using a promotion. The waiver applies to the restocking fee and does not reinstate an expired promotion or discount code.\n\n---\n\n## 11. Business Orders\n\nBusiness orders containing more than 25 units may be subject to separate contract terms.\n\nIf a signed business agreement conflicts with this policy, the signed agreement takes precedence.\n\nTechNova may require additional review for orders involving volume pricing, custom configurations, staged delivery, or purchase orders. Those orders may have different cancellation deadlines, restocking fees, or return requirements.\n\nIf no signed business agreement applies, this policy governs the order. Business customers should include their organization name and order number when submitting a cancellation, refund, or fee-waiver request.\n\n---\n\n## 12. Policy Interpretation\n\nWhen a cancellation depends on another section of this policy, the referenced section must be evaluated before the final refund amount is determined.\n\nFor example, Section 7 sets the normal 15% restocking fee for post-shipment cancellations. However, TechNova must first determine whether the order qualifies under Section 3 before calculating the final refund.\n\nWhen reviewing a cancellation request, TechNova generally follows this order:\n\n1. Confirm the order and shipment status.\n2. Determine whether Section 4, Section 5, or Section 7 applies.\n3. Evaluate whether the order qualifies for a fee waiver under Section 3.\n4. Review shipping-charge eligibility under Section 8.\n5. Calculate and issue the refund under Section 6.\n"
+  }
+}
