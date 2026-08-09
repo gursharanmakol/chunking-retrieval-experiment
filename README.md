@@ -4,6 +4,16 @@ A small, reproducible retrieval experiment over one document: the fictional
 TechNova billing and cancellation policy. Plain Python, no framework
 abstractions, so every chunk boundary is inspectable.
 
+## From AI in Practice Hub
+
+This repository accompanies the field note [Why Fixed-Size Chunking Breaks Retrieval](https://aiinpracticehub.com/articles/why-fixed-size-chunking-breaks-retrieval/).
+
+It is part of [AI in Practice Hub](https://aiinpracticehub.com/), a collection of practical engineering notes and experiments covering:
+
+- RAG and retrieval
+- AI agents
+- Model Context Protocol (MCP)
+
 ## Layout
 
 ```
