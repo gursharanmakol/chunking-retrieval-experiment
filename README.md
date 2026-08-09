@@ -18,7 +18,7 @@ It is part of [AI in Practice Hub](https://aiinpracticehub.com/), a collection o
 
 ```
 config.py            frozen parameters: chunk sizes, overlap, top-k, model, questions, rubric
-chunkers.py          the three chunking strategies
+chunkers.py          two chunking approaches used in three published configurations
 inspect_chunks.py    stage 1: build chunks and write them out for inspection
 retrieve.py          stage 2: embed, rank by cosine similarity, write raw results
 explorer_core.py     shared logic for the companion UI (delegates to chunkers/retrieve)
@@ -40,8 +40,8 @@ LICENSE              MIT
 | B | Fixed-size, with overlap | 500 characters, 100 characters overlap |
 | C | Markdown section-aware | split on `## ` headings, each heading kept with its section, sections left at natural length |
 
-Strategies A and B slice raw characters, so boundaries land mid-sentence and
-mid-table-row. Strategy C never re-cuts a section to 500 characters.
+Configurations A and B slice raw characters, so boundaries land mid-sentence and
+mid-table-row. Configuration C never re-cuts a section to 500 characters.
 
 ## Stage 1 — chunk inspection
 
@@ -101,6 +101,8 @@ it re-runs the same retrieval pipeline while letting a reader vary chunk size
 (300, 500, 800), overlap (0%, 10%, 20%), strategy, top-k (3, 5), and which of the
 five frozen questions is asked.
 
+![Chunking Explorer showing the published A/B/C presets, selected question, reviewed result, retrieved chunks, evidence highlighting, and deeper inspection controls](docs/chunking-explorer.png)
+
 ```bash
 pip install -r requirements.txt -r requirements-ui.txt
 streamlit run app.py
@@ -159,7 +161,7 @@ only**: retrieved chunks in document order, with runs of non-retrieved chunks
 collapsed into a single marker (e.g. `14 chunks not retrieved · Chunk 13 – Chunk 26`),
 so top-k competition is visible without reading the whole document. **All chunks**
 shows every boundary. Index statistics describe the full chunk set; overlap
-duplication is broken out explicitly, for example under strategy B:
+duplication is broken out explicitly, for example under configuration B:
 
 ```
 Source        10,849 chars
