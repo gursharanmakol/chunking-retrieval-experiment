@@ -122,16 +122,18 @@ st.markdown(
       .anchor .awhy .k { display: block; font-size: 12px; font-weight: 600;
                          color: #5F5E5A; text-transform: uppercase; letter-spacing: .02em;
                          margin-bottom: .2rem; }
-      .configline { font: .9rem/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
-                    color: #5F5E5A; margin: .15rem 0 .85rem; }
+      .configmeta { margin: .15rem 0 .85rem; }
+      .configmeta .clab { font-size: 12px; font-weight: 600; color: #5F5E5A;
+                          text-transform: uppercase; letter-spacing: .02em;
+                          margin-bottom: .2rem; }
+      .configmeta .configline { font: .95rem/1.5 ui-monospace, SFMono-Regular, Menlo,
+                                monospace; color: #1F1F1D; margin: 0; }
       .abcrow { display: flex; gap: .6rem; flex-wrap: wrap; margin: .2rem 0 .9rem; }
       .abcrow .abc { border: 1px solid #E8E8E4; border-radius: 8px; padding: .35rem .7rem;
                      background: #FFFFFF; font-size: .9rem; }
       .abcrow .abc.now { border-color: #0F6E56; background: #F4F8F7; }
       .abcrow .ok { color: #0F6E56; font-weight: 700; }
       .abcrow .no { color: #534AB7; font-weight: 700; }
-      /* Live configuration under the A/B/C buttons — must be the first place a
-         custom change (e.g. 300 chars) is visible in the sidebar. */
       /* The settings row is the reader's answer to "what am I looking at", and the
          panels below it are long, so it stays put while they scroll through them. */
       .sticky-selection { position: sticky; top: 0; z-index: 5; background: #FFFFFF;
@@ -339,9 +341,12 @@ st.markdown(
       .qtext { font-size: 16px; font-weight: 500; color: #1F1F1D; line-height: 1.5;
                margin: 0 0 .1rem; }
 
-      /* Sidebar footer at the 12px floor in the muted grey; model stays monospace. */
-      .st-key-sidebar_footer p, .st-key-sidebar_footer code { font-size: 12px;
-               color: #5F5E5A; }
+      /* Sidebar help: readable but still secondary to the preset controls. */
+      .sidebar-meta { font-size: 12.5px; line-height: 1.45; color: #3D3D3A;
+                      margin: .55rem 0 0; }
+      .sidebar-meta .model { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+                             color: #2C2C2A; }
+      .sidebar-meta .hint { color: #3D3D3A; margin-top: .2rem; }
 
       /* Inline code tokens (chunk IDs, the source path, the model name) render at
          0.75em, which drops to 10.5px inside a caption. Hold them at the 12px floor.
@@ -509,9 +514,14 @@ with st.sidebar:
     settings, published_letter, section_aware = sync_settings()
 
     with st.container(key="sidebar_footer"):
-        st.caption(
-            f"`{config.EMBEDDING_MODEL}` · {config.SIMILARITY} similarity · "
-            "the five questions are fixed and cannot be edited"
+        model_short = config.EMBEDDING_MODEL.rsplit("/", 1)[-1]
+        st.markdown(
+            f'<div class="sidebar-meta">'
+            f'<div class="model">{html.escape(model_short)} · '
+            f"{html.escape(config.SIMILARITY)} similarity</div>"
+            '<div class="hint">Five questions are fixed and cannot be edited</div>'
+            "</div>",
+            unsafe_allow_html=True,
         )
 
 # Re-sync once more for the main pane so every label and the retrieval run share
@@ -1016,7 +1026,8 @@ if published_letter:
             )
 
 st.markdown(
-    f'<div class="configline">{html.escape(config_line())}</div>',
+    f'<div class="configmeta"><div class="clab">Current configuration</div>'
+    f'<div class="configline">{html.escape(config_line())}</div></div>',
     unsafe_allow_html=True,
 )
 
