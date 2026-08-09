@@ -122,15 +122,6 @@ st.markdown(
       .anchor .awhy .k { display: block; font-size: 12px; font-weight: 600;
                          color: #5F5E5A; text-transform: uppercase; letter-spacing: .02em;
                          margin-bottom: .2rem; }
-      /* Active settings: contained so they read clearly before top-k evidence,
-         but with lighter weight than the result anchor above. */
-      .configmeta { border: 1px solid #E8E8E4; border-radius: 8px; background: #FAFAF8;
-                    padding: .7rem .85rem; margin: .15rem 0 .85rem; }
-      .configmeta .clab { font-size: 12px; font-weight: 600; color: #5F5E5A;
-                          text-transform: uppercase; letter-spacing: .03em;
-                          margin-bottom: .35rem; }
-      .configmeta .configline { font: 1rem/1.5 ui-monospace, SFMono-Regular, Menlo,
-                                monospace; color: #2C2C2A; margin: 0; }
       .abcrow { display: flex; gap: .6rem; flex-wrap: wrap; margin: .2rem 0 .9rem; }
       .abcrow .abc { border: 1px solid #E8E8E4; border-radius: 8px; padding: .35rem .7rem;
                      background: #FFFFFF; font-size: .9rem; }
@@ -347,12 +338,10 @@ st.markdown(
       /* Experiment setup: readable explanation, still secondary to presets. */
       .sidebar-meta { font-size: 12.5px; line-height: 1.5; color: #3D3D3A;
                       margin: .65rem 0 0; font-weight: 400; }
-      .sidebar-meta .title { font-size: 13px; font-weight: 600; color: #2C2C2A;
-                             margin-bottom: .35rem; }
+      .sidebar-meta .title { font-size: 14.5px; font-weight: 600; color: #2C2C2A;
+                             margin-bottom: .4rem; }
       .sidebar-meta .row { margin: .12rem 0; }
-      .sidebar-meta code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-                           font-size: 12px; color: #2C2C2A; background: transparent;
-                           padding: 0; }
+      .sidebar-meta .row b { font-weight: 600; color: #2C2C2A; }
       .sidebar-meta .note { color: #3D3D3A; margin-top: .45rem; line-height: 1.45; }
 
       /* Inline code tokens (chunk IDs, the source path, the model name) render at
@@ -458,24 +447,25 @@ def sync_settings() -> tuple[core.Settings, str | None, bool]:
     return live, letter, live.strategy == core.SECTION_AWARE
 
 
-def active_config_label(live: core.Settings, letter: str | None) -> str:
-    """Single source of truth for the configuration title in sidebar and main.
+def active_config_label(
+    live: core.Settings, letter: str | None, chunk_count: int
+) -> str:
+    """Heading for the selected result card: strategy summary plus chunk count.
 
     A/B/C are reserved for exact published presets. Everything else is Exploring.
     """
     if letter == "C" or (letter is None and live.strategy == core.SECTION_AWARE):
         body = f"section-aware, ## sections, top-k {live.top_k}"
-        return f"C — {body}" if letter == "C" else f"Exploring — {body}"
-
-    overlap_bit = (
-        "0 overlap" if live.overlap == 0 else f"{live.overlap_percent}% overlap"
-    )
-    body = (
-        f"fixed-size, {live.size} chars, {overlap_bit}, top-k {live.top_k}"
-    )
-    if letter:
-        return f"{letter} — {body}"
-    return f"Exploring — {body}"
+        prefix = "C" if letter == "C" else "Exploring"
+    else:
+        overlap_bit = (
+            "0 overlap" if live.overlap == 0 else f"{live.overlap_percent}% overlap"
+        )
+        body = (
+            f"fixed-size, {live.size} chars, {overlap_bit}, top-k {live.top_k}"
+        )
+        prefix = letter if letter else "Exploring"
+    return f"{prefix} — {body} · {chunk_count} chunks"
 
 
 settings, published_letter, section_aware = sync_settings()
@@ -525,12 +515,12 @@ with st.sidebar:
         st.markdown(
             f'<div class="sidebar-meta">'
             '<div class="title">Experiment setup</div>'
-            f'<div class="row">Embedding model: '
-            f"<code>{html.escape(model_short)}</code></div>"
-            f'<div class="row">Similarity: '
-            f"<code>{html.escape(config.SIMILARITY)} similarity</code></div>"
-            '<div class="row">Questions: '
-            "<code>5 fixed evaluation questions</code></div>"
+            f'<div class="row"><b>Embedding model:</b> '
+            f"{html.escape(model_short)}</div>"
+            f'<div class="row"><b>Similarity:</b> '
+            f"{html.escape(config.SIMILARITY)} similarity</div>"
+            '<div class="row"><b>Questions:</b> '
+            "5 fixed evaluation questions</div>"
             '<div class="note">These settings stay fixed so the published A/B/C '
             "results are comparable.</div>"
             "</div>",
@@ -947,27 +937,9 @@ def compact_abc_html() -> str:
     return f'<div class="abcrow">{"".join(parts)}</div>'
 
 
-def config_line() -> str:
-    """One concise line instead of a row of equal-weight chips."""
-    if section_aware:
-        return (
-            f"Section-aware · ## sections · top-k {settings.top_k} · "
-            f"{stats['count']} chunks"
-        )
-    overlap_bit = (
-        "0 overlap"
-        if settings.overlap == 0
-        else f"{settings.overlap_percent}% overlap ({settings.overlap} chars)"
-    )
-    return (
-        f"Fixed-size · {settings.size} chars · {overlap_bit} · "
-        f"top-k {settings.top_k} · {stats['count']} chunks"
-    )
-
-
 def result_anchor_html() -> str:
     """Selected configuration, current Result, and the frozen Why."""
-    title = active_config_label(settings, published_letter)
+    title = active_config_label(settings, published_letter, stats["count"])
     if published_letter:
         verdict = config.PUBLISHED_SUFFICIENCY[published_letter][question_index]
         observation = config.PUBLISHED_OBSERVATIONS[published_letter][question_index]
@@ -1037,12 +1009,6 @@ if published_letter:
                 f'<div class="q3note">{config.Q3_CROSS_REFERENCE_NOTE}</div>',
                 unsafe_allow_html=True,
             )
-
-st.markdown(
-    f'<div class="configmeta"><div class="clab">Current configuration</div>'
-    f'<div class="configline">{html.escape(config_line())}</div></div>',
-    unsafe_allow_html=True,
-)
 
 # --- primary evidence: top-k retrieved chunks --------------------------------
 st.subheader("Top retrieved chunks")
