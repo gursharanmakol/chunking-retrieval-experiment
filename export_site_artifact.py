@@ -152,22 +152,27 @@ def build_artifact() -> dict:
                         f"unknown chunk id in frozen results: {hit['chunk_id']}"
                     )
             verdict_raw = config.PUBLISHED_SUFFICIENCY[letter][qi]
-            results_out.append(
-                {
-                    "question_id": f"Q{qi + 1}",
-                    "strategy": letter,
-                    "verdict": verdict_label(verdict_raw),
-                    "explanation": config.PUBLISHED_OBSERVATIONS[letter][qi],
-                    "top3": [
-                        {
-                            "rank": hit["rank"],
-                            "chunk_id": hit["chunk_id"],
-                            "cosine": hit["cosine"],
-                        }
-                        for hit in top
-                    ],
+            entry = {
+                "question_id": f"Q{qi + 1}",
+                "strategy": letter,
+                "verdict": verdict_label(verdict_raw),
+                "explanation": config.PUBLISHED_OBSERVATIONS[letter][qi],
+                "top3": [
+                    {
+                        "rank": hit["rank"],
+                        "chunk_id": hit["chunk_id"],
+                        "cosine": hit["cosine"],
+                    }
+                    for hit in top
+                ],
+            }
+            missed = config.PUBLISHED_MISSED_EVIDENCE.get(letter, {}).get(qi)
+            if missed:
+                entry["missing_evidence"] = {
+                    "headline": config.MISSED_EVIDENCE_HEADLINE,
+                    "detail": missed,
                 }
-            )
+            results_out.append(entry)
 
     return {
         "provenance": {

@@ -742,6 +742,10 @@
     },
     {
       "explanation": "B-4 holds all four waiver conditions intact but never reached the top 3. Two of the three slots went to B-13 and B-14, which overlap each other, so the ranking spent its budget on one region of Section 7.",
+      "missing_evidence": {
+        "detail": "The top 3 returned B-13, B-14 and B-6, all Section 7 fee mechanics. A-3 and C-3 carry the same four conditions and both reached the top 3, so the evidence was equally intact under all three configurations and only the ranking differed.",
+        "headline": "Sufficient evidence existed in the index but did not reach the top 3."
+      },
       "question_id": "Q4",
       "strategy": "B",
       "top3": [
@@ -765,6 +769,10 @@
     },
     {
       "explanation": "No retrieved chunk contains any part of the Return Handling Matrix. B-19 holds the 'changes mind' row and B-18 holds the header, and neither was retrieved.",
+      "missing_evidence": {
+        "detail": "The top 3 returned B-6, B-10 and B-26, so no part of the matrix reached the set. A retrieved it across A-15 and A-14, and C-8 carries it whole, so here too the evidence survived under all three configurations and only the ranking differed.",
+        "headline": "Sufficient evidence existed in the index but did not reach the top 3."
+      },
       "question_id": "Q5",
       "strategy": "B",
       "top3": [
