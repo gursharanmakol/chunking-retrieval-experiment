@@ -106,7 +106,7 @@ pip install -r requirements.txt -r requirements-ui.txt
 streamlit run app.py
 ```
 
-The UI adds no retrieval capability. It imports `fixed_size_chunks` and
+The UI adds no new retrieval logic. It imports `fixed_size_chunks` and
 `markdown_section_chunks` from `chunkers.py` and `embed` and `rank_chunks` from
 `retrieve.py`, so normalization and tie-breaking are the same code, and only
 chunking settings and top-k vary.
@@ -186,8 +186,8 @@ reads `config.SUFFICIENCY_RUBRIC_DISPLAY`, which differs in one place: the Q5 en
 was reworded afterwards to state plainly that the generic Section 6 "may inspect"
 sentence is not sufficient on its own. That rewording narrows the criterion and
 changes no recorded verdict. A passes on the matrix row plus the table header, B
-retrieves no part of the table, and C passes on the complete table in C-8, which is
-the only chunk any verdict relied on.
+retrieves no part of the table, and C passes on the complete table in C-8. For
+C's Q5 verdict, C-8 is the only retrieved chunk used.
 
 ## Ground rules
 
