@@ -966,7 +966,7 @@ def config_line() -> str:
 
 
 def result_anchor_html() -> str:
-    """Configuration, PASS/FAIL, and the frozen Why — before any internals."""
+    """Selected configuration, current Result, and the frozen Why."""
     title = active_config_label(settings, published_letter)
     if published_letter:
         verdict = config.PUBLISHED_SUFFICIENCY[published_letter][question_index]
@@ -978,23 +978,23 @@ def result_anchor_html() -> str:
         return (
             f'<div class="anchor{border_cls}">'
             f'<div class="aconfig">{html.escape(title)}</div>'
-            f'<div class="abadge {badge_cls}">{badge}</div>'
+            f'<div class="abadge {badge_cls}">Result: {badge}</div>'
             f'<div class="awhy"><span class="k">{why_label}</span>'
             f"{html.escape(observation)}</div></div>"
         )
     return (
         f'<div class="anchor">'
         f'<div class="aconfig">{html.escape(title)}</div>'
-        f'<div class="abadge inspect">Inspect evidence</div>'
-        f'<div class="awhy"><span class="k">No published verdict</span>'
+        f'<div class="abadge inspect">Result: No published verdict</div>'
+        f'<div class="awhy"><span class="k">Inspect evidence</span>'
         "No Pass/Fail is recorded for this parameter combination, and none is inferred. "
         "Compare the retrieved chunks against the rubric below.</div></div>"
     )
 
 
 # --- page ----------------------------------------------------------------
-# Reader-first order: preset (sidebar) → question → result → why → A/B/C compare
-# → top-k evidence. Tuning machinery and chunk internals sit in expanders.
+# Reader-first order: question → selected configuration → Result → Why →
+# top-k evidence → optional A/B/C compare. Tuning and internals in expanders.
 
 st.title("Chunking explorer")
 st.caption(
@@ -1038,18 +1038,6 @@ if published_letter:
                 unsafe_allow_html=True,
             )
 
-# Compact A/B/C comparison: always visible for published presets; optional when
-# exploring so the page stays focused on the live retrieval evidence.
-if published_letter:
-    st.caption(f"Published A / B / C for Q{question_index + 1}")
-    st.markdown(compact_abc_html(), unsafe_allow_html=True)
-else:
-    with st.expander("Compare with published configuration"):
-        st.caption(
-            f"Published A / B / C results for Q{question_index + 1} — shown for comparison"
-        )
-        st.markdown(compact_abc_html(), unsafe_allow_html=True)
-
 st.markdown(
     f'<div class="configline">{html.escape(config_line())}</div>',
     unsafe_allow_html=True,
@@ -1082,6 +1070,11 @@ render_cards(
     ],
     estimate_height([chunk.text for chunk in retrieved_chunks]),
 )
+
+# Cross-strategy comparison stays optional so the main page stays on the
+# currently selected configuration.
+with st.expander(f"Compare published strategies for Q{question_index + 1}"):
+    st.markdown(compact_abc_html(), unsafe_allow_html=True)
 
 with st.expander("Sufficiency rubric for this question"):
     st.markdown(config.SUFFICIENCY_RUBRIC_DISPLAY[question_index])
