@@ -43,7 +43,7 @@ LICENSE              MIT
 Strategies A and B slice raw characters, so boundaries land mid-sentence and
 mid-table-row. Strategy C never re-cuts a section to 500 characters.
 
-## Stage 1 — chunk inspection (this stage)
+## Stage 1 — chunk inspection
 
 ```bash
 python inspect_chunks.py
