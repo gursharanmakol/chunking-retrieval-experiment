@@ -437,9 +437,31 @@ def current_settings() -> core.Settings:
     )
 
 
-settings = current_settings()
-published_letter = core.match_published(settings)
-section_aware = settings.strategy == core.SECTION_AWARE
+def sync_settings() -> tuple[core.Settings, str | None, bool]:
+    """Live controls → settings, published match, and section-aware flag."""
+    live = current_settings()
+    letter = core.match_published(live)
+    return live, letter, live.strategy == core.SECTION_AWARE
+
+
+def active_config_label(live: core.Settings, letter: str | None) -> str:
+    """Single source of truth for the configuration title in sidebar and main."""
+    if letter == "C" or (letter is None and live.strategy == core.SECTION_AWARE):
+        body = f"section-aware, ## sections, top-k {live.top_k}"
+        return f"C — {body}" if letter == "C" else f"Custom — {body}"
+
+    overlap_bit = (
+        "0 overlap" if live.overlap == 0 else f"{live.overlap_percent}% overlap"
+    )
+    body = (
+        f"fixed-size, {live.size} chars, {overlap_bit}, top-k {live.top_k}"
+    )
+    if letter:
+        return f"{letter} — {body}"
+    return f"Custom — {body}"
+
+
+settings, published_letter, section_aware = sync_settings()
 
 with st.sidebar:
     st.markdown("**Published experiment**")
@@ -452,17 +474,6 @@ with st.sidebar:
             on_click=load_published,
             args=(letter,),
         )
-    if published_letter:
-        st.caption(core.PUBLISHED_LABELS[published_letter])
-    else:
-        if section_aware:
-            detail = f"section-aware, top-k {settings.top_k}"
-        else:
-            detail = (
-                f"fixed-size, {settings.size} chars, "
-                f"{settings.overlap_percent}% overlap, top-k {settings.top_k}"
-            )
-        st.caption(f"Custom — {detail}. Not one of the three published configurations.")
 
     # Custom controls stay available but collapsed so A/B/C are the default path.
     with st.expander("Explore custom settings"):
@@ -489,11 +500,26 @@ with st.sidebar:
             )
         st.radio("Top-k", options=core.TOP_K_CHOICES, key="top_k", horizontal=True)
 
+    # Caption after the controls, from a fresh read, so it cannot disagree with
+    # the radios the reader just used.
+    settings, published_letter, section_aware = sync_settings()
+    if published_letter:
+        st.caption(active_config_label(settings, published_letter))
+    else:
+        st.caption(
+            f"{active_config_label(settings, published_letter)}. "
+            "Not one of the three published configurations."
+        )
+
     with st.container(key="sidebar_footer"):
         st.caption(
             f"`{config.EMBEDDING_MODEL}` · {config.SIMILARITY} similarity · "
             "the five questions are fixed and cannot be edited"
         )
+
+# Re-sync once more for the main pane so every label and the retrieval run share
+# the same active configuration object.
+settings, published_letter, section_aware = sync_settings()
 
 question_index = st.session_state.question_index
 question = config.QUESTIONS[question_index]
@@ -835,6 +861,7 @@ def config_line() -> str:
 
 def result_anchor_html() -> str:
     """Configuration, PASS/FAIL, and the frozen Why — before any internals."""
+    title = active_config_label(settings, published_letter)
     if published_letter:
         verdict = config.PUBLISHED_SUFFICIENCY[published_letter][question_index]
         observation = config.PUBLISHED_OBSERVATIONS[published_letter][question_index]
@@ -844,17 +871,10 @@ def result_anchor_html() -> str:
         why_label = "Why this passed" if verdict == "sufficient" else "Why this failed"
         return (
             f'<div class="anchor{border_cls}">'
-            f'<div class="aconfig">{html.escape(core.PUBLISHED_LABELS[published_letter])}</div>'
+            f'<div class="aconfig">{html.escape(title)}</div>'
             f'<div class="abadge {badge_cls}">{badge}</div>'
             f'<div class="awhy"><span class="k">{why_label}</span>'
             f"{html.escape(observation)}</div></div>"
-        )
-    if section_aware:
-        title = f"Custom — section-aware, top-k {settings.top_k}"
-    else:
-        title = (
-            f"Custom — Fixed-size, {settings.size} chars, "
-            f"{settings.overlap_percent}% overlap"
         )
     return (
         f'<div class="anchor">'
@@ -912,7 +932,13 @@ if published_letter:
                 unsafe_allow_html=True,
             )
 
-st.caption(f"Published A / B / C for Q{question_index + 1}")
+if published_letter:
+    st.caption(f"Published A / B / C for Q{question_index + 1}")
+else:
+    st.caption(
+        f"Published experiment on Q{question_index + 1} "
+        "(for comparison — current settings are custom)"
+    )
 st.markdown(compact_abc_html(), unsafe_allow_html=True)
 
 st.markdown(
