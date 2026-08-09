@@ -591,6 +591,10 @@ IFRAME_CSS = """
           border-left:3px solid var(--line); border-radius:8px;
           margin-bottom:.6rem; overflow:hidden; }
   .card.hit { border-left-color:var(--teal); border-color:#D9E5E1; }
+  /* Chunks named by the frozen review get a slightly stronger card accent. */
+  .card.verdict-used { border-color:#B7D0C8; border-left-color:var(--teal);
+                       border-left-width:4px; background:#FBFDFA; }
+  .card.verdict-used .head { background:#E7F0EE; border-bottom-color:#D0E0DA; }
   .head { display:flex; gap:.55rem; flex-wrap:wrap; align-items:baseline;
           padding:.34rem .58rem; background:var(--wash);
           border-bottom:1px solid var(--line);
@@ -609,9 +613,11 @@ IFRAME_CSS = """
   mark.dup { background:var(--blue-mark); color:inherit; border-radius:2px; }
   mark.evidence { background:rgba(15,110,86,.18); color:inherit; border-radius:2px;
                   box-decoration-break:clone; -webkit-box-decoration-break:clone; }
-  .evidence-tag { display:inline-block; margin:.15rem .58rem .35rem;
-                  font:600 .68rem/1.4 'Segoe UI', system-ui, sans-serif;
-                  color:var(--teal); }
+  .verdict-tag { display:inline-block; margin:.2rem .58rem .35rem;
+                 font:600 .68rem/1.4 'Segoe UI', system-ui, sans-serif;
+                 padding:.08rem .4rem; border-radius:4px; }
+  .verdict-tag.used { color:var(--teal); background:#E7F0EE; }
+  .verdict-tag.unused { color:#8A8984; background:#F4F4F1; font-weight:500; }
   .gap { border:1px dashed var(--line); border-radius:8px; margin-bottom:.6rem;
          padding:.3rem .58rem; color:var(--gray); background:#FFFFFF;
          font:.72rem/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; }
@@ -731,14 +737,28 @@ def card_html(
     spans = evidence_spans_for(chunk.index) if show_reviewed_evidence else ()
     # Only mark spans that are actually present in this chunk's text.
     present = tuple(span for span in spans if span in chunk.text)
+
+    # Card-level reviewed-verdict treatment only when this question has at least
+    # one frozen evidence annotation. Ranking-miss FAILs with no named retrieved
+    # passage stay visually neutral.
+    table = getattr(config, "PUBLISHED_EVIDENCE_SPANS", {})
+    has_reviewed_annotation = bool(
+        show_reviewed_evidence
+        and published_letter
+        and table.get(published_letter, {}).get(question_index)
+    )
+
     tag = ""
+    css = "card hit" if rank is not None else "card"
     if present:
-        tag = '<div class="evidence-tag">Evidence used for reviewed verdict</div>'
+        css += " verdict-used"
+        tag = '<div class="verdict-tag used">Used for reviewed verdict</div>'
+    elif has_reviewed_annotation and rank is not None:
+        tag = '<div class="verdict-tag unused">Retrieved, not used for verdict</div>'
 
     bar = ""
     if score is not None:
         bar = f'<div class="bar" style="width:{max(0.0, min(1.0, score)) * 100:.1f}%"></div>'
-    css = "card hit" if rank is not None else "card"
     return (
         f'<div class="{css}"><div class="head">{"".join(head)}</div>{bar}{tag}'
         f"{body_html(chunk.text, duplicated_prefix, present)}</div>"
