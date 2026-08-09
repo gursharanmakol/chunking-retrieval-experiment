@@ -591,10 +591,21 @@ IFRAME_CSS = """
           border-left:3px solid var(--line); border-radius:8px;
           margin-bottom:.6rem; overflow:hidden; }
   .card.hit { border-left-color:var(--teal); border-color:#D9E5E1; }
-  /* Chunks named by the frozen review get a slightly stronger card accent. */
-  .card.verdict-used { border-color:#B7D0C8; border-left-color:var(--teal);
-                       border-left-width:4px; background:#FBFDFA; }
-  .card.verdict-used .head { background:#E7F0EE; border-bottom-color:#D0E0DA; }
+  /* Used for reviewed verdict: one teal accent family on the whole card. */
+  .card.verdict-used { border:1px solid #9FBFB4; border-left:5px solid var(--teal);
+                       background:#F3F8F6; box-shadow: inset 0 0 0 1px #E7F0EE; }
+  .card.verdict-used .head { background:#DCECE6; border-bottom-color:#B7D0C8; }
+  .card.verdict-used .rank { background:var(--teal); }
+  .card.verdict-used .score { color:var(--teal); font-weight:600; }
+  .card.verdict-used .bar { background:rgba(15,110,86,.45); }
+  /* Retrieved but not used: neutral gray, no teal accent border. */
+  .card.verdict-unused { border:1px solid #E0DFDA; border-left:3px solid #C8C7C1;
+                         background:#FFFFFF; }
+  .card.verdict-unused .head { background:#F4F4F1; border-bottom-color:#E8E8E4; }
+  .card.verdict-unused .rank { background:#B4B4AE; }
+  .card.verdict-unused .score { color:#8A8984; }
+  .card.verdict-unused .bar { background:#D8D7D2; }
+  .card.verdict-unused .primary { color:#5F5E5A; }
   .head { display:flex; gap:.55rem; flex-wrap:wrap; align-items:baseline;
           padding:.34rem .58rem; background:var(--wash);
           border-bottom:1px solid var(--line);
@@ -611,13 +622,14 @@ IFRAME_CSS = """
   .body { padding:.6rem; margin:0; white-space:pre-wrap; word-break:break-word;
           font:.79rem/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
   mark.dup { background:var(--blue-mark); color:inherit; border-radius:2px; }
-  mark.evidence { background:rgba(15,110,86,.18); color:inherit; border-radius:2px;
+  mark.evidence { background:rgba(15,110,86,.28); color:inherit; border-radius:2px;
                   box-decoration-break:clone; -webkit-box-decoration-break:clone; }
-  .verdict-tag { display:inline-block; margin:.2rem .58rem .35rem;
-                 font:600 .68rem/1.4 'Segoe UI', system-ui, sans-serif;
-                 padding:.08rem .4rem; border-radius:4px; }
-  .verdict-tag.used { color:var(--teal); background:#E7F0EE; }
-  .verdict-tag.unused { color:#8A8984; background:#F4F4F1; font-weight:500; }
+  .verdict-tag { display:inline-block; margin:.25rem .58rem .4rem;
+                 font:600 .7rem/1.4 'Segoe UI', system-ui, sans-serif;
+                 padding:.12rem .5rem; border-radius:4px; }
+  .verdict-tag.used { color:#FFFFFF; background:var(--teal); }
+  .verdict-tag.unused { color:#5F5E5A; background:#EDEDEA; font-weight:500;
+                        border:1px solid #E0DFDA; }
   .gap { border:1px dashed var(--line); border-radius:8px; margin-bottom:.6rem;
          padding:.3rem .58rem; color:var(--gray); background:#FFFFFF;
          font:.72rem/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; }
@@ -749,12 +761,15 @@ def card_html(
     )
 
     tag = ""
-    css = "card hit" if rank is not None else "card"
     if present:
-        css += " verdict-used"
+        # Drop .hit so the stronger verdict-used accent is the only color cue.
+        css = "card verdict-used"
         tag = '<div class="verdict-tag used">Used for reviewed verdict</div>'
     elif has_reviewed_annotation and rank is not None:
+        css = "card verdict-unused"
         tag = '<div class="verdict-tag unused">Retrieved, not used for verdict</div>'
+    else:
+        css = "card hit" if rank is not None else "card"
 
     bar = ""
     if score is not None:
