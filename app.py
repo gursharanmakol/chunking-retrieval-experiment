@@ -102,6 +102,30 @@ st.markdown(
       /* Narrower sidebar so the evidence column gets more horizontal room. */
       [data-testid="stSidebar"] { min-width: 260px; max-width: 280px; }
       section[data-testid="stSidebar"] { width: 280px !important; }
+      /* Streamlit hides the sidebar << collapse control until hover
+         (visibility:hidden). Keep collapse and expand chevrons always visible. */
+      [data-testid="stSidebarCollapseButton"] {
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+      [data-testid="stSidebarCollapseButton"] svg,
+      [data-testid="stSidebarCollapseButton"] span {
+        fill: #3A3A37 !important;
+        color: #3A3A37 !important;
+      }
+      [data-testid="stExpandSidebarButton"] {
+        visibility: visible !important;
+        opacity: 1 !important;
+        background: #FFFFFF !important;
+        border: 1px solid #D8D8D2 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+      }
+      [data-testid="stExpandSidebarButton"] svg,
+      [data-testid="stExpandSidebarButton"] span {
+        fill: #2C2C2A !important;
+        color: #2C2C2A !important;
+      }
       .selection { display: flex; gap: .4rem; flex-wrap: wrap; align-items: center;
                    margin: .2rem 0 .6rem; }
       /* Selected result: the first thing a reader should absorb. */
@@ -335,14 +359,25 @@ st.markdown(
       .qtext { font-size: 16px; font-weight: 500; color: #1F1F1D; line-height: 1.5;
                margin: 0 0 .1rem; }
 
-      /* Experiment setup: readable explanation, still secondary to presets. */
-      .sidebar-meta { font-size: 12.5px; line-height: 1.5; color: #3D3D3A;
-                      margin: .65rem 0 0; font-weight: 400; }
-      .sidebar-meta .title { font-size: 14.5px; font-weight: 600; color: #2C2C2A;
-                             margin-bottom: .4rem; }
-      .sidebar-meta .row { margin: .12rem 0; }
-      .sidebar-meta .row b { font-weight: 600; color: #2C2C2A; }
-      .sidebar-meta .note { color: #3D3D3A; margin-top: .45rem; line-height: 1.45; }
+      /* Experiment setup: readable and scannable, still secondary to presets. */
+      .st-key-sidebar_footer .sidebar-meta {
+        font-size: 13.5px; line-height: 1.55; color: #3A3A37; font-weight: 400;
+        margin: .7rem 0 0; padding: .75rem .8rem;
+        border: 1px solid #D8D8D2; border-radius: 8px; background: #FFFFFF;
+      }
+      .st-key-sidebar_footer .sidebar-meta .title {
+        font-size: 16px; font-weight: 700 !important; color: #1F1F1D !important;
+        margin-bottom: .5rem;
+      }
+      .st-key-sidebar_footer .sidebar-meta .row {
+        margin: .22rem 0; color: #3A3A37;
+      }
+      .st-key-sidebar_footer .sidebar-meta .lab {
+        font-weight: 700 !important; color: #1F1F1D !important;
+      }
+      .st-key-sidebar_footer .sidebar-meta .note {
+        color: #4A4A46; margin-top: .55rem; line-height: 1.45; font-size: 12.5px;
+      }
 
       /* Inline code tokens (chunk IDs, the source path, the model name) render at
          0.75em, which drops to 10.5px inside a caption. Hold them at the 12px floor.
@@ -512,18 +547,27 @@ with st.sidebar:
 
     with st.container(key="sidebar_footer"):
         model_short = config.EMBEDDING_MODEL.rsplit("/", 1)[-1]
+        # Inline styles: Streamlit's markdown CSS often flattens class-based weight.
         st.markdown(
-            f'<div class="sidebar-meta">'
-            '<div class="title">Experiment setup</div>'
-            f'<div class="row"><b>Embedding model:</b> '
+            '<div class="sidebar-meta" style="font-size:13.5px;line-height:1.55;'
+            "color:#3A3A37;font-weight:400;margin:.7rem 0 0;padding:.75rem .8rem;"
+            'border:1px solid #D8D8D2;border-radius:8px;background:#FFFFFF;">'
+            '<div class="title" style="font-size:16px;font-weight:700;color:#1F1F1D;'
+            'margin-bottom:.5rem;">Experiment setup</div>'
+            '<div class="row" style="margin:.22rem 0;color:#3A3A37;">'
+            '<span class="lab" style="font-weight:700;color:#1F1F1D;">'
+            "Embedding model:</span> "
             f"{html.escape(model_short)}</div>"
-            f'<div class="row"><b>Similarity:</b> '
+            '<div class="row" style="margin:.22rem 0;color:#3A3A37;">'
+            '<span class="lab" style="font-weight:700;color:#1F1F1D;">'
+            "Similarity:</span> "
             f"{html.escape(config.SIMILARITY)} similarity</div>"
-            '<div class="row"><b>Questions:</b> '
-            "5 fixed evaluation questions</div>"
-            '<div class="note">These settings stay fixed so the published A/B/C '
-            "results are comparable.</div>"
-            "</div>",
+            '<div class="row" style="margin:.22rem 0;color:#3A3A37;">'
+            '<span class="lab" style="font-weight:700;color:#1F1F1D;">'
+            "Questions:</span> 5 fixed evaluation questions</div>"
+            '<div class="note" style="color:#4A4A46;margin-top:.55rem;line-height:1.45;'
+            'font-size:12.5px;">These settings stay fixed so the published A/B/C '
+            "results are comparable.</div></div>",
             unsafe_allow_html=True,
         )
 

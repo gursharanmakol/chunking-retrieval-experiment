@@ -11,9 +11,15 @@ config.py            frozen parameters: chunk sizes, overlap, top-k, model, ques
 chunkers.py          the three chunking strategies
 inspect_chunks.py    stage 1: build chunks and write them out for inspection
 retrieve.py          stage 2: embed, rank by cosine similarity, write raw results
+explorer_core.py     shared logic for the companion UI (delegates to chunkers/retrieve)
+app.py               Streamlit companion UI
+verify_preset.py     checks published A/B/C presets against frozen retrieval results
 requirements.txt     stage 2 dependencies (stage 1 is standard library only)
+requirements-ui.txt  Streamlit, kept out of requirements.txt
+.streamlit/          theme for the companion UI
 source/              byte-identical copy of the source document, never modified
 outputs/             generated artifacts
+LICENSE              MIT
 ```
 
 ## Strategies
@@ -90,22 +96,23 @@ pip install -r requirements.txt -r requirements-ui.txt
 streamlit run app.py
 ```
 
-```
-explorer_core.py     shared logic, delegates to chunkers.py and retrieve.py
-app.py               the Streamlit UI
-verify_preset.py     checks the Published experiment preset against the frozen results
-requirements-ui.txt  Streamlit, kept out of requirements.txt
-```
-
 The UI adds no retrieval capability. It imports `fixed_size_chunks` and
 `markdown_section_chunks` from `chunkers.py` and `embed` and `rank_chunks` from
 `retrieve.py`, so normalization and tie-breaking are the same code, and only
 chunking settings and top-k vary.
 
-A **Published experiment** preset reproduces the three article configurations
-(A: 500 chars / 0 overlap; B: 500 chars / 100 overlap; C: `##` sections; each at
-top-k 3). Overlap percentages resolve to characters as `round(size × pct/100)`,
-so 500 at 20% is exactly 100. To confirm:
+### Sidebar
+
+- **Published experiment** — load article presets A, B, or C
+  (A: 500 chars / 0 overlap; B: 500 chars / 100 overlap; C: `##` sections; each at
+  top-k 3). Overlap percentages resolve to characters as `round(size × pct/100)`,
+  so 500 at 20% is exactly 100.
+- **Explore custom settings** — strategy, size, overlap, and top-k for exploratory
+  runs (collapsed by default when a published preset is active).
+- **Experiment setup** — fixed model, cosine similarity, and the five evaluation
+  questions (held constant so A/B/C stay comparable).
+
+To confirm the presets still match the frozen run:
 
 ```bash
 python verify_preset.py
@@ -115,12 +122,34 @@ That compares chunk counts and top-3 chunk IDs against the values in
 `outputs/retrieval_results.md` and exits non-zero on any mismatch. It writes
 nothing.
 
-The left panel opens on **Retrieved chunks only**, showing the retrieved chunks in
-document order with runs of non-retrieved chunks collapsed into a single marker
-("14 chunks not retrieved · Chunk 13 – Chunk 26"), so the competition for top-k
-slots is visible without reading the whole document. **All chunks** shows every
-boundary. Index statistics always describe the full chunk set, and the duplication
-introduced by overlap is broken out explicitly:
+### Main page (reader flow)
+
+The main column stays on the **currently selected** configuration:
+
+1. Question (Q1–Q5)
+2. Selected configuration heading, including chunk count  
+   (e.g. `A — fixed-size, 500 chars, 0 overlap, top-k 3 · 22 chunks`)
+3. `Result: PASS` / `Result: FAIL`, or `Result: No published verdict` when
+   exploring a non-published combination
+4. Why this passed / failed (published) or inspect-evidence guidance (exploratory)
+5. Top retrieved chunks for that configuration
+6. Optional expanders for deeper inspection
+
+Cross-strategy comparison is optional, not always on screen: **Compare published
+strategies for Qx** shows the frozen A/B/C Pass/Fail for the selected question.
+Further expanders cover the sufficiency rubric, the full published verdict grid
+and top-k IDs, index statistics, source/chunk boundaries, and method notes.
+
+**Top retrieved chunks** are primary. For published presets, frozen reviewed
+evidence spans (where recorded) are highlighted, and each card is tagged
+**Used for reviewed verdict** or **Retrieved, not used for verdict**.
+
+**Inspect source and chunk boundaries** (expander) defaults to **Retrieved chunks
+only**: retrieved chunks in document order, with runs of non-retrieved chunks
+collapsed into a single marker (e.g. `14 chunks not retrieved · Chunk 13 – Chunk 26`),
+so top-k competition is visible without reading the whole document. **All chunks**
+shows every boundary. Index statistics describe the full chunk set; overlap
+duplication is broken out explicitly, for example under strategy B:
 
 ```
 Source        10,849 chars
@@ -130,10 +159,6 @@ Chunks              28
 Chunk size    min 49 · mean 482 · max 500 chars
 ```
 
-The right panel compares all three published configurations for the selected
-question, each with its top-3 chunk IDs and reviewed verdict, which is the
-quickest way to see where they diverge.
-
 ### Sufficiency and explanations
 
 Never judged automatically, and no LLM is involved. The UI shows the rubric for
@@ -142,7 +167,8 @@ configuration it also shows the hand-authored verdict from
 `config.PUBLISHED_SUFFICIENCY` and a one-sentence explanation from
 `config.PUBLISHED_OBSERVATIONS` ("Why this passed" / "Why this failed"). Both are
 written by hand for those three configurations only. Every other combination shows
-"Inspect retrieved evidence against the rubric".
+`Result: No published verdict` and asks the reader to inspect the retrieved
+evidence against the rubric — nothing is inferred.
 
 `config.SUFFICIENCY_RUBRIC` holds the rubric exactly as frozen before the run, so
 `retrieve.py` still reproduces `outputs/retrieval_results.md` byte for byte. The UI
