@@ -122,12 +122,15 @@ st.markdown(
       .anchor .awhy .k { display: block; font-size: 12px; font-weight: 600;
                          color: #5F5E5A; text-transform: uppercase; letter-spacing: .02em;
                          margin-bottom: .2rem; }
-      .configmeta { margin: .15rem 0 .85rem; }
+      /* Active settings: contained so they read clearly before top-k evidence,
+         but with lighter weight than the result anchor above. */
+      .configmeta { border: 1px solid #E8E8E4; border-radius: 8px; background: #FAFAF8;
+                    padding: .7rem .85rem; margin: .15rem 0 .85rem; }
       .configmeta .clab { font-size: 12px; font-weight: 600; color: #5F5E5A;
-                          text-transform: uppercase; letter-spacing: .02em;
-                          margin-bottom: .2rem; }
-      .configmeta .configline { font: .95rem/1.5 ui-monospace, SFMono-Regular, Menlo,
-                                monospace; color: #1F1F1D; margin: 0; }
+                          text-transform: uppercase; letter-spacing: .03em;
+                          margin-bottom: .35rem; }
+      .configmeta .configline { font: 1rem/1.5 ui-monospace, SFMono-Regular, Menlo,
+                                monospace; color: #2C2C2A; margin: 0; }
       .abcrow { display: flex; gap: .6rem; flex-wrap: wrap; margin: .2rem 0 .9rem; }
       .abcrow .abc { border: 1px solid #E8E8E4; border-radius: 8px; padding: .35rem .7rem;
                      background: #FFFFFF; font-size: .9rem; }
@@ -341,12 +344,16 @@ st.markdown(
       .qtext { font-size: 16px; font-weight: 500; color: #1F1F1D; line-height: 1.5;
                margin: 0 0 .1rem; }
 
-      /* Sidebar help: readable but still secondary to the preset controls. */
-      .sidebar-meta { font-size: 12.5px; line-height: 1.45; color: #3D3D3A;
-                      margin: .55rem 0 0; }
-      .sidebar-meta .model { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-                             color: #2C2C2A; }
-      .sidebar-meta .hint { color: #3D3D3A; margin-top: .2rem; }
+      /* Experiment setup: readable explanation, still secondary to presets. */
+      .sidebar-meta { font-size: 12.5px; line-height: 1.5; color: #3D3D3A;
+                      margin: .65rem 0 0; font-weight: 400; }
+      .sidebar-meta .title { font-size: 13px; font-weight: 600; color: #2C2C2A;
+                             margin-bottom: .35rem; }
+      .sidebar-meta .row { margin: .12rem 0; }
+      .sidebar-meta code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+                           font-size: 12px; color: #2C2C2A; background: transparent;
+                           padding: 0; }
+      .sidebar-meta .note { color: #3D3D3A; margin-top: .45rem; line-height: 1.45; }
 
       /* Inline code tokens (chunk IDs, the source path, the model name) render at
          0.75em, which drops to 10.5px inside a caption. Hold them at the 12px floor.
@@ -517,9 +524,15 @@ with st.sidebar:
         model_short = config.EMBEDDING_MODEL.rsplit("/", 1)[-1]
         st.markdown(
             f'<div class="sidebar-meta">'
-            f'<div class="model">{html.escape(model_short)} · '
-            f"{html.escape(config.SIMILARITY)} similarity</div>"
-            '<div class="hint">Five questions are fixed and cannot be edited</div>'
+            '<div class="title">Experiment setup</div>'
+            f'<div class="row">Embedding model: '
+            f"<code>{html.escape(model_short)}</code></div>"
+            f'<div class="row">Similarity: '
+            f"<code>{html.escape(config.SIMILARITY)} similarity</code></div>"
+            '<div class="row">Questions: '
+            "<code>5 fixed evaluation questions</code></div>"
+            '<div class="note">These settings stay fixed so the published A/B/C '
+            "results are comparable.</div>"
             "</div>",
             unsafe_allow_html=True,
         )
