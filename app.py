@@ -607,6 +607,11 @@ IFRAME_CSS = """
   .body { padding:.6rem; margin:0; white-space:pre-wrap; word-break:break-word;
           font:.79rem/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
   mark.dup { background:var(--blue-mark); color:inherit; border-radius:2px; }
+  mark.evidence { background:rgba(15,110,86,.18); color:inherit; border-radius:2px;
+                  box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  .evidence-tag { display:inline-block; margin:.15rem .58rem .35rem;
+                  font:600 .68rem/1.4 'Segoe UI', system-ui, sans-serif;
+                  color:var(--teal); }
   .gap { border:1px dashed var(--line); border-radius:8px; margin-bottom:.6rem;
          padding:.3rem .58rem; color:var(--gray); background:#FFFFFF;
          font:.72rem/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; }
@@ -640,15 +645,61 @@ def chunk_label(index: int) -> str:
     return f"{published_letter}-{index}" if published_letter else f"Chunk {index}"
 
 
-def body_html(text: str, duplicated_prefix: int) -> str:
+def evidence_spans_for(chunk_index: int) -> tuple[str, ...]:
+    """Frozen reviewed spans for this chunk, only under a published preset."""
+    if not published_letter:
+        return ()
+    # getattr: Streamlit can keep a stale config module across hot-reloads.
+    table = getattr(config, "PUBLISHED_EVIDENCE_SPANS", {})
+    annotated = table.get(published_letter, {}).get(question_index, ())
+    return tuple(span for index, span in annotated if index == chunk_index)
+
+
+def body_html(
+    text: str,
+    duplicated_prefix: int,
+    evidence_spans: tuple[str, ...] = (),
+) -> str:
+    """Escape chunk text and overlay presentation marks only.
+
+    Evidence marks come from frozen annotations; the duplicated-prefix mark is
+    the existing overlap tint. The underlying chunk text is never altered.
+    """
+    marks: list[tuple[int, int, str]] = []
+    for span in evidence_spans:
+        start = text.find(span)
+        if start >= 0:
+            marks.append((start, start + len(span), "evidence"))
     cut = min(duplicated_prefix, len(text))
     if cut > 0:
-        marked = f'<mark class="dup">{html.escape(text[:cut])}</mark>'
-        return f'<div class="body">{marked}{html.escape(text[cut:])}</div>'
-    return f'<div class="body">{html.escape(text)}</div>'
+        marks.append((0, cut, "dup"))
+
+    if not marks:
+        return f'<div class="body">{html.escape(text)}</div>'
+
+    points = sorted({0, len(text), *(s for s, _, _ in marks), *(e for _, e, _ in marks)})
+    parts: list[str] = []
+    for left, right in zip(points, points[1:]):
+        if left == right:
+            continue
+        segment = html.escape(text[left:right])
+        kinds = {kind for start, end, kind in marks if start <= left and right <= end}
+        if "evidence" in kinds:
+            segment = f'<mark class="evidence">{segment}</mark>'
+        elif "dup" in kinds:
+            segment = f'<mark class="dup">{segment}</mark>'
+        parts.append(segment)
+    return f'<div class="body">{"".join(parts)}</div>'
 
 
-def card_html(chunk, duplicated_prefix: int, rank: int | None, score: float | None) -> str:
+def card_html(
+    chunk,
+    duplicated_prefix: int,
+    rank: int | None,
+    score: float | None,
+    *,
+    show_reviewed_evidence: bool = False,
+) -> str:
     head = []
     label = chunk_label(chunk.index)
     # Primary line: Rank · ID · cosine. Offsets and boundary notes stay quieter.
@@ -677,13 +728,20 @@ def card_html(chunk, duplicated_prefix: int, rank: int | None, score: float | No
     if flags:
         head.append(f'<span class="flag">{" · ".join(flags)}</span>')
 
+    spans = evidence_spans_for(chunk.index) if show_reviewed_evidence else ()
+    # Only mark spans that are actually present in this chunk's text.
+    present = tuple(span for span in spans if span in chunk.text)
+    tag = ""
+    if present:
+        tag = '<div class="evidence-tag">Evidence used for reviewed verdict</div>'
+
     bar = ""
     if score is not None:
         bar = f'<div class="bar" style="width:{max(0.0, min(1.0, score)) * 100:.1f}%"></div>'
     css = "card hit" if rank is not None else "card"
     return (
-        f'<div class="{css}"><div class="head">{"".join(head)}</div>{bar}'
-        f"{body_html(chunk.text, duplicated_prefix)}</div>"
+        f'<div class="{css}"><div class="head">{"".join(head)}</div>{bar}{tag}'
+        f"{body_html(chunk.text, duplicated_prefix, present)}</div>"
     )
 
 
@@ -978,7 +1036,13 @@ else:
 
 render_cards(
     [
-        card_html(chunk, settings.overlap if chunk.index > 0 else 0, rank, score)
+        card_html(
+            chunk,
+            settings.overlap if chunk.index > 0 else 0,
+            rank,
+            score,
+            show_reviewed_evidence=bool(published_letter),
+        )
         for rank, (chunk, score) in enumerate(hits, start=1)
     ],
     estimate_height([chunk.text for chunk in retrieved_chunks]),

@@ -226,6 +226,75 @@ PUBLISHED_MISSED_EVIDENCE: dict[str, dict[int, str]] = {
     },
 }
 
+# --- Reviewed evidence spans for the companion UI ----------------------------
+# Exact substrings of retrieved chunk text, written by hand from
+# PUBLISHED_OBSERVATIONS and checked against the frozen chunk text. Used only
+# to highlight what the reviewed Why note already names. Never inferred at
+# runtime, never applied to exploratory (non-published) settings.
+#
+# Shape: strategy letter -> question index -> ((chunk_index, exact_span), ...)
+# A missing entry means no highlight for that published cell.
+#
+# FAIL rows only appear when the observation names a retrieved passage that
+# explains the shortfall (e.g. a truncated clause or a pointer without its
+# target). Ranking misses that name evidence outside the top-3 are omitted.
+_REFUND_WINDOW = (
+    "Refunds may take **5\u201310 business days** to appear on the customer\u2019s account."
+)
+_RATE_15 = "Cancellation after shipment normally incurs a **15% restocking fee**."
+_FEE_BASE = (
+    "The restocking fee is based on the amount actually paid for the product "
+    "after any promotional discount, but before tax and shipping charges."
+)
+_TRUNCATED_WAIVER = "However, the restoc"
+_WAIVER_POINTER = (
+    "However, the restocking fee does not apply if the order qualifies under "
+    "**Section 3: Orders Eligible for Fee Waiver**."
+)
+_B14_SECTION3_WAIVER = (
+    "If the order qualifies under Section 3:\n\n"
+    "- the customer receives a full refund\n"
+    "- the 15% restocking fee is waived"
+)
+_FOUR_CONDITIONS = (
+    "- TechNova shipped the wrong item.\n"
+    "- The product was damaged before delivery.\n"
+    "- The order was cancelled because of a verified TechNova fulfillment error.\n"
+    "- The customer requested cancellation before the order entered shipment "
+    "processing."
+)
+_MATRIX_HEADER = (
+    "| Return scenario | Restocking fee | Original shipping | Return shipping | "
+    "Inspection before refund |"
+)
+_CHANGES_MIND_ROW = (
+    "| Customer changes mind after shipment | 15% | Not refunded | Paid by "
+    "customer | Returned product must be inspected |"
+)
+
+PUBLISHED_EVIDENCE_SPANS: dict[str, dict[int, tuple[tuple[int, str], ...]]] = {
+    "A": {
+        0: ((9, _REFUND_WINDOW),),
+        1: ((10, _RATE_15), (12, _FEE_BASE)),
+        2: ((10, _TRUNCATED_WAIVER),),
+        3: ((3, _FOUR_CONDITIONS),),
+        4: ((14, _MATRIX_HEADER), (15, _CHANGES_MIND_ROW)),
+    },
+    "B": {
+        0: ((11, _REFUND_WINDOW),),
+        1: ((13, _RATE_15), (15, _FEE_BASE)),
+        2: ((14, _B14_SECTION3_WAIVER),),
+        # Q4/Q5: sufficient evidence was not retrieved — no retrieved span to mark.
+    },
+    "C": {
+        0: ((6, _REFUND_WINDOW),),
+        1: ((7, _RATE_15), (7, _FEE_BASE)),
+        2: ((7, _WAIVER_POINTER),),
+        3: ((3, _FOUR_CONDITIONS),),
+        4: ((8, _MATRIX_HEADER), (8, _CHANGES_MIND_ROW)),
+    },
+}
+
 # Q3 is the one row where every configuration falls short, so a full row of Fail
 # is the single place this summary could teach the wrong lesson. The author's line
 # on what that row actually shows.
