@@ -1,0 +1,7 @@
+# Companion UI only. Kept separate from requirements.txt so the dependency set
+# behind the published experiment stays exactly what that run used.
+#
+# Install the experiment requirements first, since the UI reuses the same
+# embedding stack:
+#   pip install -r requirements.txt -r requirements-ui.txt
+streamlit==1.61.1

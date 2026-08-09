@@ -1,0 +1,40 @@
+[theme]
+# Palette mirrors the CSS custom properties published on aiinpracticehub.com
+# so this companion UI reads as part of the article rather than a stock app.
+base = "light"
+
+# Teal is the RAG in Practice accent: the site tags that series' card with
+# .card.t, against purple for Agents and blue for MCP.
+primaryColor = "#0F6E56"           # --teal
+backgroundColor = "#FCFCFB"        # --bg
+secondaryBackgroundColor = "#F4F4F1"
+textColor = "#26262C"              # --ink
+borderColor = "#E8E8E4"            # --line
+dataframeBorderColor = "#E8E8E4"
+
+# Article pages colour body links purple and give inline code a purple-fill
+# background, so the two follow ArticleLayout.astro rather than the nav.
+linkColor = "#534AB7"              # --purple
+codeBackgroundColor = "#EEEDF8"    # --purple-fill
+codeTextColor = "#26262C"
+
+# Site semantic accents, so Streamlit's built-in colored text and alert
+# callouts stay inside the same three-hue system.
+greenColor = "#0F6E56"
+greenBackgroundColor = "#E7F0EE"   # --teal-fill
+blueColor = "#185FA5"
+blueBackgroundColor = "#E8EFF6"    # --blue-fill
+violetColor = "#534AB7"            # --purple
+violetBackgroundColor = "#EEEDF8"  # --purple-fill
+grayColor = "#5F5E5A"              # --gray
+
+font = "'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif"
+headingFont = "'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif"
+codeFont = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+# The site sets both its article h1 and h2 to weight 800.
+headingFontWeights = [800, 800, 700, 600, 600, 600]
+baseRadius = "8px"
+showWidgetBorder = true
+
+[browser]
+gatherUsageStats = false

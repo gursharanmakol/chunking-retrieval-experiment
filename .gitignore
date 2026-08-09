@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Model / HF caches if ever created locally
+.cache/
+*.pt
+*.bin
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Throwaway verification scripts (named with a leading underscore)
+_*.py
+
+# UI screenshots generated during development, not part of the experiment
+*.png
+
+# Provisional analysis, not yet hand-reviewed / signed off for publication.
+# Remove these two lines once the verdicts are confirmed.
+chunk-size-comparison.md
+topk-recovery-check.md
