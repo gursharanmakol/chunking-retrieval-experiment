@@ -453,10 +453,13 @@ def sync_settings() -> tuple[core.Settings, str | None, bool]:
 
 
 def active_config_label(live: core.Settings, letter: str | None) -> str:
-    """Single source of truth for the configuration title in sidebar and main."""
+    """Single source of truth for the configuration title in sidebar and main.
+
+    A/B/C are reserved for exact published presets. Everything else is Exploring.
+    """
     if letter == "C" or (letter is None and live.strategy == core.SECTION_AWARE):
         body = f"section-aware, ## sections, top-k {live.top_k}"
-        return f"C — {body}" if letter == "C" else f"Custom — {body}"
+        return f"C — {body}" if letter == "C" else f"Exploring — {body}"
 
     overlap_bit = (
         "0 overlap" if live.overlap == 0 else f"{live.overlap_percent}% overlap"
@@ -466,7 +469,7 @@ def active_config_label(live: core.Settings, letter: str | None) -> str:
     )
     if letter:
         return f"{letter} — {body}"
-    return f"Custom — {body}"
+    return f"Exploring — {body}"
 
 
 settings, published_letter, section_aware = sync_settings()
@@ -547,13 +550,6 @@ matrix = get_chunk_matrix(settings.cache_key)
 hits = core.top_hits(get_question_matrix()[question_index], matrix, chunks, settings.top_k)
 rank_of = {chunk.index: rank for rank, (chunk, _) in enumerate(hits, start=1)}
 stats = core.chunk_stats(chunks)
-
-if settings.strategy == core.SECTION_AWARE:
-    settings_label = f"section-aware, top-k {settings.top_k}"
-else:
-    settings_label = (
-        f"{settings.size} chars, {settings.overlap_percent}% overlap, top-k {settings.top_k}"
-    )
 
 # Verdict totals for the published run, counted from the reviewed verdicts rather
 # than transcribed, so the strip and the surrounding prose cannot disagree.
@@ -736,7 +732,7 @@ def selection_html() -> str:
     if published_letter:
         chips = [f'<span class="chip pub">Published experiment {published_letter}</span>']
     else:
-        chips = ['<span class="chip custom">Custom configuration</span>']
+        chips = ['<span class="chip custom">Exploring</span>']
 
     chips.append(chip("Strategy", settings.strategy))
     if section_aware:
@@ -949,14 +945,17 @@ if published_letter:
                 unsafe_allow_html=True,
             )
 
+# Compact A/B/C comparison: always visible for published presets; optional when
+# exploring so the page stays focused on the live retrieval evidence.
 if published_letter:
     st.caption(f"Published A / B / C for Q{question_index + 1}")
+    st.markdown(compact_abc_html(), unsafe_allow_html=True)
 else:
-    st.caption(
-        f"Published experiment on Q{question_index + 1} "
-        "(for comparison — current settings are custom)"
-    )
-st.markdown(compact_abc_html(), unsafe_allow_html=True)
+    with st.expander("Compare with published configuration"):
+        st.caption(
+            f"Published A / B / C results for Q{question_index + 1} — shown for comparison"
+        )
+        st.markdown(compact_abc_html(), unsafe_allow_html=True)
 
 st.markdown(
     f'<div class="configline">{html.escape(config_line())}</div>',
@@ -976,19 +975,6 @@ else:
         f"Covering {unique:,} unique characters of the source, from {total:,} characters "
         f"across the {settings.top_k} chunks, so {total - unique:,} are retrieved twice."
     )
-
-history = st.session_state.setdefault("previous_view", {})
-earlier = history.get(question_index)
-if earlier and earlier["label"] != settings_label:
-    st.caption(
-        f"Previously on this question — {earlier['label']}: {earlier['ids']} "
-        f"({earlier['unique']:,} unique chars)."
-    )
-history[question_index] = {
-    "label": settings_label,
-    "ids": ", ".join(chunk_label(chunk.index) for chunk in retrieved_chunks),
-    "unique": unique,
-}
 
 render_cards(
     [
