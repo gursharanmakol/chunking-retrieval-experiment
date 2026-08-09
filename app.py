@@ -86,17 +86,53 @@ ALL_CHUNKS = "All chunks"
 st.markdown(
     """
     <style>
-      /* The site draws a dot grid on the page background, at the same spacing and
-         colour as its own body rule. Chunk cards render inside transparent
-         iframes, so the grid shows through between them as it does on the site. */
-      .stApp { background-image: radial-gradient(#E4E4E8 1.4px, transparent 1.4px);
+      /* Dot grid stays as page atmosphere only. Content sits on solid white so
+         reading surfaces (question, source, retrieval, method) never show dots
+         through the text. */
+      .stApp { background-color: #FCFCFB;
+               background-image: radial-gradient(#E4E4E8 1.4px, transparent 1.4px);
                background-size: 32px 32px; }
-      .block-container { max-width: 1600px; padding-top: 1.5rem; padding-bottom: 2rem; }
+      .block-container { max-width: 1600px; padding-top: 1.5rem; padding-bottom: 2rem;
+                         background: #FFFFFF; border-radius: 12px;
+                         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); }
+      [data-testid="stMain"] { background: transparent; }
+      /* Chunk cards live in iframes; paint the frame itself white so no page
+         dots leak around the document body. */
+      [data-testid="stMain"] iframe { background: #FFFFFF; }
+      /* Narrower sidebar so the evidence column gets more horizontal room. */
+      [data-testid="stSidebar"] { min-width: 260px; max-width: 280px; }
+      section[data-testid="stSidebar"] { width: 280px !important; }
       .selection { display: flex; gap: .4rem; flex-wrap: wrap; align-items: center;
                    margin: .2rem 0 .6rem; }
+      /* Selected result: the first thing a reader should absorb. */
+      .anchor { border: 1px solid #E8E8E4; border-left: 4px solid #0F6E56;
+                border-radius: 10px; background: #FFFFFF; padding: 1rem 1.1rem;
+                margin: .4rem 0 .85rem; }
+      .anchor.fail { border-left-color: #534AB7; }
+      .anchor .aconfig { font-size: 1.05rem; font-weight: 700; color: #1F1F1D;
+                         margin-bottom: .45rem; }
+      .anchor .abadge { display: inline-block; font-size: .92rem; font-weight: 800;
+                        letter-spacing: .04em; padding: .2rem .65rem; border-radius: 6px;
+                        margin-bottom: .55rem; }
+      .anchor .abadge.pass { background: #E7F0EE; color: #0F6E56; }
+      .anchor .abadge.fail { background: #EEEDF8; color: #534AB7; }
+      .anchor .abadge.inspect { background: #F4F4F1; color: #5F5E5A; font-weight: 700;
+                                letter-spacing: 0; }
+      .anchor .awhy { font-size: .95rem; color: #1F1F1D; line-height: 1.5; }
+      .anchor .awhy .k { display: block; font-size: 12px; font-weight: 600;
+                         color: #5F5E5A; text-transform: uppercase; letter-spacing: .02em;
+                         margin-bottom: .2rem; }
+      .configline { font: .9rem/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+                    color: #5F5E5A; margin: .15rem 0 .85rem; }
+      .abcrow { display: flex; gap: .6rem; flex-wrap: wrap; margin: .2rem 0 .9rem; }
+      .abcrow .abc { border: 1px solid #E8E8E4; border-radius: 8px; padding: .35rem .7rem;
+                     background: #FFFFFF; font-size: .9rem; }
+      .abcrow .abc.now { border-color: #0F6E56; background: #F4F8F7; }
+      .abcrow .ok { color: #0F6E56; font-weight: 700; }
+      .abcrow .no { color: #534AB7; font-weight: 700; }
       /* The settings row is the reader's answer to "what am I looking at", and the
          panels below it are long, so it stays put while they scroll through them. */
-      .sticky-selection { position: sticky; top: 0; z-index: 5; background: #FCFCFB;
+      .sticky-selection { position: sticky; top: 0; z-index: 5; background: #FFFFFF;
                           border-bottom: 1px solid #E8E8E4; padding: .45rem 0 .1rem;
                           margin-bottom: .35rem; }
       .sticky-selection .selection { margin: 0; }
@@ -287,7 +323,7 @@ st.markdown(
          gap and a 10px row inset; the selected question text is the dominant line
          beneath them. */
       .st-key-question { border: 1px solid #CFE0DB; border-left: 4px solid #0F6E56;
-                        border-radius: 10px; background: #F7FAF9;
+                        border-radius: 10px; background: #FFFFFF;
                         padding: 14px 16px 16px; }
       [data-testid="stVerticalBlock"].st-key-question { gap: 4px; }
       .st-key-question [data-testid="stWidgetLabel"] p { font-size: 28px;
@@ -416,14 +452,9 @@ with st.sidebar:
             on_click=load_published,
             args=(letter,),
         )
-    # The full description sits below the buttons rather than in a hover tooltip:
-    # Streamlit's tooltip is placed above the hovered button and overlaps the button
-    # above it, so it blocked clicks, and it never appeared on touch at all.
     if published_letter:
         st.caption(core.PUBLISHED_LABELS[published_letter])
     else:
-        # Echo the live values so the panel still reflects the current chunk size and
-        # overlap once the settings no longer match a published A/B/C preset.
         if section_aware:
             detail = f"section-aware, top-k {settings.top_k}"
         else:
@@ -433,36 +464,31 @@ with st.sidebar:
             )
         st.caption(f"Custom — {detail}. Not one of the three published configurations.")
 
-    st.divider()
-    st.markdown("**Chunking**")
-    st.radio("Strategy", options=[core.FIXED_SIZE, core.SECTION_AWARE], key="strategy")
-
-    st.radio(
-        "Chunk size (characters)",
-        options=core.CHUNK_SIZES,
-        key="size",
-        horizontal=True,
-        disabled=section_aware,
-    )
-    st.radio(
-        "Overlap",
-        options=core.OVERLAP_PERCENTS,
-        format_func=lambda percent: f"{percent}%",
-        key="overlap_percent",
-        horizontal=True,
-        disabled=section_aware,
-    )
-    if section_aware:
-        st.caption(
-            "Section-aware splitting follows the document's `##` headings, "
-            "so chunk size and overlap do not apply."
+    # Custom controls stay available but collapsed so A/B/C are the default path.
+    with st.expander("Explore custom settings"):
+        st.radio("Strategy", options=[core.FIXED_SIZE, core.SECTION_AWARE], key="strategy")
+        st.radio(
+            "Chunk size (characters)",
+            options=core.CHUNK_SIZES,
+            key="size",
+            horizontal=True,
+            disabled=section_aware,
         )
+        st.radio(
+            "Overlap",
+            options=core.OVERLAP_PERCENTS,
+            format_func=lambda percent: f"{percent}%",
+            key="overlap_percent",
+            horizontal=True,
+            disabled=section_aware,
+        )
+        if section_aware:
+            st.caption(
+                "Section-aware splitting follows the document's `##` headings, "
+                "so chunk size and overlap do not apply."
+            )
+        st.radio("Top-k", options=core.TOP_K_CHOICES, key="top_k", horizontal=True)
 
-    st.divider()
-    st.markdown("**Retrieval**")
-    st.radio("Top-k", options=core.TOP_K_CHOICES, key="top_k", horizontal=True)
-
-    st.divider()
     with st.container(key="sidebar_footer"):
         st.caption(
             f"`{config.EMBEDDING_MODEL}` · {config.SIMILARITY} similarity · "
@@ -520,7 +546,7 @@ IFRAME_CSS = """
           --blue-mark:rgba(24,95,165,.16); --purple:#534AB7;
           --bar:rgba(15,110,86,.28); }
   * { box-sizing: border-box; }
-  body { margin:0; background:transparent; color:var(--ink);
+  body { margin:0; background:#FFFFFF; color:var(--ink);
          font-family:'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; }
   .card { background:var(--card); border:1px solid var(--line);
           border-left:3px solid var(--line); border-radius:8px;
@@ -531,9 +557,10 @@ IFRAME_CSS = """
           border-bottom:1px solid var(--line);
           font:600 .72rem/1.7 ui-monospace, SFMono-Regular, Menlo, monospace; }
   .card.hit .head { background:var(--teal-fill); border-bottom-color:#D9E5E1; }
+  .primary { font-size:.84rem; font-weight:700; color:var(--ink); }
   .id { font-size:.78rem; }
-  .muted { color:var(--gray); font-weight:400; }
-  .flag { color:var(--purple); font-weight:400; }
+  .muted { color:#9B9A96; font-weight:400; font-size:.68rem; }
+  .flag { color:var(--purple); font-weight:400; font-size:.68rem; }
   .rank { background:var(--teal); color:#fff; padding:.04rem .42rem; border-radius:4px;
           font-size:.7rem; }
   .score { font-size:.75rem; color:var(--teal); }
@@ -542,7 +569,7 @@ IFRAME_CSS = """
           font:.79rem/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
   mark.dup { background:var(--blue-mark); color:inherit; border-radius:2px; }
   .gap { border:1px dashed var(--line); border-radius:8px; margin-bottom:.6rem;
-         padding:.3rem .58rem; color:var(--gray); background:transparent;
+         padding:.3rem .58rem; color:var(--gray); background:#FFFFFF;
          font:.72rem/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; }
 """
 
@@ -584,11 +611,19 @@ def body_html(text: str, duplicated_prefix: int) -> str:
 
 def card_html(chunk, duplicated_prefix: int, rank: int | None, score: float | None) -> str:
     head = []
-    if rank is not None:
-        head.append(f'<span class="rank">rank {rank}</span>')
-    head.append(f'<span class="id">{chunk_label(chunk.index)}</span>')
-    if score is not None:
-        head.append(f'<span class="score">cosine {score:.4f}</span>')
+    label = chunk_label(chunk.index)
+    # Primary line: Rank · ID · cosine. Offsets and boundary notes stay quieter.
+    if rank is not None and score is not None:
+        head.append(
+            f'<span class="primary">Rank {rank} · {html.escape(label)} · '
+            f"cosine {score:.4f}</span>"
+        )
+    else:
+        if rank is not None:
+            head.append(f'<span class="rank">Rank {rank}</span>')
+        head.append(f'<span class="id">{html.escape(label)}</span>')
+        if score is not None:
+            head.append(f'<span class="score">cosine {score:.4f}</span>')
     head.append(f'<span class="muted">[{chunk.start}:{chunk.end}]</span>')
     head.append(f'<span class="muted">{chunk.char_count} chars</span>')
     if chunk.heading:
@@ -765,124 +800,203 @@ def compare_html() -> str:
     return f'<div class="compare">{"".join(rows)}</div>'
 
 
-# --- page ----------------------------------------------------------------
+def compact_abc_html() -> str:
+    """Pass/Fail only for the selected question across A/B/C."""
+    parts = []
+    for letter in core.PUBLISHED_SETTINGS:
+        verdict = config.PUBLISHED_SUFFICIENCY[letter][question_index]
+        label = "PASS" if verdict == "sufficient" else "FAIL"
+        cls = "ok" if verdict == "sufficient" else "no"
+        now = " now" if letter == published_letter else ""
+        parts.append(
+            f'<span class="abc{now}"><b>{letter}</b> '
+            f'<span class="{cls}">{label}</span></span>'
+        )
+    return f'<div class="abcrow">{"".join(parts)}</div>'
 
-# Everything above the tab bar is either required to be visible or answers "what am
-# I looking at right now". Framing a reader needs once sits in Method; the verdict
-# grid sits in Verdicts behind its own always-visible headline.
+
+def config_line() -> str:
+    """One concise line instead of a row of equal-weight chips."""
+    if section_aware:
+        return (
+            f"Section-aware · ## sections · top-k {settings.top_k} · "
+            f"{stats['count']} chunks"
+        )
+    overlap_bit = (
+        "0 overlap"
+        if settings.overlap == 0
+        else f"{settings.overlap_percent}% overlap ({settings.overlap} chars)"
+    )
+    return (
+        f"Fixed-size · {settings.size} chars · {overlap_bit} · "
+        f"top-k {settings.top_k} · {stats['count']} chunks"
+    )
+
+
+def result_anchor_html() -> str:
+    """Configuration, PASS/FAIL, and the frozen Why — before any internals."""
+    if published_letter:
+        verdict = config.PUBLISHED_SUFFICIENCY[published_letter][question_index]
+        observation = config.PUBLISHED_OBSERVATIONS[published_letter][question_index]
+        badge = "PASS" if verdict == "sufficient" else "FAIL"
+        badge_cls = "pass" if verdict == "sufficient" else "fail"
+        border_cls = "" if verdict == "sufficient" else " fail"
+        why_label = "Why this passed" if verdict == "sufficient" else "Why this failed"
+        return (
+            f'<div class="anchor{border_cls}">'
+            f'<div class="aconfig">{html.escape(core.PUBLISHED_LABELS[published_letter])}</div>'
+            f'<div class="abadge {badge_cls}">{badge}</div>'
+            f'<div class="awhy"><span class="k">{why_label}</span>'
+            f"{html.escape(observation)}</div></div>"
+        )
+    if section_aware:
+        title = f"Custom — section-aware, top-k {settings.top_k}"
+    else:
+        title = (
+            f"Custom — Fixed-size, {settings.size} chars, "
+            f"{settings.overlap_percent}% overlap"
+        )
+    return (
+        f'<div class="anchor">'
+        f'<div class="aconfig">{html.escape(title)}</div>'
+        f'<div class="abadge inspect">Inspect evidence</div>'
+        f'<div class="awhy"><span class="k">No published verdict</span>'
+        "No Pass/Fail is recorded for this parameter combination, and none is inferred. "
+        "Compare the retrieved chunks against the rubric below.</div></div>"
+    )
+
+
+# --- page ----------------------------------------------------------------
+# Reader-first order: preset (sidebar) → question → result → why → A/B/C compare
+# → top-k evidence. Tuning machinery and chunk internals sit in expanders.
+
 st.title("Chunking explorer")
 st.caption(
     "This demo uses one small policy and one embedding model. Treat the results as "
     "an illustration, not a universal benchmark."
 )
-st.markdown(verdict_summary_html(), unsafe_allow_html=True)
 
-explore_tab, verdicts_tab, method_tab = st.tabs(["Explore", "Verdicts", "Method"])
+with st.container(key="question"):
+    st.radio(
+        "Question",
+        options=range(len(config.QUESTIONS)),
+        format_func=lambda index: f"Q{index + 1}",
+        key="question_index",
+        horizontal=True,
+    )
+    st.markdown(
+        f'<div class="qtext">{html.escape(config.QUESTIONS[st.session_state.question_index])}</div>',
+        unsafe_allow_html=True,
+    )
 
-with verdicts_tab:
+st.markdown(result_anchor_html(), unsafe_allow_html=True)
+
+# Extra failure context for published shortfalls, still above the evidence.
+if published_letter:
+    verdict = config.PUBLISHED_SUFFICIENCY[published_letter][question_index]
+    if verdict != "sufficient":
+        st.markdown(
+            failure_modes_html(published_letter, question_index),
+            unsafe_allow_html=True,
+        )
+        missed = config.PUBLISHED_MISSED_EVIDENCE.get(published_letter, {}).get(
+            question_index
+        )
+        if missed:
+            st.info(f"{config.MISSED_EVIDENCE_HEADLINE} {missed}")
+        if config.CROSS_REFERENCE in config.PUBLISHED_FAILURE_MODES.get(
+            published_letter, {}
+        ).get(question_index, ()):
+            st.markdown(
+                f'<div class="q3note">{config.Q3_CROSS_REFERENCE_NOTE}</div>',
+                unsafe_allow_html=True,
+            )
+
+st.caption(f"Published A / B / C for Q{question_index + 1}")
+st.markdown(compact_abc_html(), unsafe_allow_html=True)
+
+st.markdown(
+    f'<div class="configline">{html.escape(config_line())}</div>',
+    unsafe_allow_html=True,
+)
+
+# --- primary evidence: top-k retrieved chunks --------------------------------
+st.subheader("Top retrieved chunks")
+retrieved_chunks = [chunk for chunk, _ in hits]
+unique, total = core.unique_coverage(retrieved_chunks)
+badges = " ".join(f"`{chunk_label(chunk.index)}`" for chunk in retrieved_chunks)
+st.markdown(f"**Top-{settings.top_k}:** {badges}")
+if unique == total:
+    st.caption(f"Covering {unique:,} unique characters of the source.")
+else:
+    st.caption(
+        f"Covering {unique:,} unique characters of the source, from {total:,} characters "
+        f"across the {settings.top_k} chunks, so {total - unique:,} are retrieved twice."
+    )
+
+history = st.session_state.setdefault("previous_view", {})
+earlier = history.get(question_index)
+if earlier and earlier["label"] != settings_label:
+    st.caption(
+        f"Previously on this question — {earlier['label']}: {earlier['ids']} "
+        f"({earlier['unique']:,} unique chars)."
+    )
+history[question_index] = {
+    "label": settings_label,
+    "ids": ", ".join(chunk_label(chunk.index) for chunk in retrieved_chunks),
+    "unique": unique,
+}
+
+render_cards(
+    [
+        card_html(chunk, settings.overlap if chunk.index > 0 else 0, rank, score)
+        for rank, (chunk, score) in enumerate(hits, start=1)
+    ],
+    estimate_height([chunk.text for chunk in retrieved_chunks]),
+)
+
+with st.expander("Sufficiency rubric for this question"):
+    st.markdown(config.SUFFICIENCY_RUBRIC_DISPLAY[question_index])
+    if published_letter:
+        st.caption(
+            "Verdict and explanation above were written by hand after the published "
+            "run, for this configuration only."
+        )
+    else:
+        st.caption(
+            "No verdict is recorded for this parameter combination, and none is inferred."
+        )
+
+# --- optional deeper inspection ---------------------------------------------
+with st.expander("View all experiment results"):
     st.markdown("**Reviewed verdicts for the published experiment**")
     st.markdown(verdict_strip_html(), unsafe_allow_html=True)
     st.markdown(
         f'<div class="q3note">{config.Q3_CROSS_REFERENCE_NOTE}</div>',
         unsafe_allow_html=True,
     )
+    st.caption(f"{config.VERDICT_SCOPE_NOTE} {TIE_NOTE}")
     st.caption(
-        f"{config.VERDICT_SCOPE_NOTE} {TIE_NOTE} "
-        f"The row in bold is Q{question_index + 1}, selected on the Explore tab."
+        f"Top-{config.TOP_K} chunk IDs for Q{question_index + 1} under each published "
+        "configuration:"
     )
+    st.markdown(compare_html(), unsafe_allow_html=True)
 
-with method_tab:
-    st.markdown(
-        "Companion to *Why Fixed-Size Chunking Breaks Retrieval*, from the "
-        f"[RAG in Practice]({SITE_URL}) series. Changing chunk boundaries changes both "
-        "the evidence stored in each chunk and which chunks compete for the top-k "
-        "retrieval slots."
-    )
-    st.markdown(
-        f"""
-- The document is `source/{config.SOURCE_DOCUMENT.name}`, {len(raw):,} characters, loaded raw.
-- Chunks are embedded with `{config.EMBEDDING_MODEL}` and ranked by {config.SIMILARITY}
-  similarity. Ties resolve to the lower chunk index.
-- **Retrieval evidence only.** No answer is generated, and no keyword search, reranking,
-  contextual retrieval or query rewriting is applied. Only chunking settings and top-k vary.
-- Chunks are numbered from 0, matching the chunk IDs published with the article. When the
-  settings reproduce a published configuration, IDs appear as `A-9`, `B-11`, `C-6` and so on.
-- Chunk text is shown exactly as stored, including Markdown markers, table pipes and `---`
-  rules. Nothing is normalized or re-wrapped.
-- Verdicts and explanations exist only for the three published configurations, are written
-  by hand, and are never generated. Every other combination shows the rubric alone.
-- The Q5 rubric wording was clarified after the published run to say plainly that the
-  generic "may inspect" sentence is not sufficient on its own. The change narrows the
-  criterion and alters no recorded verdict; `config.SUFFICIENCY_RUBRIC` still holds the
-  text exactly as frozen before the run.
-        """
-    )
-    # The Source panel shows the document chunked; this expander shows it whole, as
-    # readable prose, for anyone who wants to read the policy the answers come from.
-    # Display only, from the frozen source file — nothing here feeds retrieval.
-    with st.expander("Read the full policy document"):
-        st.caption(
-            f"Verbatim contents of `source/{config.SOURCE_DOCUMENT.name}` "
-            f"({len(raw):,} characters) — the one document behind every result here."
-        )
-        st.markdown(raw)
-
-with explore_tab:
-    # The question selector lives here, not in the sidebar, so a mobile reader can
-    # pick a question without opening the drawer. Same widget, key and default as
-    # before, so selection behaviour and its independence from presets are unchanged.
-    # The keyed container scopes the question-block typography without touching the
-    # sidebar radios.
-    with st.container(key="question"):
-        st.radio(
-            "Question",
-            options=range(len(config.QUESTIONS)),
-            format_func=lambda index: f"Q{index + 1}",
-            key="question_index",
-            horizontal=True,
-        )
-        st.markdown(
-            f'<div class="qtext">{html.escape(config.QUESTIONS[st.session_state.question_index])}</div>',
-            unsafe_allow_html=True,
-        )
-
-    st.markdown(
-        '<div class="sticky-selection"><div class="lab">Currently showing</div>'
-        f"{selection_html()}</div>",
-        unsafe_allow_html=True,
-    )
-    if published_letter:
-        st.caption(
-            f"Reproduces configuration {published_letter} from the article, so chunk IDs "
-            f"appear as `{published_letter}-0`, `{published_letter}-1` and so on."
-        )
-    else:
-        st.caption(
-            "No published run uses these settings. Load A, B or C from the sidebar to "
-            "return to one."
-        )
-
-    left, right = st.columns([1, 1], gap="medium")
-
-with left:
-    st.subheader("Source and chunk boundaries")
+with st.expander("Index statistics"):
     st.markdown(stats_html(), unsafe_allow_html=True)
 
+with st.expander("Inspect source and chunk boundaries"):
     view = st.radio(
         "Source view",
         options=[RETRIEVED_ONLY, ALL_CHUNKS],
         key="source_view",
         horizontal=True,
     )
-
     if settings.overlap:
         st.caption(
             f"Highlighted text at the start of a chunk is the {settings.overlap} characters "
             "it repeats from the end of the previous chunk."
         )
-
-    # The legend sits with the cards it describes rather than in the page preamble,
-    # where its swatches appeared before anything used them.
     st.markdown(
         '<div class="legend">'
         '<span class="key"><span class="swatch hit"></span>retrieved for this question</span>'
@@ -929,102 +1043,41 @@ with left:
             cards.append(gap_html(pending))
             gap_count += 1
         st.caption(
-            f"Showing the {len(hits)} retrieved chunks in document order. The statistics "
-            f"above describe the full index of {stats['count']} chunks."
+            f"Showing the {len(hits)} retrieved chunks in document order. The index "
+            f"contains {stats['count']} chunks in total."
         )
 
     render_cards(cards, estimate_height(texts, gap_count))
 
-with right:
-    st.subheader("Retrieval results")
-    st.markdown(f"**Q{question_index + 1}.** {question}")
-
-    retrieved_chunks = [chunk for chunk, _ in hits]
-    unique, total = core.unique_coverage(retrieved_chunks)
-    badges = " ".join(f"`{chunk_label(chunk.index)}`" for chunk in retrieved_chunks)
-    st.markdown(f"**Top-{settings.top_k}:** {badges}")
-    if unique == total:
-        st.caption(f"Covering {unique:,} unique characters of the source.")
-    else:
-        st.caption(
-            f"Covering {unique:,} unique characters of the source, from {total:,} characters "
-            f"across the {settings.top_k} chunks, so {total - unique:,} are retrieved twice."
-        )
-
-    history = st.session_state.setdefault("previous_view", {})
-    earlier = history.get(question_index)
-    if earlier and earlier["label"] != settings_label:
-        st.caption(
-            f"Previously on this question — {earlier['label']}: {earlier['ids']} "
-            f"({earlier['unique']:,} unique chars)."
-        )
-    history[question_index] = {
-        "label": settings_label,
-        "ids": ", ".join(chunk_label(chunk.index) for chunk in retrieved_chunks),
-        "unique": unique,
-    }
-
-    with st.container(border=True):
-        st.markdown("**Frozen sufficiency rubric for this question**")
-        st.markdown(config.SUFFICIENCY_RUBRIC_DISPLAY[question_index])
-
-        if published_letter:
-            verdict = config.PUBLISHED_SUFFICIENCY[published_letter][question_index]
-            observation = config.PUBLISHED_OBSERVATIONS[published_letter][question_index]
-            top_chunk, top_score = hits[0]
-            st.markdown(
-                verdict_line_html(verdict, chunk_label(top_chunk.index), top_score),
-                unsafe_allow_html=True,
-            )
-            if verdict != "sufficient":
-                st.markdown(
-                    "High similarity is not the same as sufficient evidence. The rank 1 "
-                    "chunk is the closest match in this index, and the retrieved set "
-                    "still falls short of the rubric."
-                )
-                st.markdown(
-                    failure_modes_html(published_letter, question_index),
-                    unsafe_allow_html=True,
-                )
-
-            headline = "Why this passed" if verdict == "sufficient" else "Why this failed"
-            with st.container(border=True):
-                st.markdown(f"**{headline}:** {observation}")
-
-            missed = config.PUBLISHED_MISSED_EVIDENCE.get(published_letter, {}).get(
-                question_index
-            )
-            if missed:
-                with st.container(border=True):
-                    st.markdown(f"**{config.MISSED_EVIDENCE_HEADLINE}** {missed}")
-
-            if config.CROSS_REFERENCE in config.PUBLISHED_FAILURE_MODES.get(
-                published_letter, {}
-            ).get(question_index, ()):
-                with st.container(border=True):
-                    st.markdown(config.Q3_CROSS_REFERENCE_NOTE)
-
-            st.caption(
-                "Verdict, failure mode and explanation were written by hand after the "
-                "published run, for this configuration only."
-            )
-        else:
-            st.markdown("**Inspect retrieved evidence against the rubric.**")
-            st.caption(
-                "No verdict is recorded for this parameter combination, and none is inferred."
-            )
-
-    with st.expander("Compare the three published configurations", expanded=True):
-        st.caption(
-            f"Top-{config.TOP_K} for Q{question_index + 1} under each published "
-            "configuration, with its reviewed verdict."
-        )
-        st.markdown(compare_html(), unsafe_allow_html=True)
-
-    render_cards(
-        [
-            card_html(chunk, settings.overlap if chunk.index > 0 else 0, rank, score)
-            for rank, (chunk, score) in enumerate(hits, start=1)
-        ],
-        estimate_height([chunk.text for chunk in retrieved_chunks]),
+with st.expander("Method"):
+    st.markdown(
+        "Companion to *Why Fixed-Size Chunking Breaks Retrieval*, from the "
+        f"[RAG in Practice]({SITE_URL}) series. Changing chunk boundaries changes both "
+        "the evidence stored in each chunk and which chunks compete for the top-k "
+        "retrieval slots."
     )
+    st.markdown(
+        f"""
+- The document is `source/{config.SOURCE_DOCUMENT.name}`, {len(raw):,} characters, loaded raw.
+- Chunks are embedded with `{config.EMBEDDING_MODEL}` and ranked by {config.SIMILARITY}
+  similarity. Ties resolve to the lower chunk index.
+- **Retrieval evidence only.** No answer is generated, and no keyword search, reranking,
+  contextual retrieval or query rewriting is applied. Only chunking settings and top-k vary.
+- Chunks are numbered from 0, matching the chunk IDs published with the article. When the
+  settings reproduce a published configuration, IDs appear as `A-9`, `B-11`, `C-6` and so on.
+- Chunk text is shown exactly as stored, including Markdown markers, table pipes and `---`
+  rules. Nothing is normalized or re-wrapped.
+- Verdicts and explanations exist only for the three published configurations, are written
+  by hand, and are never generated. Every other combination shows the rubric alone.
+- The Q5 rubric wording was clarified after the published run to say plainly that the
+  generic "may inspect" sentence is not sufficient on its own. The change narrows the
+  criterion and alters no recorded verdict; `config.SUFFICIENCY_RUBRIC` still holds the
+  text exactly as frozen before the run.
+        """
+    )
+    with st.expander("Read the full policy document"):
+        st.caption(
+            f"Verbatim contents of `source/{config.SOURCE_DOCUMENT.name}` "
+            f"({len(raw):,} characters) — the one document behind every result here."
+        )
+        st.markdown(raw)
