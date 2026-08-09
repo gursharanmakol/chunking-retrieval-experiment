@@ -132,12 +132,6 @@ st.markdown(
       .abcrow .no { color: #534AB7; font-weight: 700; }
       /* Live configuration under the A/B/C buttons — must be the first place a
          custom change (e.g. 300 chars) is visible in the sidebar. */
-      .activelabel { font-size: .82rem; line-height: 1.4; color: #1F1F1D;
-                     border: 1px solid #E8E8E4; border-radius: 8px;
-                     background: #FFFFFF; padding: .45rem .6rem; margin: .35rem 0 .5rem; }
-      .activelabel.pub { border-color: #0F6E56; background: #F4F8F7; color: #0F6E56;
-                         font-weight: 600; }
-      .activelabel.custom { border-color: #B4B4AE; }
       /* The settings row is the reader's answer to "what am I looking at", and the
          panels below it are long, so it stays put while they scroll through them. */
       .sticky-selection { position: sticky; top: 0; z-index: 5; background: #FFFFFF;
@@ -484,23 +478,6 @@ with st.sidebar:
             type="primary" if letter == published_letter else "secondary",
             on_click=load_published,
             args=(letter,),
-        )
-
-    # Active configuration sits directly under A/B/C so a custom change (e.g. 300)
-    # is visible at the top of the sidebar without scrolling past the expander.
-    # Session state is already updated before this rerun, so this matches the radios.
-    label = active_config_label(settings, published_letter)
-    if published_letter:
-        st.markdown(
-            f'<div class="activelabel pub">{html.escape(label)}</div>',
-            unsafe_allow_html=True,
-        )
-    else:
-        st.markdown(
-            f'<div class="activelabel custom">{html.escape(label)}</div>'
-            '<div style="font-size:12px;color:#5F5E5A;margin:-.25rem 0 .5rem;">'
-            "Not one of the three published configurations.</div>",
-            unsafe_allow_html=True,
         )
 
     # Custom controls stay available but collapsed so A/B/C are the default path.
