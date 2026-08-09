@@ -130,6 +130,14 @@ st.markdown(
       .abcrow .abc.now { border-color: #0F6E56; background: #F4F8F7; }
       .abcrow .ok { color: #0F6E56; font-weight: 700; }
       .abcrow .no { color: #534AB7; font-weight: 700; }
+      /* Live configuration under the A/B/C buttons — must be the first place a
+         custom change (e.g. 300 chars) is visible in the sidebar. */
+      .activelabel { font-size: .82rem; line-height: 1.4; color: #1F1F1D;
+                     border: 1px solid #E8E8E4; border-radius: 8px;
+                     background: #FFFFFF; padding: .45rem .6rem; margin: .35rem 0 .5rem; }
+      .activelabel.pub { border-color: #0F6E56; background: #F4F8F7; color: #0F6E56;
+                         font-weight: 600; }
+      .activelabel.custom { border-color: #B4B4AE; }
       /* The settings row is the reader's answer to "what am I looking at", and the
          panels below it are long, so it stays put while they scroll through them. */
       .sticky-selection { position: sticky; top: 0; z-index: 5; background: #FFFFFF;
@@ -475,8 +483,25 @@ with st.sidebar:
             args=(letter,),
         )
 
+    # Active configuration sits directly under A/B/C so a custom change (e.g. 300)
+    # is visible at the top of the sidebar without scrolling past the expander.
+    # Session state is already updated before this rerun, so this matches the radios.
+    label = active_config_label(settings, published_letter)
+    if published_letter:
+        st.markdown(
+            f'<div class="activelabel pub">{html.escape(label)}</div>',
+            unsafe_allow_html=True,
+        )
+    else:
+        st.markdown(
+            f'<div class="activelabel custom">{html.escape(label)}</div>'
+            '<div style="font-size:12px;color:#5F5E5A;margin:-.25rem 0 .5rem;">'
+            "Not one of the three published configurations.</div>",
+            unsafe_allow_html=True,
+        )
+
     # Custom controls stay available but collapsed so A/B/C are the default path.
-    with st.expander("Explore custom settings"):
+    with st.expander("Explore custom settings", expanded=not published_letter):
         st.radio("Strategy", options=[core.FIXED_SIZE, core.SECTION_AWARE], key="strategy")
         st.radio(
             "Chunk size (characters)",
@@ -500,16 +525,8 @@ with st.sidebar:
             )
         st.radio("Top-k", options=core.TOP_K_CHOICES, key="top_k", horizontal=True)
 
-    # Caption after the controls, from a fresh read, so it cannot disagree with
-    # the radios the reader just used.
+    # Fresh read after the radios so the main pane cannot lag the sidebar controls.
     settings, published_letter, section_aware = sync_settings()
-    if published_letter:
-        st.caption(active_config_label(settings, published_letter))
-    else:
-        st.caption(
-            f"{active_config_label(settings, published_letter)}. "
-            "Not one of the three published configurations."
-        )
 
     with st.container(key="sidebar_footer"):
         st.caption(
