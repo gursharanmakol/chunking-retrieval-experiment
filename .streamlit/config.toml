@@ -38,3 +38,8 @@ showWidgetBorder = true
 
 [browser]
 gatherUsageStats = false
+
+# Hide Streamlit's filename-based page list ("app", "Retrieval explorer") so
+# both explorers can use explicit st.page_link labels instead.
+[client]
+showSidebarNavigation = false
