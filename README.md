@@ -153,8 +153,11 @@ Further expanders cover the sufficiency rubric, the full published verdict grid
 and top-k IDs, index statistics, source/chunk boundaries, and method notes.
 
 **Top retrieved chunks** are primary. For published presets, frozen reviewed
-evidence spans (where recorded) are highlighted, and each card is tagged
-**Used for reviewed verdict** or **Retrieved, not used for verdict**.
+evidence spans (where recorded) are highlighted. On a PASS, those cards are
+tagged **Used for reviewed verdict**. On a FAIL, a retrieved span named in the
+review that does not complete the required set is amber **Required evidence**,
+matching the Retrieval explorer. Other retrieved cards are tagged
+**Retrieved, not used for verdict**.
 
 **Inspect source and chunk boundaries** (expander) defaults to **Retrieved chunks
 only**: retrieved chunks in document order, with runs of non-retrieved chunks

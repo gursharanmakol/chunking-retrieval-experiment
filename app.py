@@ -663,6 +663,14 @@ IFRAME_CSS = """
   .card.verdict-used .rank { background:var(--teal); }
   .card.verdict-used .score { color:var(--teal); font-weight:600; }
   .card.verdict-used .bar { background:rgba(15,110,86,.45); }
+  /* Required evidence present, but the reviewed set is incomplete (FAIL). */
+  .card.verdict-incomplete { border:1px solid #E6D5A8; border-left:5px solid #B8870F;
+                             background:#FBF6EA; }
+  .card.verdict-incomplete .head { background:#F3E8C8; border-bottom-color:#E6D5A8; }
+  .card.verdict-incomplete .rank { background:#B8870F; }
+  .card.verdict-incomplete .score { color:#6B5308; font-weight:600; }
+  .card.verdict-incomplete .bar { background:rgba(184,135,15,.45); }
+  .card.verdict-incomplete .primary { color:#6B5308; }
   /* Retrieved but not used: neutral gray, no teal accent border. */
   .card.verdict-unused { border:1px solid #E0DFDA; border-left:3px solid #C8C7C1;
                          background:#FFFFFF; }
@@ -689,10 +697,14 @@ IFRAME_CSS = """
   mark.dup { background:var(--blue-mark); color:inherit; border-radius:2px; }
   mark.evidence { background:rgba(15,110,86,.28); color:inherit; border-radius:2px;
                   box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  mark.incomplete { background:rgba(184,135,15,.28); color:inherit; border-radius:2px;
+                    box-decoration-break:clone; -webkit-box-decoration-break:clone; }
   .verdict-tag { display:inline-block; margin:.25rem .58rem .4rem;
                  font:600 .7rem/1.4 'Segoe UI', system-ui, sans-serif;
                  padding:.12rem .5rem; border-radius:4px; }
   .verdict-tag.used { color:#FFFFFF; background:var(--teal); }
+  .verdict-tag.incomplete { color:#6B5308; background:#F3E8C8; font-weight:700;
+                            border:1px solid #C4A35A; }
   .verdict-tag.unused { color:#5F5E5A; background:#EDEDEA; font-weight:500;
                         border:1px solid #E0DFDA; }
   .gap { border:1px dashed var(--line); border-radius:8px; margin-bottom:.6rem;
@@ -742,17 +754,20 @@ def body_html(
     text: str,
     duplicated_prefix: int,
     evidence_spans: tuple[str, ...] = (),
+    *,
+    incomplete: bool = False,
 ) -> str:
     """Escape chunk text and overlay presentation marks only.
 
     Evidence marks come from frozen annotations; the duplicated-prefix mark is
     the existing overlap tint. The underlying chunk text is never altered.
     """
+    evidence_kind = "incomplete" if incomplete else "evidence"
     marks: list[tuple[int, int, str]] = []
     for span in evidence_spans:
         start = text.find(span)
         if start >= 0:
-            marks.append((start, start + len(span), "evidence"))
+            marks.append((start, start + len(span), evidence_kind))
     cut = min(duplicated_prefix, len(text))
     if cut > 0:
         marks.append((0, cut, "dup"))
@@ -767,7 +782,9 @@ def body_html(
             continue
         segment = html.escape(text[left:right])
         kinds = {kind for start, end, kind in marks if start <= left and right <= end}
-        if "evidence" in kinds:
+        if "incomplete" in kinds:
+            segment = f'<mark class="incomplete">{segment}</mark>'
+        elif "evidence" in kinds:
             segment = f'<mark class="evidence">{segment}</mark>'
         elif "dup" in kinds:
             segment = f'<mark class="dup">{segment}</mark>'
@@ -825,8 +842,18 @@ def card_html(
         and table.get(published_letter, {}).get(question_index)
     )
 
+    set_complete = (
+        published_letter is not None
+        and config.PUBLISHED_SUFFICIENCY[published_letter][question_index]
+        == "sufficient"
+    )
+    incomplete = bool(present) and not set_complete
+
     tag = ""
-    if present:
+    if incomplete:
+        css = "card verdict-incomplete"
+        tag = '<div class="verdict-tag incomplete">Required evidence</div>'
+    elif present:
         # Drop .hit so the stronger verdict-used accent is the only color cue.
         css = "card verdict-used"
         tag = '<div class="verdict-tag used">Used for reviewed verdict</div>'
@@ -841,7 +868,7 @@ def card_html(
         bar = f'<div class="bar" style="width:{max(0.0, min(1.0, score)) * 100:.1f}%"></div>'
     return (
         f'<div class="{css}"><div class="head">{"".join(head)}</div>{bar}{tag}'
-        f"{body_html(chunk.text, duplicated_prefix, present)}</div>"
+        f"{body_html(chunk.text, duplicated_prefix, present, incomplete=incomplete)}</div>"
     )
 
 
