@@ -132,14 +132,14 @@ st.markdown(
       .anchor { border: 1px solid #E8E8E4; border-left: 4px solid #0F6E56;
                 border-radius: 10px; background: #FFFFFF; padding: 1rem 1.1rem;
                 margin: .4rem 0 .85rem; }
-      .anchor.fail { border-left-color: #534AB7; }
+      .anchor.fail { border-left-color: #9B2C2C; }
       .anchor .aconfig { font-size: 1.05rem; font-weight: 700; color: #1F1F1D;
                          margin-bottom: .45rem; }
       .anchor .abadge { display: inline-block; font-size: .92rem; font-weight: 800;
                         letter-spacing: .04em; padding: .2rem .65rem; border-radius: 6px;
                         margin-bottom: .55rem; }
       .anchor .abadge.pass { background: #E7F0EE; color: #0F6E56; }
-      .anchor .abadge.fail { background: #EEEDF8; color: #534AB7; }
+      .anchor .abadge.fail { background: #FCEBEB; color: #9B2C2C; }
       .anchor .abadge.inspect { background: #F4F4F1; color: #5F5E5A; font-weight: 700;
                                 letter-spacing: 0; }
       .anchor .awhy { font-size: .95rem; color: #1F1F1D; line-height: 1.5; }
@@ -151,7 +151,7 @@ st.markdown(
                      background: #FFFFFF; font-size: .9rem; }
       .abcrow .abc.now { border-color: #0F6E56; background: #F4F8F7; }
       .abcrow .ok { color: #0F6E56; font-weight: 700; }
-      .abcrow .no { color: #534AB7; font-weight: 700; }
+      .abcrow .no { color: #9B2C2C; font-weight: 700; }
       /* The settings row is the reader's answer to "what am I looking at", and the
          panels below it are long, so it stays put while they scroll through them. */
       .sticky-selection { position: sticky; top: 0; z-index: 5; background: #FFFFFF;
@@ -231,8 +231,7 @@ st.markdown(
       .selection .pub { background: #E7F0EE; border-color: #0F6E56; color: #0F6E56;
                         font-weight: 600; }
       .selection .custom { color: #5F5E5A; font-weight: 600; }
-      /* 5x3 verdict summary. Pass and Fail carry the same teal and purple the
-         retrieval panel already uses, so the shape of the run reads at a glance. */
+      /* 5x3 verdict summary. Pass is teal; Fail matches the site explorers' red. */
       .verdicts { background: #FFFFFF; border: 1px solid #E8E8E4; border-radius: 8px;
                   padding: .55rem .7rem; max-width: 660px; margin: .1rem 0 .4rem; }
       .verdicts .vr { display: flex; gap: .3rem; align-items: stretch;
@@ -248,7 +247,7 @@ st.markdown(
       .verdicts .cell .why { display: block; font-size: .62rem; font-weight: 400;
                              margin-top: .05rem; }
       .verdicts .pass { background: #E7F0EE; color: #0F6E56; }
-      .verdicts .fail { background: #EEEDF8; color: #534AB7; }
+      .verdicts .fail { background: #FCEBEB; color: #9B2C2C; }
       .verdicts .tot { border-top: 1px solid #E8E8E4; padding-top: .35rem; }
       .verdicts .tot .cell { background: transparent; color: #26262C;
                              font: .8rem ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -261,7 +260,7 @@ st.markdown(
                       border: 1px solid #E8E8E4; border-radius: 6px;
                       padding: .2rem .52rem; font-size: .76rem; font-weight: 600; }
       .vline .pass { background: #E7F0EE; border-color: #0F6E56; color: #0F6E56; }
-      .vline .fail { background: #EEEDF8; border-color: #534AB7; color: #534AB7; }
+      .vline .fail { background: #FCEBEB; border-color: #9B2C2C; color: #9B2C2C; }
       .vline .score { background: #FFFFFF; color: #26262C; font-weight: 400;
                       font: .76rem ui-monospace, SFMono-Regular, Menlo, monospace; }
       .modes { display: flex; gap: .4rem; flex-wrap: wrap; align-items: center;
@@ -320,7 +319,7 @@ st.markdown(
       .stats .dup { color: #185FA5; }
       .compare .now { color: #0F6E56; font-weight: 600; }
       .compare .ok { color: #0F6E56; }
-      .compare .no { color: #534AB7; }
+      .compare .no { color: #9B2C2C; }
 
       /* --- typography & spacing polish ------------------------------------
          No new colours or fonts: #1F1F1D and #5F5E5A are named in the brief,

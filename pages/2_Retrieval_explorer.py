@@ -119,14 +119,14 @@ st.markdown(
       .anchor { border: 1px solid #E8E8E4; border-left: 4px solid #0F6E56;
                 border-radius: 10px; background: #FFFFFF; padding: 1rem 1.1rem;
                 margin: .4rem 0 .85rem; }
-      .anchor.fail { border-left-color: #534AB7; }
+      .anchor.fail { border-left-color: #9B2C2C; }
       .anchor .aconfig { font-size: 1.05rem; font-weight: 700; color: #1F1F1D;
                          margin-bottom: .45rem; }
       .anchor .abadge { display: inline-block; font-size: .92rem; font-weight: 800;
                         letter-spacing: .04em; padding: .2rem .65rem; border-radius: 6px;
                         margin-bottom: .55rem; }
       .anchor .abadge.pass { background: #E7F0EE; color: #0F6E56; }
-      .anchor .abadge.fail { background: #EEEDF8; color: #534AB7; }
+      .anchor .abadge.fail { background: #FCEBEB; color: #9B2C2C; }
       .anchor .awhy { font-size: .95rem; color: #1F1F1D; line-height: 1.5; }
       .anchor .awhy .k { display: block; font-size: 12px; font-weight: 600;
                          color: #5F5E5A; text-transform: uppercase; letter-spacing: .02em;
