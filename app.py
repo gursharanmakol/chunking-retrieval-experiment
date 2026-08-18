@@ -385,6 +385,30 @@ st.markdown(
          touched. */
       [data-testid="stMain"] code,
       [data-testid="stSidebarUserContent"] code { font-size: 12px; }
+
+      /* Sidebar page links: current explorer must read as selected, not a faint gray. */
+      .explorer-nav-current {
+        background: #E7F0EE; border: 1px solid #0F6E56; color: #0F6E56;
+        font-weight: 700; font-size: .95rem; border-radius: 8px;
+        padding: .4rem .65rem; margin: .12rem 0 .2rem;
+      }
+      [data-testid="stSidebar"] [data-testid="stPageLink-NavLink"] {
+        border: 1px solid #E8E8E4; border-radius: 8px;
+        padding: .4rem .65rem !important; margin: .12rem 0 !important;
+      }
+      /* Page switcher stays the larger control. A/B/C sit in a separate, tighter group. */
+      .st-key-explorer_nav [data-testid="stVerticalBlock"] { gap: 8px !important; }
+      .st-key-preset_pick {
+        margin-top: .35rem; padding-top: 1rem; border-top: 1px solid #E8E8E4;
+      }
+      .st-key-preset_pick [data-testid="stVerticalBlock"] { gap: 6px !important; }
+      .st-key-preset_pick [data-testid="stButton"] button {
+        min-height: 2.05rem !important; padding-top: .22rem !important;
+        padding-bottom: .22rem !important; font-size: .84rem !important;
+      }
+      .st-key-sidebar_footer { margin-top: .45rem; }
+      .details-gap { height: 1.15rem; }
+      [data-testid="stMain"] [data-testid="stExpander"] { margin-bottom: .4rem; }
     </style>
     """,
     unsafe_allow_html=True,
@@ -506,16 +530,23 @@ def active_config_label(
 settings, published_letter, section_aware = sync_settings()
 
 with st.sidebar:
-    st.markdown("**Published experiment**")
-    st.caption("Load a configuration from the article.")
-    for letter, label in core.PUBLISHED_SHORT_LABELS.items():
-        st.button(
-            label,
-            use_container_width=True,
-            type="primary" if letter == published_letter else "secondary",
-            on_click=load_published,
-            args=(letter,),
+    with st.container(key="explorer_nav"):
+        st.markdown(
+            '<div class="explorer-nav-current">Chunking explorer</div>',
+            unsafe_allow_html=True,
         )
+        st.page_link("pages/2_Retrieval_explorer.py", label="Retrieval explorer")
+    with st.container(key="preset_pick"):
+        st.markdown("**Published experiment**")
+        st.caption("Load a configuration from the article.")
+        for letter, label in core.PUBLISHED_SHORT_LABELS.items():
+            st.button(
+                label,
+                use_container_width=True,
+                type="primary" if letter == published_letter else "secondary",
+                on_click=load_published,
+                args=(letter,),
+            )
 
     # Custom controls stay available but collapsed so A/B/C are the default path.
     with st.expander("Explore custom settings", expanded=not published_letter):
@@ -951,6 +982,21 @@ def failure_modes_html(letter: str, index: int) -> str:
     return f'<div class="modes"><span class="k">Failure mode</span>{chips}</div>'
 
 
+Q3_FOLLOW_UP = (
+    "Follow-up: Part 2 showed that the section-aware Q3 miss was partly a "
+    "ranking/cutoff issue, not purely a cross-reference limit."
+)
+
+
+def render_q3_follow_up() -> None:
+    """Narrow Experiment #2 correction. Does not change A/B/C verdicts or Why text."""
+    st.markdown(
+        f'<div class="q3note">{html.escape(Q3_FOLLOW_UP)}</div>',
+        unsafe_allow_html=True,
+    )
+    st.page_link("pages/2_Retrieval_explorer.py", label="See Retrieval explorer")
+
+
 def compare_html() -> str:
     rows = []
     for letter in core.PUBLISHED_SETTINGS:
@@ -1012,6 +1058,7 @@ def result_anchor_html() -> str:
 # Reader-first order: question → selected configuration → Result → Why →
 # top-k evidence → optional A/B/C compare. Tuning and internals in expanders.
 
+
 st.title("Chunking explorer")
 st.caption(
     "This demo uses one small policy and one embedding model. Treat the results as "
@@ -1049,10 +1096,7 @@ if published_letter:
         if config.CROSS_REFERENCE in config.PUBLISHED_FAILURE_MODES.get(
             published_letter, {}
         ).get(question_index, ()):
-            st.markdown(
-                f'<div class="q3note">{config.Q3_CROSS_REFERENCE_NOTE}</div>',
-                unsafe_allow_html=True,
-            )
+            render_q3_follow_up()
 
 # --- primary evidence: top-k retrieved chunks --------------------------------
 st.subheader("Top retrieved chunks")
@@ -1084,6 +1128,7 @@ render_cards(
 
 # Cross-strategy comparison stays optional so the main page stays on the
 # currently selected configuration.
+st.markdown('<div class="details-gap"></div>', unsafe_allow_html=True)
 with st.expander(f"Compare published strategies for Q{question_index + 1}"):
     st.markdown(compact_abc_html(), unsafe_allow_html=True)
 
@@ -1103,10 +1148,7 @@ with st.expander("Sufficiency rubric for this question"):
 with st.expander("View all experiment results"):
     st.markdown("**Reviewed verdicts for the published experiment**")
     st.markdown(verdict_strip_html(), unsafe_allow_html=True)
-    st.markdown(
-        f'<div class="q3note">{config.Q3_CROSS_REFERENCE_NOTE}</div>',
-        unsafe_allow_html=True,
-    )
+    render_q3_follow_up()
     st.caption(f"{config.VERDICT_SCOPE_NOTE} {TIE_NOTE}")
     st.caption(
         f"Top-{config.TOP_K} chunk IDs for Q{question_index + 1} under each published "

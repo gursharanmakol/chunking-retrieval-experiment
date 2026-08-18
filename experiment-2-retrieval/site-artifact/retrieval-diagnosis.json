@@ -1,0 +1,1357 @@
+{
+  "experiment": {
+    "id": "retrieval-diagnosis",
+    "name": "Retrieval diagnosis",
+    "chunking": "section-aware",
+    "chunk_count": 13,
+    "question_count": 5,
+    "headline_k": 3,
+    "source_sha256": "59d1785463a48b752babc882ac155ef2b9de84ad7cfed32b64aeecabcb68f1e4",
+    "commits": {
+      "preregistration": "e9d116a",
+      "implementation": "ac7be30",
+      "results": "3229255"
+    }
+  },
+  "methods": [
+    {
+      "id": "dense",
+      "label": "Dense",
+      "model": "sentence-transformers/all-MiniLM-L6-v2",
+      "similarity": "cosine",
+      "score_kind": "cosine"
+    },
+    {
+      "id": "bm25",
+      "label": "BM25",
+      "implementation": "rank_bm25.BM25Okapi",
+      "k1": 1.5,
+      "b": 0.75,
+      "epsilon": 0.25,
+      "tokenizer": "lowercase; non-alphanumeric characters become whitespace; unigrams; no stemming; no stopword list; no n-grams",
+      "score_kind": "bm25"
+    },
+    {
+      "id": "rrf",
+      "label": "RRF",
+      "components": [
+        "dense",
+        "bm25"
+      ],
+      "k": 60,
+      "fusion": "full_13_chunk_rankings",
+      "score_kind": "rrf"
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q1",
+      "text": "How long can an approved refund take to appear in a customer's account?",
+      "rubric": "Sufficient only if the retrieved set contains the explicit '5-10 business days' window from Section 6. A set containing only 'refund timing depends on the payment provider', or only the refund-confirmation-email caveat, without the number, is insufficient.",
+      "required": [
+        [
+          "C-6"
+        ]
+      ]
+    },
+    {
+      "id": "Q2",
+      "text": "How is the restocking fee calculated for a post-shipment cancellation?",
+      "rubric": "Sufficient only if the retrieved set contains both the 15% rate and the base it is applied to: the amount actually paid after any promotional discount, before tax and shipping charges. Either half alone is insufficient.",
+      "required": [
+        [
+          "C-7"
+        ]
+      ]
+    },
+    {
+      "id": "Q3",
+      "text": "A customer cancels after shipment because TechNova sent the wrong item. Does the 15% restocking fee apply?",
+      "rubric": "Sufficient only if the retrieved set contains both the statement that the restocking fee does not apply when the order qualifies under Section 3, and the Section 3 condition 'TechNova shipped the wrong item' (or the Return Handling Matrix row 'Wrong item shipped by TechNova | Waived'). A set containing only the bare 15% post-shipment rule is insufficient, because it supports the wrong answer.",
+      "required": [
+        [
+          "C-7"
+        ],
+        [
+          "C-3",
+          "C-8"
+        ]
+      ]
+    },
+    {
+      "id": "Q4",
+      "text": "What conditions make a post-shipment cancellation eligible for a restocking-fee waiver?",
+      "rubric": "Sufficient only if all four Section 3 waiver conditions appear intact in the retrieved text: wrong item shipped, product damaged before delivery, verified TechNova fulfillment error, and cancellation requested before the order entered shipment processing. A bullet list truncated by a chunk boundary is insufficient.",
+      "required": [
+        [
+          "C-3"
+        ]
+      ]
+    },
+    {
+      "id": "Q5",
+      "text": "A customer changes their mind after shipment. Is an inspection required before the refund is issued?",
+      "rubric": "Sufficient only if the retrieved set binds 'customer changes mind after shipment' to the requirement that the returned product must be inspected, with enough table or header context to interpret that relationship. Generic language that TechNova 'may inspect' returned products is insufficient.",
+      "required": [
+        [
+          "C-8"
+        ]
+      ]
+    }
+  ],
+  "chunks": [
+    {
+      "id": "C-0",
+      "heading": "(front matter, before first ## heading)",
+      "start": 0,
+      "end": 151,
+      "text": "# TechNova Billing and Cancellation Policy\n\n**Effective date:** August 1, 2026  \n**Applies to:** Purchases made directly from the TechNova Store\n\n---\n\n"
+    },
+    {
+      "id": "C-1",
+      "heading": "## 1. Purpose",
+      "start": 151,
+      "end": 521,
+      "text": "## 1. Purpose\n\nThis policy defines billing, cancellation, refund, and restocking rules for TechNova product orders.\n\nIt applies to physical products, subscriptions, accessories, promotional purchases, and business orders unless a separate written agreement applies. If a signed business agreement conflicts with this policy, the signed agreement takes precedence.\n\n---\n\n"
+    },
+    {
+      "id": "C-2",
+      "heading": "## 2. Payment Terms",
+      "start": 521,
+      "end": 1483,
+      "text": "## 2. Payment Terms\n\nCustomers are charged when an order is confirmed.\n\nFor subscription products:\n\n- recurring charges are billed at the start of each billing cycle\n- failed payments may be retried\n- access may be suspended if payment remains outstanding\n\nFor physical products:\n\n- payment is authorized at order placement\n- final capture occurs when the order ships\n\nA payment authorization confirms that the customer’s payment method can cover the order amount. It is not a completed charge. TechNova captures payment when the physical product ships.\n\nIf an authorization expires before shipment, TechNova may request updated payment information or attempt to reauthorize the original payment method. An order may be delayed or cancelled if TechNova cannot obtain a valid authorization.\n\nPrices, taxes, shipping charges, and discounts are shown at checkout. Promotional discounts apply only when the order meets the offer terms at the time of purchase.\n\n---\n\n"
+    },
+    {
+      "id": "C-3",
+      "heading": "## 3. Orders Eligible for Fee Waiver",
+      "start": 1483,
+      "end": 2799,
+      "text": "## 3. Orders Eligible for Fee Waiver\n\nA cancellation fee or restocking fee does not apply when one of the following conditions is met:\n\n- TechNova shipped the wrong item.\n- The product was damaged before delivery.\n- The order was cancelled because of a verified TechNova fulfillment error.\n- The customer requested cancellation before the order entered shipment processing.\n\nOrders qualifying under this section are considered **fee-waiver eligible**.\n\nTo request a fee waiver, the customer must provide the order number and a description of the issue. For damaged or incorrect products, TechNova may request photos of the product, packaging, and shipping label before approving the claim.\n\nA verified TechNova fulfillment error includes an incorrect item, an incorrect quantity, an order sent to the wrong address because of a TechNova processing error, or a failure to ship an in-stock order within the stated handling period.\n\nFor purposes of this policy, damage before delivery means damage that occurred during packing, handling, or transit and was not caused by the customer after delivery. Damage claims should be reported within 14 calendar days of delivery.\n\nFee-waiver eligibility applies to the restocking fee. Whether original or return shipping charges are refunded is determined under Section 8.\n\n---\n\n"
+    },
+    {
+      "id": "C-4",
+      "heading": "## 4. Cancellation Before Shipment",
+      "start": 2799,
+      "end": 3653,
+      "text": "## 4. Cancellation Before Shipment\n\nA customer may cancel an order before shipment without a restocking fee.\n\nIf the order has not entered shipment processing:\n\n- the cancellation is accepted\n- the full payment is refunded\n- no cancellation fee applies\n\nCustomers may submit a cancellation request through the TechNova Support Portal. A request is received when it appears in the customer’s order record.\n\nAn order enters shipment processing when TechNova begins picking, packing, labeling, or assigning the order to a carrier. An order awaiting payment review, inventory allocation, or warehouse release has not entered shipment processing.\n\nIf TechNova has only authorized payment, the authorization will be released. If payment has already been captured, TechNova will issue a refund to the original payment method in accordance with Section 6.\n\n---\n\n"
+    },
+    {
+      "id": "C-5",
+      "heading": "## 5. Cancellation During Shipment Processing",
+      "start": 3653,
+      "end": 4448,
+      "text": "## 5. Cancellation During Shipment Processing\n\nIf an order has entered shipment processing but has not yet shipped, TechNova may attempt to stop fulfillment.\n\nIf fulfillment can be stopped successfully:\n\n- the order is cancelled\n- the customer receives a full refund\n\nIf fulfillment cannot be stopped:\n\n- the order is treated as a post-shipment cancellation\n\nTechNova cannot guarantee that fulfillment can be stopped once warehouse processing begins. Whether a request can be completed depends on the order’s current status, including picking, packing, carrier-label creation, and carrier handoff.\n\nIf TechNova cannot stop fulfillment, it will provide return instructions after delivery. The request will then be reviewed under Section 7, including the fee-waiver conditions in Section 3.\n\n---\n\n"
+    },
+    {
+      "id": "C-6",
+      "heading": "## 6. Refund Processing",
+      "start": 4448,
+      "end": 5284,
+      "text": "## 6. Refund Processing\n\nApproved refunds are returned to the original payment method.\n\nRefund timing depends on the payment provider.\n\nRefunds may take **5–10 business days** to appear on the customer’s account.\n\nTechNova begins refund processing after a cancellation, return, or fee-waiver claim is approved. For returned physical products, TechNova may inspect the item before determining the final refund amount.\n\nThe final refund may include the product price, applicable taxes, and eligible shipping charges. If a restocking fee applies under Section 7, TechNova deducts that amount before issuing the refund.\n\nA refund confirmation email does not mean the funds have already appeared in the customer’s account. Processing times after TechNova issues the refund are determined by the card issuer, bank, or payment provider.\n\n---\n\n"
+    },
+    {
+      "id": "C-7",
+      "heading": "## 7. Cancellation After Shipment",
+      "start": 5284,
+      "end": 6471,
+      "text": "## 7. Cancellation After Shipment\n\nCancellation after shipment normally incurs a **15% restocking fee**.\n\nThe restocking fee is calculated using the product price before tax and shipping charges.\n\nHowever, the restocking fee does not apply if the order qualifies under **Section 3: Orders Eligible for Fee Waiver**.\n\nIf the order qualifies under Section 3:\n\n- the customer receives a full refund\n- the 15% restocking fee is waived\n\nIf the order does not qualify:\n\n- the 15% restocking fee is deducted from the refund\n\nA post-shipment cancellation applies when an order has shipped, is in transit, has been delivered, or could not be stopped under Section 5. The customer must return the item according to TechNova’s return instructions.\n\nThe restocking fee is based on the amount actually paid for the product after any promotional discount, but before tax and shipping charges. For example, if a product was listed at $1,000 and purchased for $800 during a promotion, the restocking fee is $120.\n\nThe restocking fee is waived when TechNova confirms that the order is fee-waiver eligible under Section 3. A cancellation request by itself does not stop an order already in transit.\n\n---\n\n"
+    },
+    {
+      "id": "C-8",
+      "heading": "## 8. Shipping Charges",
+      "start": 6471,
+      "end": 8089,
+      "text": "## 8. Shipping Charges\n\nOriginal shipping charges are generally non-refundable after shipment.\n\nShipping charges may be refunded if:\n\n- TechNova shipped the wrong product\n- the product was damaged before delivery\n- the shipment failure was caused by TechNova\n\nCustomers are responsible for return-shipping costs unless TechNova confirms that the return resulted from an eligible damage claim, an incorrect shipment, or a verified fulfillment error. TechNova may provide a prepaid return label in those situations.\n\nShipping-charge eligibility is reviewed separately from restocking-fee eligibility. An order may qualify for a restocking-fee waiver under Section 3 while TechNova separately reviews whether shipping charges should be refunded.\n\n### Return Handling Matrix\n\n| Return scenario | Restocking fee | Original shipping | Return shipping | Inspection before refund |\n|---|---:|---|---|---|\n| Wrong item shipped by TechNova | Waived | Refunded | Paid by TechNova | No physical inspection required before refund |\n| Product damaged before delivery | Waived | Refunded | Paid by TechNova | Photo review may be required |\n| Verified TechNova fulfillment error | Waived | Refunded if related to the error | Paid by TechNova | Case-by-case review |\n| Customer changes mind after shipment | 15% | Not refunded | Paid by customer | Returned product must be inspected |\n| Customer cancels before shipment processing | None | Not applicable | Not applicable | No |\n\nThe table is a quick operational reference. If the table conflicts with the detailed rules in another section, the detailed policy language governs.\n\n---\n\n"
+    },
+    {
+      "id": "C-9",
+      "heading": "## 9. Subscription Cancellation",
+      "start": 8089,
+      "end": 8731,
+      "text": "## 9. Subscription Cancellation\n\nSubscription customers may cancel future renewals at any time.\n\nCancellation:\n\n- stops future billing\n- does not automatically refund charges already processed\n- does not affect physical-order restocking rules\n\nThe subscription remains active until the end of the current paid billing period unless TechNova approves an earlier termination. Cancelling a subscription does not cancel an open physical-product order.\n\nTechNova may issue a subscription refund for a duplicate charge, billing error, or other verified issue. The restocking-fee rules in Section 7 do not apply to subscription cancellations.\n\n---\n\n"
+    },
+    {
+      "id": "C-10",
+      "heading": "## 10. Promotional Orders",
+      "start": 8731,
+      "end": 9427,
+      "text": "## 10. Promotional Orders\n\nPromotional discounts do not change the restocking-fee percentage.\n\nFor example:\n\n- product list price: $1,000\n- promotional price paid: $800\n- applicable restocking fee: 15% of the product price actually paid\n\nPromotional gifts, bundled accessories, and limited-time credits must be returned when they were included with the original purchase. If a required promotional item is not returned, TechNova may deduct its stated value from the refund.\n\nAn order that qualifies under Section 3 remains fee-waiver eligible even if it was purchased using a promotion. The waiver applies to the restocking fee and does not reinstate an expired promotion or discount code.\n\n---\n\n"
+    },
+    {
+      "id": "C-11",
+      "heading": "## 11. Business Orders",
+      "start": 9427,
+      "end": 10090,
+      "text": "## 11. Business Orders\n\nBusiness orders containing more than 25 units may be subject to separate contract terms.\n\nIf a signed business agreement conflicts with this policy, the signed agreement takes precedence.\n\nTechNova may require additional review for orders involving volume pricing, custom configurations, staged delivery, or purchase orders. Those orders may have different cancellation deadlines, restocking fees, or return requirements.\n\nIf no signed business agreement applies, this policy governs the order. Business customers should include their organization name and order number when submitting a cancellation, refund, or fee-waiver request.\n\n---\n\n"
+    },
+    {
+      "id": "C-12",
+      "heading": "## 12. Policy Interpretation",
+      "start": 10090,
+      "end": 10849,
+      "text": "## 12. Policy Interpretation\n\nWhen a cancellation depends on another section of this policy, the referenced section must be evaluated before the final refund amount is determined.\n\nFor example, Section 7 sets the normal 15% restocking fee for post-shipment cancellations. However, TechNova must first determine whether the order qualifies under Section 3 before calculating the final refund.\n\nWhen reviewing a cancellation request, TechNova generally follows this order:\n\n1. Confirm the order and shipment status.\n2. Determine whether Section 4, Section 5, or Section 7 applies.\n3. Evaluate whether the order qualifies for a fee waiver under Section 3.\n4. Review shipping-charge eligibility under Section 8.\n5. Calculate and issue the refund under Section 6.\n"
+    }
+  ],
+  "results": [
+    {
+      "question_id": "Q1",
+      "method": "dense",
+      "verdict": "PASS",
+      "ranking": [
+        {
+          "rank": 1,
+          "chunk_id": "C-6",
+          "score": 0.6168
+        },
+        {
+          "rank": 2,
+          "chunk_id": "C-3",
+          "score": 0.3016
+        },
+        {
+          "rank": 3,
+          "chunk_id": "C-2",
+          "score": 0.2844
+        },
+        {
+          "rank": 4,
+          "chunk_id": "C-8",
+          "score": 0.2823
+        },
+        {
+          "rank": 5,
+          "chunk_id": "C-12",
+          "score": 0.2785
+        },
+        {
+          "rank": 6,
+          "chunk_id": "C-7",
+          "score": 0.2710
+        },
+        {
+          "rank": 7,
+          "chunk_id": "C-4",
+          "score": 0.2658
+        },
+        {
+          "rank": 8,
+          "chunk_id": "C-0",
+          "score": 0.2521
+        },
+        {
+          "rank": 9,
+          "chunk_id": "C-10",
+          "score": 0.2491
+        },
+        {
+          "rank": 10,
+          "chunk_id": "C-9",
+          "score": 0.2458
+        },
+        {
+          "rank": 11,
+          "chunk_id": "C-1",
+          "score": 0.2074
+        },
+        {
+          "rank": 12,
+          "chunk_id": "C-5",
+          "score": 0.1792
+        },
+        {
+          "rank": 13,
+          "chunk_id": "C-11",
+          "score": 0.1613
+        }
+      ],
+      "classification": [
+        {
+          "chunk_id": "C-6",
+          "rank": 1,
+          "label": "RETURNED"
+        }
+      ]
+    },
+    {
+      "question_id": "Q1",
+      "method": "bm25",
+      "verdict": "PASS",
+      "ranking": [
+        {
+          "rank": 1,
+          "chunk_id": "C-6",
+          "score": 13.6932
+        },
+        {
+          "rank": 2,
+          "chunk_id": "C-5",
+          "score": 5.6333
+        },
+        {
+          "rank": 3,
+          "chunk_id": "C-4",
+          "score": 3.8379
+        },
+        {
+          "rank": 4,
+          "chunk_id": "C-2",
+          "score": 3.7614
+        },
+        {
+          "rank": 5,
+          "chunk_id": "C-7",
+          "score": 3.2132
+        },
+        {
+          "rank": 6,
+          "chunk_id": "C-8",
+          "score": 2.8378
+        },
+        {
+          "rank": 7,
+          "chunk_id": "C-3",
+          "score": 2.8162
+        },
+        {
+          "rank": 8,
+          "chunk_id": "C-9",
+          "score": 2.7649
+        },
+        {
+          "rank": 9,
+          "chunk_id": "C-10",
+          "score": 1.9696
+        },
+        {
+          "rank": 10,
+          "chunk_id": "C-1",
+          "score": 1.7470
+        },
+        {
+          "rank": 11,
+          "chunk_id": "C-11",
+          "score": 1.4711
+        },
+        {
+          "rank": 12,
+          "chunk_id": "C-12",
+          "score": 1.2998
+        },
+        {
+          "rank": 13,
+          "chunk_id": "C-0",
+          "score": 0.6199
+        }
+      ],
+      "classification": [
+        {
+          "chunk_id": "C-6",
+          "rank": 1,
+          "label": "RETURNED"
+        }
+      ]
+    },
+    {
+      "question_id": "Q1",
+      "method": "rrf",
+      "verdict": "PASS",
+      "ranking": [
+        {
+          "rank": 1,
+          "chunk_id": "C-6",
+          "score": 0.0328
+        },
+        {
+          "rank": 2,
+          "chunk_id": "C-2",
+          "score": 0.0315
+        },
+        {
+          "rank": 3,
+          "chunk_id": "C-3",
+          "score": 0.0311
+        },
+        {
+          "rank": 4,
+          "chunk_id": "C-4",
+          "score": 0.0308
+        },
+        {
+          "rank": 5,
+          "chunk_id": "C-8",
+          "score": 0.0308
+        },
+        {
+          "rank": 6,
+          "chunk_id": "C-7",
+          "score": 0.0305
+        },
+        {
+          "rank": 7,
+          "chunk_id": "C-5",
+          "score": 0.0300
+        },
+        {
+          "rank": 8,
+          "chunk_id": "C-12",
+          "score": 0.0293
+        },
+        {
+          "rank": 9,
+          "chunk_id": "C-9",
+          "score": 0.0290
+        },
+        {
+          "rank": 10,
+          "chunk_id": "C-10",
+          "score": 0.0290
+        },
+        {
+          "rank": 11,
+          "chunk_id": "C-0",
+          "score": 0.0284
+        },
+        {
+          "rank": 12,
+          "chunk_id": "C-1",
+          "score": 0.0284
+        },
+        {
+          "rank": 13,
+          "chunk_id": "C-11",
+          "score": 0.0278
+        }
+      ]
+    },
+    {
+      "question_id": "Q2",
+      "method": "dense",
+      "verdict": "PASS",
+      "ranking": [
+        {
+          "rank": 1,
+          "chunk_id": "C-7",
+          "score": 0.7467
+        },
+        {
+          "rank": 2,
+          "chunk_id": "C-12",
+          "score": 0.5930
+        },
+        {
+          "rank": 3,
+          "chunk_id": "C-4",
+          "score": 0.5533
+        },
+        {
+          "rank": 4,
+          "chunk_id": "C-10",
+          "score": 0.5426
+        },
+        {
+          "rank": 5,
+          "chunk_id": "C-9",
+          "score": 0.4772
+        },
+        {
+          "rank": 6,
+          "chunk_id": "C-5",
+          "score": 0.4644
+        },
+        {
+          "rank": 7,
+          "chunk_id": "C-8",
+          "score": 0.4628
+        },
+        {
+          "rank": 8,
+          "chunk_id": "C-3",
+          "score": 0.4384
+        },
+        {
+          "rank": 9,
+          "chunk_id": "C-2",
+          "score": 0.4034
+        },
+        {
+          "rank": 10,
+          "chunk_id": "C-6",
+          "score": 0.3999
+        },
+        {
+          "rank": 11,
+          "chunk_id": "C-1",
+          "score": 0.3635
+        },
+        {
+          "rank": 12,
+          "chunk_id": "C-11",
+          "score": 0.3240
+        },
+        {
+          "rank": 13,
+          "chunk_id": "C-0",
+          "score": 0.3146
+        }
+      ],
+      "classification": [
+        {
+          "chunk_id": "C-7",
+          "rank": 1,
+          "label": "RETURNED"
+        }
+      ]
+    },
+    {
+      "question_id": "Q2",
+      "method": "bm25",
+      "verdict": "PASS",
+      "ranking": [
+        {
+          "rank": 1,
+          "chunk_id": "C-7",
+          "score": 8.2414
+        },
+        {
+          "rank": 2,
+          "chunk_id": "C-12",
+          "score": 5.7091
+        },
+        {
+          "rank": 3,
+          "chunk_id": "C-5",
+          "score": 4.7035
+        },
+        {
+          "rank": 4,
+          "chunk_id": "C-4",
+          "score": 4.5576
+        },
+        {
+          "rank": 5,
+          "chunk_id": "C-3",
+          "score": 4.5132
+        },
+        {
+          "rank": 6,
+          "chunk_id": "C-8",
+          "score": 3.9648
+        },
+        {
+          "rank": 7,
+          "chunk_id": "C-10",
+          "score": 3.5631
+        },
+        {
+          "rank": 8,
+          "chunk_id": "C-6",
+          "score": 3.5454
+        },
+        {
+          "rank": 9,
+          "chunk_id": "C-9",
+          "score": 3.5047
+        },
+        {
+          "rank": 10,
+          "chunk_id": "C-11",
+          "score": 3.1061
+        },
+        {
+          "rank": 11,
+          "chunk_id": "C-2",
+          "score": 2.9139
+        },
+        {
+          "rank": 12,
+          "chunk_id": "C-1",
+          "score": 2.8097
+        },
+        {
+          "rank": 13,
+          "chunk_id": "C-0",
+          "score": 1.2398
+        }
+      ],
+      "classification": [
+        {
+          "chunk_id": "C-7",
+          "rank": 1,
+          "label": "RETURNED"
+        }
+      ]
+    },
+    {
+      "question_id": "Q2",
+      "method": "rrf",
+      "verdict": "PASS",
+      "ranking": [
+        {
+          "rank": 1,
+          "chunk_id": "C-7",
+          "score": 0.0328
+        },
+        {
+          "rank": 2,
+          "chunk_id": "C-12",
+          "score": 0.0323
+        },
+        {
+          "rank": 3,
+          "chunk_id": "C-4",
+          "score": 0.0315
+        },
+        {
+          "rank": 4,
+          "chunk_id": "C-5",
+          "score": 0.0310
+        },
+        {
+          "rank": 5,
+          "chunk_id": "C-10",
+          "score": 0.0306
+        },
+        {
+          "rank": 6,
+          "chunk_id": "C-3",
+          "score": 0.0301
+        },
+        {
+          "rank": 7,
+          "chunk_id": "C-8",
+          "score": 0.0301
+        },
+        {
+          "rank": 8,
+          "chunk_id": "C-9",
+          "score": 0.0299
+        },
+        {
+          "rank": 9,
+          "chunk_id": "C-6",
+          "score": 0.0290
+        },
+        {
+          "rank": 10,
+          "chunk_id": "C-2",
+          "score": 0.0286
+        },
+        {
+          "rank": 11,
+          "chunk_id": "C-11",
+          "score": 0.0282
+        },
+        {
+          "rank": 12,
+          "chunk_id": "C-1",
+          "score": 0.0280
+        },
+        {
+          "rank": 13,
+          "chunk_id": "C-0",
+          "score": 0.0274
+        }
+      ]
+    },
+    {
+      "question_id": "Q3",
+      "method": "dense",
+      "verdict": "FAIL",
+      "ranking": [
+        {
+          "rank": 1,
+          "chunk_id": "C-7",
+          "score": 0.8422
+        },
+        {
+          "rank": 2,
+          "chunk_id": "C-12",
+          "score": 0.7160
+        },
+        {
+          "rank": 3,
+          "chunk_id": "C-10",
+          "score": 0.6969
+        },
+        {
+          "rank": 4,
+          "chunk_id": "C-4",
+          "score": 0.6966
+        },
+        {
+          "rank": 5,
+          "chunk_id": "C-3",
+          "score": 0.6715
+        },
+        {
+          "rank": 6,
+          "chunk_id": "C-8",
+          "score": 0.6508
+        },
+        {
+          "rank": 7,
+          "chunk_id": "C-9",
+          "score": 0.6447
+        },
+        {
+          "rank": 8,
+          "chunk_id": "C-5",
+          "score": 0.6351
+        },
+        {
+          "rank": 9,
+          "chunk_id": "C-1",
+          "score": 0.6256
+        },
+        {
+          "rank": 10,
+          "chunk_id": "C-6",
+          "score": 0.6031
+        },
+        {
+          "rank": 11,
+          "chunk_id": "C-2",
+          "score": 0.5593
+        },
+        {
+          "rank": 12,
+          "chunk_id": "C-0",
+          "score": 0.5248
+        },
+        {
+          "rank": 13,
+          "chunk_id": "C-11",
+          "score": 0.5188
+        }
+      ],
+      "classification": [
+        {
+          "chunk_id": "C-7",
+          "rank": 1,
+          "label": "RETURNED"
+        },
+        {
+          "chunk_id": "C-3",
+          "rank": 5,
+          "label": "RANKING / CUTOFF MISS"
+        }
+      ]
+    },
+    {
+      "question_id": "Q3",
+      "method": "bm25",
+      "verdict": "PASS",
+      "ranking": [
+        {
+          "rank": 1,
+          "chunk_id": "C-3",
+          "score": 12.8424
+        },
+        {
+          "rank": 2,
+          "chunk_id": "C-8",
+          "score": 9.8447
+        },
+        {
+          "rank": 3,
+          "chunk_id": "C-7",
+          "score": 8.7583
+        },
+        {
+          "rank": 4,
+          "chunk_id": "C-6",
+          "score": 5.9716
+        },
+        {
+          "rank": 5,
+          "chunk_id": "C-10",
+          "score": 5.6638
+        },
+        {
+          "rank": 6,
+          "chunk_id": "C-9",
+          "score": 5.4355
+        },
+        {
+          "rank": 7,
+          "chunk_id": "C-4",
+          "score": 5.2717
+        },
+        {
+          "rank": 8,
+          "chunk_id": "C-12",
+          "score": 5.1188
+        },
+        {
+          "rank": 9,
+          "chunk_id": "C-5",
+          "score": 4.7256
+        },
+        {
+          "rank": 10,
+          "chunk_id": "C-2",
+          "score": 4.2524
+        },
+        {
+          "rank": 11,
+          "chunk_id": "C-11",
+          "score": 3.1061
+        },
+        {
+          "rank": 12,
+          "chunk_id": "C-1",
+          "score": 2.8097
+        },
+        {
+          "rank": 13,
+          "chunk_id": "C-0",
+          "score": 1.9934
+        }
+      ],
+      "classification": [
+        {
+          "chunk_id": "C-7",
+          "rank": 3,
+          "label": "RETURNED"
+        },
+        {
+          "chunk_id": "C-3",
+          "rank": 1,
+          "label": "RETURNED"
+        }
+      ]
+    },
+    {
+      "question_id": "Q3",
+      "method": "rrf",
+      "verdict": "PASS",
+      "ranking": [
+        {
+          "rank": 1,
+          "chunk_id": "C-7",
+          "score": 0.0323
+        },
+        {
+          "rank": 2,
+          "chunk_id": "C-3",
+          "score": 0.0318
+        },
+        {
+          "rank": 3,
+          "chunk_id": "C-8",
+          "score": 0.0313
+        },
+        {
+          "rank": 4,
+          "chunk_id": "C-10",
+          "score": 0.0313
+        },
+        {
+          "rank": 5,
+          "chunk_id": "C-12",
+          "score": 0.0308
+        },
+        {
+          "rank": 6,
+          "chunk_id": "C-4",
+          "score": 0.0306
+        },
+        {
+          "rank": 7,
+          "chunk_id": "C-9",
+          "score": 0.0301
+        },
+        {
+          "rank": 8,
+          "chunk_id": "C-6",
+          "score": 0.0299
+        },
+        {
+          "rank": 9,
+          "chunk_id": "C-5",
+          "score": 0.0292
+        },
+        {
+          "rank": 10,
+          "chunk_id": "C-1",
+          "score": 0.0284
+        },
+        {
+          "rank": 11,
+          "chunk_id": "C-2",
+          "score": 0.0284
+        },
+        {
+          "rank": 12,
+          "chunk_id": "C-11",
+          "score": 0.0278
+        },
+        {
+          "rank": 13,
+          "chunk_id": "C-0",
+          "score": 0.0276
+        }
+      ]
+    },
+    {
+      "question_id": "Q4",
+      "method": "dense",
+      "verdict": "PASS",
+      "ranking": [
+        {
+          "rank": 1,
+          "chunk_id": "C-7",
+          "score": 0.7203
+        },
+        {
+          "rank": 2,
+          "chunk_id": "C-3",
+          "score": 0.6413
+        },
+        {
+          "rank": 3,
+          "chunk_id": "C-5",
+          "score": 0.6297
+        },
+        {
+          "rank": 4,
+          "chunk_id": "C-12",
+          "score": 0.6230
+        },
+        {
+          "rank": 5,
+          "chunk_id": "C-4",
+          "score": 0.5818
+        },
+        {
+          "rank": 6,
+          "chunk_id": "C-9",
+          "score": 0.5377
+        },
+        {
+          "rank": 7,
+          "chunk_id": "C-8",
+          "score": 0.5282
+        },
+        {
+          "rank": 8,
+          "chunk_id": "C-10",
+          "score": 0.5273
+        },
+        {
+          "rank": 9,
+          "chunk_id": "C-1",
+          "score": 0.4845
+        },
+        {
+          "rank": 10,
+          "chunk_id": "C-2",
+          "score": 0.4171
+        },
+        {
+          "rank": 11,
+          "chunk_id": "C-11",
+          "score": 0.4086
+        },
+        {
+          "rank": 12,
+          "chunk_id": "C-6",
+          "score": 0.3650
+        },
+        {
+          "rank": 13,
+          "chunk_id": "C-0",
+          "score": 0.3598
+        }
+      ],
+      "classification": [
+        {
+          "chunk_id": "C-3",
+          "rank": 2,
+          "label": "RETURNED"
+        }
+      ]
+    },
+    {
+      "question_id": "Q4",
+      "method": "bm25",
+      "verdict": "PASS",
+      "ranking": [
+        {
+          "rank": 1,
+          "chunk_id": "C-7",
+          "score": 6.6367
+        },
+        {
+          "rank": 2,
+          "chunk_id": "C-3",
+          "score": 6.2686
+        },
+        {
+          "rank": 3,
+          "chunk_id": "C-5",
+          "score": 5.9729
+        },
+        {
+          "rank": 4,
+          "chunk_id": "C-12",
+          "score": 5.5442
+        },
+        {
+          "rank": 5,
+          "chunk_id": "C-10",
+          "score": 3.9818
+        },
+        {
+          "rank": 6,
+          "chunk_id": "C-8",
+          "score": 3.9751
+        },
+        {
+          "rank": 7,
+          "chunk_id": "C-4",
+          "score": 3.8811
+        },
+        {
+          "rank": 8,
+          "chunk_id": "C-6",
+          "score": 3.7577
+        },
+        {
+          "rank": 9,
+          "chunk_id": "C-11",
+          "score": 3.5418
+        },
+        {
+          "rank": 10,
+          "chunk_id": "C-9",
+          "score": 3.4520
+        },
+        {
+          "rank": 11,
+          "chunk_id": "C-1",
+          "score": 2.9627
+        },
+        {
+          "rank": 12,
+          "chunk_id": "C-2",
+          "score": 2.1052
+        },
+        {
+          "rank": 13,
+          "chunk_id": "C-0",
+          "score": 0.6199
+        }
+      ],
+      "classification": [
+        {
+          "chunk_id": "C-3",
+          "rank": 2,
+          "label": "RETURNED"
+        }
+      ]
+    },
+    {
+      "question_id": "Q4",
+      "method": "rrf",
+      "verdict": "PASS",
+      "ranking": [
+        {
+          "rank": 1,
+          "chunk_id": "C-7",
+          "score": 0.0328
+        },
+        {
+          "rank": 2,
+          "chunk_id": "C-3",
+          "score": 0.0323
+        },
+        {
+          "rank": 3,
+          "chunk_id": "C-5",
+          "score": 0.0317
+        },
+        {
+          "rank": 4,
+          "chunk_id": "C-12",
+          "score": 0.0312
+        },
+        {
+          "rank": 5,
+          "chunk_id": "C-4",
+          "score": 0.0303
+        },
+        {
+          "rank": 6,
+          "chunk_id": "C-10",
+          "score": 0.0301
+        },
+        {
+          "rank": 7,
+          "chunk_id": "C-8",
+          "score": 0.0301
+        },
+        {
+          "rank": 8,
+          "chunk_id": "C-9",
+          "score": 0.0294
+        },
+        {
+          "rank": 9,
+          "chunk_id": "C-6",
+          "score": 0.0286
+        },
+        {
+          "rank": 10,
+          "chunk_id": "C-1",
+          "score": 0.0286
+        },
+        {
+          "rank": 11,
+          "chunk_id": "C-11",
+          "score": 0.0286
+        },
+        {
+          "rank": 12,
+          "chunk_id": "C-2",
+          "score": 0.0282
+        },
+        {
+          "rank": 13,
+          "chunk_id": "C-0",
+          "score": 0.0274
+        }
+      ]
+    },
+    {
+      "question_id": "Q5",
+      "method": "dense",
+      "verdict": "PASS",
+      "ranking": [
+        {
+          "rank": 1,
+          "chunk_id": "C-3",
+          "score": 0.4681
+        },
+        {
+          "rank": 2,
+          "chunk_id": "C-8",
+          "score": 0.4677
+        },
+        {
+          "rank": 3,
+          "chunk_id": "C-6",
+          "score": 0.4246
+        },
+        {
+          "rank": 4,
+          "chunk_id": "C-4",
+          "score": 0.4234
+        },
+        {
+          "rank": 5,
+          "chunk_id": "C-12",
+          "score": 0.4191
+        },
+        {
+          "rank": 6,
+          "chunk_id": "C-1",
+          "score": 0.3935
+        },
+        {
+          "rank": 7,
+          "chunk_id": "C-2",
+          "score": 0.3767
+        },
+        {
+          "rank": 8,
+          "chunk_id": "C-5",
+          "score": 0.3737
+        },
+        {
+          "rank": 9,
+          "chunk_id": "C-11",
+          "score": 0.3550
+        },
+        {
+          "rank": 10,
+          "chunk_id": "C-7",
+          "score": 0.3131
+        },
+        {
+          "rank": 11,
+          "chunk_id": "C-9",
+          "score": 0.2462
+        },
+        {
+          "rank": 12,
+          "chunk_id": "C-10",
+          "score": 0.2429
+        },
+        {
+          "rank": 13,
+          "chunk_id": "C-0",
+          "score": 0.2384
+        }
+      ],
+      "classification": [
+        {
+          "chunk_id": "C-8",
+          "rank": 2,
+          "label": "RETURNED"
+        }
+      ]
+    },
+    {
+      "question_id": "Q5",
+      "method": "bm25",
+      "verdict": "PASS",
+      "ranking": [
+        {
+          "rank": 1,
+          "chunk_id": "C-8",
+          "score": 12.8565
+        },
+        {
+          "rank": 2,
+          "chunk_id": "C-7",
+          "score": 6.1305
+        },
+        {
+          "rank": 3,
+          "chunk_id": "C-4",
+          "score": 5.6775
+        },
+        {
+          "rank": 4,
+          "chunk_id": "C-3",
+          "score": 4.9021
+        },
+        {
+          "rank": 5,
+          "chunk_id": "C-5",
+          "score": 4.8113
+        },
+        {
+          "rank": 6,
+          "chunk_id": "C-10",
+          "score": 4.7925
+        },
+        {
+          "rank": 7,
+          "chunk_id": "C-6",
+          "score": 4.7526
+        },
+        {
+          "rank": 8,
+          "chunk_id": "C-2",
+          "score": 4.3353
+        },
+        {
+          "rank": 9,
+          "chunk_id": "C-11",
+          "score": 4.0384
+        },
+        {
+          "rank": 10,
+          "chunk_id": "C-12",
+          "score": 4.0223
+        },
+        {
+          "rank": 11,
+          "chunk_id": "C-9",
+          "score": 2.6295
+        },
+        {
+          "rank": 12,
+          "chunk_id": "C-1",
+          "score": 1.7470
+        },
+        {
+          "rank": 13,
+          "chunk_id": "C-0",
+          "score": 0.6199
+        }
+      ],
+      "classification": [
+        {
+          "chunk_id": "C-8",
+          "rank": 1,
+          "label": "RETURNED"
+        }
+      ]
+    },
+    {
+      "question_id": "Q5",
+      "method": "rrf",
+      "verdict": "PASS",
+      "ranking": [
+        {
+          "rank": 1,
+          "chunk_id": "C-8",
+          "score": 0.0325
+        },
+        {
+          "rank": 2,
+          "chunk_id": "C-3",
+          "score": 0.0320
+        },
+        {
+          "rank": 3,
+          "chunk_id": "C-4",
+          "score": 0.0315
+        },
+        {
+          "rank": 4,
+          "chunk_id": "C-6",
+          "score": 0.0308
+        },
+        {
+          "rank": 5,
+          "chunk_id": "C-7",
+          "score": 0.0304
+        },
+        {
+          "rank": 6,
+          "chunk_id": "C-5",
+          "score": 0.0301
+        },
+        {
+          "rank": 7,
+          "chunk_id": "C-12",
+          "score": 0.0297
+        },
+        {
+          "rank": 8,
+          "chunk_id": "C-2",
+          "score": 0.0296
+        },
+        {
+          "rank": 9,
+          "chunk_id": "C-1",
+          "score": 0.0290
+        },
+        {
+          "rank": 10,
+          "chunk_id": "C-10",
+          "score": 0.0290
+        },
+        {
+          "rank": 11,
+          "chunk_id": "C-11",
+          "score": 0.0290
+        },
+        {
+          "rank": 12,
+          "chunk_id": "C-9",
+          "score": 0.0282
+        },
+        {
+          "rank": 13,
+          "chunk_id": "C-0",
+          "score": 0.0274
+        }
+      ]
+    }
+  ]
+}

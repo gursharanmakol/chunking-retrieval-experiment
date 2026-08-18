@@ -191,6 +191,30 @@ changes no recorded verdict. A passes on the matrix row plus the table header, B
 retrieves no part of the table, and C passes on the complete table in C-8. For
 C's Q5 verdict, C-8 is the only retrieved chunk used.
 
+## Experiment 2 — Retrieval Failure Analysis
+
+Holds chunking fixed at section-aware configuration C (13 chunks) and varies
+the retrieval method: Dense, BM25, and RRF. That is the experiment behind
+[One Retrieval Method Is Not a Diagnosis](https://aiinpracticehub.com/articles/one-retrieval-method-is-not-a-diagnosis/).
+
+All Experiment 2 files live under `experiment-2-retrieval/`:
+
+- `PRE-REGISTRATION.md` — frozen spec, written before the retrieval run
+- `outputs/retrieval_results.md` — frozen full rankings and verdicts
+- `site-artifact/retrieval-diagnosis.json` — publication JSON read by the Retrieval explorer
+
+The headline Q3 result: Dense places required evidence C-3 at rank 5 and C-8 at
+rank 6, so the required-evidence group (`C-7` and `C-3` or `C-8`) fails at
+published top-3. BM25 and RRF pass the same frozen question.
+
+```bash
+pip install -r requirements.txt -r requirements-ui.txt
+streamlit run app.py
+```
+
+Then open **Retrieval explorer**. That page reads the frozen JSON only. It does
+not rerun Dense, BM25, or RRF.
+
 ## Ground rules
 
 For the frozen A/B/C experiment, the source document, questions, chunking
